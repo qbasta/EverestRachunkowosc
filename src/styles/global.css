@@ -15,7 +15,6 @@
   --color-slate: #44536f; /* tekst drugorzędny (kontrast 7:1 na snow) */
 
   --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
-  --font-serif: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
 
   --breakpoint-xs: 30rem;
 }
@@ -34,9 +33,9 @@
   }
 
   body {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    line-height: 1.7;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    line-height: 1.65;
     color: var(--color-ink);
     background: var(--color-snow);
     font-optical-sizing: auto;

@@ -3,12 +3,11 @@ import type { Lang } from '../i18n';
 import { getDict } from '../i18n';
 import Header from './Header.astro';
 import Hero from './Hero.astro';
-import About from './About.astro';
-import Cooperation from './Cooperation.astro';
 import Services from './Services.astro';
 import Info from './Info.astro';
-import Team from './Team.astro';
+import AboutTeaser from './AboutTeaser.astro';
 import Contact from './Contact.astro';
+import Trust from './Trust.astro';
 import Footer from './Footer.astro';
 
 interface Props {
@@ -18,14 +17,13 @@ const { lang } = Astro.props;
 const t = getDict(lang);
 ---
 
-<Header t={t} lang={lang} />
+<Header t={t} lang={lang} page="home" />
 <main id="main">
   <Hero t={t} lang={lang} />
-  <About t={t} />
-  <Cooperation t={t} />
   <Services t={t} />
   <Info t={t} />
-  <Team t={t} />
+  <AboutTeaser t={t} lang={lang} />
   <Contact t={t} lang={lang} />
+  <Trust t={t} />
 </main>
 <Footer t={t} lang={lang} />

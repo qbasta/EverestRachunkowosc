@@ -16,13 +16,13 @@ export const en: Dict = {
     closeMenu: 'Close menu',
     mainNav: 'Main navigation',
     switchLang: 'Wersja polska',
+    pause: 'Pause animation',
+    play: 'Play animation',
   },
   nav: {
-    about: 'About us',
-    cooperation: 'Cooperation',
     services: 'Services',
     info: 'Additional information',
-    team: 'Our team',
+    about: 'About us',
     contact: 'Contact us',
   },
   hero: {
@@ -31,6 +31,24 @@ export const en: Dict = {
     primary: 'Contact us',
     secondary: 'See our services',
     chartLabel: 'Illustration: a mountain ridge that is also a growth chart',
+  },
+  aboutPage: {
+    metaTitle: 'About us | Everest – Accounting & NGO',
+    metaDescription:
+      'Get to know Everest accounting office: our experience serving non-governmental organisations and businesses, our team and the way we work.',
+    title: 'About us',
+  },
+  aboutTeaser: {
+    title: 'About us',
+    paragraphs: [
+      'Our service and our relationships with clients are built on reliability and professionalism.',
+      'We have many years of experience in keeping the accounts of business entities, and we continually improve our qualifications.',
+    ],
+    cta: 'Meet our team',
+  },
+  trust: {
+    title: 'Trusted by',
+    label: 'Clients who trust us',
   },
   about: {
     title: 'About our office',

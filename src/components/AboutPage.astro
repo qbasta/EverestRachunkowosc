@@ -1,0 +1,27 @@
+---
+import type { Lang } from '../i18n';
+import { getDict } from '../i18n';
+import Header from './Header.astro';
+import PageHeader from './PageHeader.astro';
+import About from './About.astro';
+import Team from './Team.astro';
+import Cooperation from './Cooperation.astro';
+import CtaBand from './CtaBand.astro';
+import Footer from './Footer.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = getDict(lang);
+---
+
+<Header t={t} lang={lang} page="about" />
+<main id="main">
+  <PageHeader title={t.aboutPage.title} />
+  <About t={t} />
+  <Team t={t} />
+  <Cooperation t={t} />
+  <CtaBand t={t} lang={lang} />
+</main>
+<Footer t={t} lang={lang} />

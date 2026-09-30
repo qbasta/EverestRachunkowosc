@@ -1,0 +1,164 @@
+---
+import { clients } from '../config/clients';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<section
+  id="trust"
+  aria-labelledby="trust-title"
+  class="trust section-y border-mist overflow-hidden border-t"
+  data-paused="false"
+  data-label-pause={t.a11y.pause}
+  data-label-play={t.a11y.play}
+>
+  <div class="container-page flex items-center justify-between gap-6">
+    <h2 id="trust-title" class="text-summit text-3xl font-bold md:text-4xl">
+      {t.trust.title}
+    </h2>
+    <button type="button" class="trust-toggle" aria-pressed="false">
+      <span class="trust-toggle-label">{t.a11y.pause}</span>
+    </button>
+  </div>
+
+  <div class="marquee mt-10" role="region" aria-label={t.trust.label}>
+    <div class="track">
+      <ul class="group">
+        {clients.map((c) => (
+          <li>
+            <img
+              src={c.logo.src}
+              width={c.logo.width}
+              height={c.logo.height}
+              alt={c.name}
+              loading="lazy"
+              decoding="async"
+              class="client-logo"
+            />
+          </li>
+        ))}
+      </ul>
+      <!-- Kopia dla płynnej pętli: ukryta przed czytnikami ekranu. -->
+      <ul class="group group-copy" aria-hidden="true">
+        {clients.map((c) => (
+          <li>
+            <img
+              src={c.logo.src}
+              width={c.logo.width}
+              height={c.logo.height}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              class="client-logo"
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee {
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .track {
+    display: flex;
+    width: max-content;
+    animation-name: marquee-scroll;
+    animation-duration: 48s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 4.5rem;
+    padding-right: 4.5rem;
+    list-style: none;
+    margin: 0;
+  }
+  .client-logo {
+    height: 3.5rem;
+    width: auto;
+    max-width: none;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition:
+      filter 0.25s ease,
+      opacity 0.25s ease;
+  }
+  .client-logo:hover {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+
+  /* Pauza: po najechaniu (mysz) i na życzenie przyciskiem (klawiatura, dotyk). */
+  .marquee:hover .track,
+  .trust[data-paused='true'] .track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .trust-toggle {
+    flex-shrink: 0;
+    border: 1.5px solid var(--color-mist);
+    border-radius: 9999px;
+    padding: 0.45rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-glacier);
+    background: #fff;
+    cursor: pointer;
+  }
+  .trust-toggle:hover {
+    border-color: var(--color-glacier);
+  }
+
+  /* Ograniczony ruch: statyczna siatka zamiast przewijania, bez przycisku i bez kopii. */
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+      width: auto;
+      justify-content: center;
+    }
+    .group {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem 3rem;
+      padding: 0 1.5rem;
+    }
+    .group-copy,
+    .trust-toggle {
+      display: none;
+    }
+    .marquee {
+      mask-image: none;
+    }
+  }
+</style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('#trust');
+  const button = section?.querySelector<HTMLButtonElement>('.trust-toggle');
+  const label = button?.querySelector<HTMLElement>('.trust-toggle-label');
+
+  if (section && button && label) {
+    button.addEventListener('click', () => {
+      const paused = section.dataset.paused !== 'true';
+      section.dataset.paused = String(paused);
+      button.setAttribute('aria-pressed', String(paused));
+      label.textContent = paused ? section.dataset.labelPlay! : section.dataset.labelPause!;
+    });
+  }
+</script>

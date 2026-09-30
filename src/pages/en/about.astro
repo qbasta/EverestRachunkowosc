@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import AboutPage from '../../components/AboutPage.astro';
+import { getDict } from '../../i18n';
+
+const t = getDict('en');
+---
+
+<Base
+  lang="en"
+  page="about"
+  title={t.aboutPage.metaTitle}
+  description={t.aboutPage.metaDescription}
+>
+  <AboutPage lang="en" />
+</Base>

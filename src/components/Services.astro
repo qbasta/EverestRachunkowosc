@@ -1,9 +1,16 @@
 ---
+import Calculator from '@lucide/astro/icons/calculator';
+import Users from '@lucide/astro/icons/users';
+import FileCheck from '@lucide/astro/icons/file-check';
 import type { Dict } from '../i18n/pl';
+
 interface Props {
   t: Dict;
 }
 const { t } = Astro.props;
+
+// Kolejność ikon odpowiada kolejności grup w słowniku (księgowość, kadry i płace, sprawozdawczość).
+const icons = [Calculator, Users, FileCheck];
 ---
 
 <section id="services" aria-labelledby="services-title" class="section-y">
@@ -13,16 +20,22 @@ const { t } = Astro.props;
     </h2>
 
     <div class="mt-14 grid gap-12 lg:grid-cols-3 lg:gap-10">
-      {t.services.groups.map((group) => (
-        <div class="border-summit border-t-4 pt-5">
-          <h3 class="text-summit text-2xl font-semibold">{group.title}</h3>
-          <ul class="divide-mist mt-5 divide-y">
-            {group.items.map((item) => (
-              <li class="text-ink py-4 text-base leading-relaxed">{item}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {t.services.groups.map((group, i) => {
+        const Icon = icons[i] ?? Calculator;
+        return (
+          <div class="border-summit border-t-4 pt-6">
+            <span class="text-glacier inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[#e3ecfa]">
+              <Icon size={30} stroke-width={1.75} aria-hidden="true" />
+            </span>
+            <h3 class="text-summit mt-4 text-2xl font-semibold">{group.title}</h3>
+            <ul class="divide-mist mt-5 divide-y">
+              {group.items.map((item) => (
+                <li class="text-ink py-4 text-base leading-relaxed">{item}</li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
     </div>
   </div>
 </section>

@@ -1,26 +1,23 @@
 ---
-// Tymczasowe logo (znak + napis). TODO: podmienić na oryginalne SVG od klienta.
+import { Image } from 'astro:assets';
+import light from '../assets/brand/logo-light.svg';
+import dark from '../assets/brand/logo-dark.svg';
+
 interface Props {
+  /** `light` = białe logo (na ciemne tło), `dark` = granatowe (na jasne tło). */
+  variant?: 'light' | 'dark';
   class?: string;
 }
-const { class: className } = Astro.props;
+const { variant = 'light', class: className } = Astro.props;
+const src = variant === 'light' ? light : dark;
 ---
 
-<span class:list={['inline-flex items-center gap-3', className]}>
-  <svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true" class="shrink-0">
-    <rect width="64" height="64" rx="14" fill="#006aff"></rect>
-    <path d="M8 46 L22 32 L29 38 L44 14 L56 46 Z" fill="#003174"></path>
-    <path
-      d="M8 46 L22 32 L29 38 L44 14"
-      fill="none"
-      stroke="#fff"
-      stroke-width="3.5"
-      stroke-linejoin="round"
-      stroke-linecap="round"
-    ></path>
-  </svg>
-  <span class="font-display leading-none">
-    <span class="block text-xl font-bold tracking-tight">Everest</span>
-    <span class="mt-1 block text-[0.72rem] font-medium opacity-75">Rachunkowość &amp; NGO</span>
-  </span>
-</span>
+<Image
+  src={src}
+  alt="Everest – Biuro rachunkowe & NGO"
+  width={135}
+  height={48}
+  class:list={['w-auto', className ?? 'h-12']}
+  loading="eager"
+  decoding="async"
+/>

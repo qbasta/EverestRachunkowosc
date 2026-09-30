@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import dominik from '../assets/team/dominik.jpg';
+import julita from '../assets/team/julita.jpg';
+import { aboutPath, type Lang } from '../i18n';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+  lang: Lang;
+}
+const { t, lang } = Astro.props;
+const photos = { dominik, julita } as const;
+---
+
+<section
+  id="about-teaser"
+  aria-labelledby="about-teaser-title"
+  class="section-y border-mist border-y bg-white"
+>
+  <div class="container-page grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-6">
+      <h2 id="about-teaser-title" class="text-summit text-4xl font-bold md:text-5xl">
+        {t.aboutTeaser.title}
+      </h2>
+      <div class="mt-6 max-w-[52ch] space-y-4">
+        <p class="text-ink text-xl leading-snug md:text-2xl">{t.aboutTeaser.paragraphs[0]}</p>
+        <p class="text-slate">{t.aboutTeaser.paragraphs[1]}</p>
+      </div>
+      <a href={aboutPath(lang)} class="btn btn-primary mt-8">
+        {t.aboutTeaser.cta}
+        <ArrowRight size={18} stroke-width={2} aria-hidden="true" />
+      </a>
+    </div>
+
+    <ul class="grid grid-cols-2 gap-5 lg:col-span-6">
+      {t.team.members.map((m) => (
+        <li>
+          <Image
+            src={photos[m.key as keyof typeof photos]}
+            alt={m.name}
+            widths={[240, 360, 480]}
+            sizes="(min-width: 1024px) 22vw, 44vw"
+            class="aspect-[4/5] w-full rounded-2xl object-cover object-top"
+            loading="lazy"
+          />
+          <p class="text-ink mt-3 text-lg leading-tight font-semibold">{m.name}</p>
+          <p class="text-glacier text-sm font-medium">{m.role}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

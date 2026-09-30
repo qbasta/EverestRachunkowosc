@@ -1,25 +1,25 @@
 ---
 import '@fontsource-variable/bricolage-grotesque/opsz.css';
-import '@fontsource-variable/source-serif-4/opsz.css';
 import '../styles/global.css';
 import { site } from '../config/site';
-import { getDict, homePath, otherLang, type Lang } from '../i18n';
+import { getDict, pagePath, otherLang, type Lang, type PageKey } from '../i18n';
 
 interface Props {
   lang: Lang;
+  page?: PageKey;
   title?: string;
   description?: string;
   noindex?: boolean;
 }
 
-const { lang, noindex = false } = Astro.props;
+const { lang, page = 'home', noindex = false } = Astro.props;
 const t = getDict(lang);
 const title = Astro.props.title ?? t.meta.title;
 const description = Astro.props.description ?? t.meta.description;
 
 const canonical = new URL(Astro.url.pathname, site.url).href;
-const plUrl = new URL(homePath('pl'), site.url).href;
-const enUrl = new URL(homePath('en'), site.url).href;
+const plUrl = new URL(pagePath(page, 'pl'), site.url).href;
+const enUrl = new URL(pagePath(page, 'en'), site.url).href;
 
 // Dane strukturalne dla wyszukiwarek (wizytówka lokalna).
 const jsonLd = {
@@ -71,7 +71,7 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
   <body>
     <a
       href="#main"
-      class="focus:bg-signal sr-only z-[100] rounded-md px-4 py-2 font-[var(--font-display)] text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      class="focus:bg-signal sr-only z-[100] rounded-md px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
     >
       {t.a11y.skip}
     </a>

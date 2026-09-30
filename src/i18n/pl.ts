@@ -13,13 +13,13 @@ export const pl = {
     closeMenu: 'Zamknij menu',
     mainNav: 'Główna nawigacja',
     switchLang: 'English version',
+    pause: 'Zatrzymaj animację',
+    play: 'Wznów animację',
   },
   nav: {
-    about: 'O biurze',
-    cooperation: 'Współpraca',
     services: 'Oferta',
     info: 'Dodatkowe informacje',
-    team: 'Nasz zespół',
+    about: 'O nas',
     contact: 'Skontaktuj się',
   },
   hero: {
@@ -28,6 +28,24 @@ export const pl = {
     primary: 'Skontaktuj się',
     secondary: 'Zobacz ofertę',
     chartLabel: 'Ilustracja: grzbiet górski będący jednocześnie wykresem wzrostu',
+  },
+  aboutPage: {
+    metaTitle: 'O nas | Everest – Rachunkowość & NGO',
+    metaDescription:
+      'Poznaj biuro rachunkowe Everest: doświadczenie w obsłudze organizacji pozarządowych i firm, nasz zespół oraz zasady współpracy.',
+    title: 'O nas',
+  },
+  aboutTeaser: {
+    title: 'O nas',
+    paragraphs: [
+      'Nasza obsługa i współpraca z klientami opierają się na rzetelności oraz profesjonalizmie.',
+      'Posiadamy wieloletnie doświadczenie w prowadzeniu księgowości jednostek gospodarczych i stale podwyższamy nasze kwalifikacje.',
+    ],
+    cta: 'Poznaj nasz zespół',
+  },
+  trust: {
+    title: 'Zaufali nam już',
+    label: 'Klienci, którzy nam zaufali',
   },
   about: {
     title: 'O naszym biurze',
