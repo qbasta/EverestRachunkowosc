@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { getDict } from '../i18n';
+
+const pl = getDict('pl');
+const en = getDict('en');
+---
+
+<Base lang="pl" title={`${pl.notFound.title} | Everest`} noindex>
+  <main id="main" class="bg-night flex min-h-screen items-center text-white">
+    <div class="container-page py-24">
+      <h1 class="text-5xl font-bold md:text-6xl">{pl.notFound.title}</h1>
+      <p class="mt-5 max-w-[40ch] text-xl text-white/80">{pl.notFound.text}</p>
+      <p class="mt-2 max-w-[40ch] text-white/60" lang="en">
+        {en.notFound.text}
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="/" class="btn btn-primary">
+          {pl.notFound.back}
+        </a>
+        <a href="/en/" class="btn btn-ghost" hreflang="en" lang="en">
+          {en.notFound.back}
+        </a>
+      </div>
+    </div>
+  </main>
+</Base>

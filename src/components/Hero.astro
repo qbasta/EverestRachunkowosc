@@ -1,0 +1,148 @@
+---
+import { homePath, type Lang } from '../i18n';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+  lang: Lang;
+}
+const { t, lang } = Astro.props;
+const home = homePath(lang);
+
+// Grzbiet szczytu jest jednocześnie wykresem wzrostu – ten sam zestaw punktów rysuje linię i wypełnienie.
+const ridge =
+  'M0 520 L110 500 L190 515 L300 440 L390 465 L500 385 L585 410 L690 320 L770 345 L880 240 L955 262 L1050 150 L1120 205 L1200 190 L1290 290 L1370 318 L1440 350';
+---
+
+<section
+  class="hero relative isolate flex min-h-[100svh] flex-col overflow-hidden text-white"
+  aria-labelledby="hero-title"
+>
+  <div class="hero-ledger absolute inset-0 -z-10" aria-hidden="true"></div>
+
+  <div class="container-page relative z-10 pt-36 pb-16 md:pt-44 lg:pt-48">
+    <h1 id="hero-title" class="max-w-[15ch] text-[clamp(2.75rem,7vw,5.75rem)] font-bold">
+      {t.hero.title}
+    </h1>
+    <p class="mt-6 max-w-[52ch] text-lg leading-relaxed text-white/85 md:text-xl">{t.hero.text}</p>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href={`${home}#contact`} class="btn btn-primary">
+        {t.hero.primary}
+      </a>
+      <a href={`${home}#services`} class="btn btn-ghost">
+        {t.hero.secondary}
+      </a>
+    </div>
+  </div>
+
+  <svg
+    class="relative mt-auto block h-[42svh] min-h-[240px] w-full lg:pointer-events-none lg:absolute lg:inset-x-0 lg:bottom-0 lg:-z-10 lg:h-[58%] lg:min-h-0"
+    viewBox="0 0 1440 640"
+    preserveAspectRatio="xMaxYMax slice"
+    role="img"
+    aria-label={t.hero.chartLabel}
+  >
+    <defs>
+      <linearGradient id="ridge-fill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0a4bb3" stop-opacity="0.9"></stop>
+        <stop offset="1" stop-color="#04152f" stop-opacity="1"></stop>
+      </linearGradient>
+    </defs>
+
+    <!-- Dalekie warstwy: spokojne tło dla wykresu -->
+    <path
+      d="M0 380 L140 330 L240 360 L380 290 L480 330 L620 260 L720 300 L830 235 L930 270 L1030 200 L1150 250 L1260 215 L1360 265 L1440 240 V640 H0Z"
+      fill="#07214a"
+    ></path>
+    <path
+      d="M0 450 L120 410 L230 440 L350 380 L460 410 L590 345 L690 375 L800 300 L900 330 L1000 255 L1100 300 L1210 270 L1320 330 L1440 300 V640 H0Z"
+      fill="#0a2f6b"
+    ></path>
+
+    <!-- Pierwszy plan: wykres wzrostu -->
+    <path class="ridge-fill" d={`${ridge} V640 H0Z`} fill="url(#ridge-fill)"></path>
+    <path
+      class="ridge-line"
+      d={ridge}
+      pathLength="1"
+      fill="none"
+      stroke="#fff"
+      stroke-width="3.5"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    ></path>
+    <circle
+      class="ridge-dot"
+      cx="1050"
+      cy="150"
+      r="8"
+      fill="#006aff"
+      stroke="#fff"
+      stroke-width="3.5"
+    ></circle>
+  </svg>
+</section>
+
+<style>
+  .hero {
+    background: linear-gradient(180deg, #04152f 0%, #052250 65%, #063070 100%);
+  }
+
+  /* Linie księgi – ledger rules znikające ku dołowi. */
+  .hero-ledger {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 55px,
+      rgb(255 255 255 / 0.055) 55px 56px
+    );
+    mask-image: linear-gradient(to bottom, #000 25%, transparent 80%);
+  }
+
+  /* Jedyny „wielki moment” strony: wykres rysuje się po załadowaniu. */
+  .ridge-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 2.6s cubic-bezier(0.55, 0.05, 0.25, 1) 0.4s forwards;
+  }
+  .ridge-fill {
+    opacity: 0;
+    animation: appear 1.4s ease-out 2s forwards;
+  }
+  .ridge-dot {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pop 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) 2.9s forwards;
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes appear {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ridge-line,
+    .ridge-fill,
+    .ridge-dot {
+      animation: none;
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+</style>

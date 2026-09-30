@@ -1,0 +1,25 @@
+---
+import type { Dict } from '../i18n/pl';
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<section
+  id="cooperation"
+  aria-labelledby="cooperation-title"
+  class="section-y border-mist border-y bg-white"
+>
+  <div class="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
+    <h2 id="cooperation-title" class="text-summit text-4xl font-bold md:text-5xl lg:col-span-5">
+      {t.cooperation.title}
+    </h2>
+    <div class="max-w-[62ch] lg:col-span-7">
+      <p class="font-display text-glacier text-2xl leading-tight font-semibold md:text-3xl">
+        {t.cooperation.lead}
+      </p>
+      <p class="text-slate mt-6">{t.cooperation.text}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,50 @@
+---
+import { site } from '../config/site';
+import { homePath, type Lang } from '../i18n';
+import type { Dict } from '../i18n/pl';
+import Logo from './Logo.astro';
+
+interface Props {
+  t: Dict;
+  lang: Lang;
+}
+const { t, lang } = Astro.props;
+
+// Renderujemy tylko te profile, dla których podano adres.
+const social = [
+  { href: site.social.facebook, label: t.footer.facebook },
+  { href: site.social.linkedin, label: t.footer.linkedin },
+  { href: site.social.google, label: t.footer.google },
+].filter((s) => s.href);
+---
+
+<footer class="bg-night border-t border-white/10 text-white/80">
+  <div class="container-page font-display flex flex-col gap-8 py-10 text-sm md:flex-row md:items-center md:justify-between">
+    <a href={homePath(lang)} aria-label={t.a11y.home} class="w-fit rounded-md text-white">
+      <Logo />
+    </a>
+
+    {social.length > 0 && (
+      <nav aria-label={t.footer.social}>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2">
+          {social.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="underline-offset-4 hover:text-white hover:underline"
+              >
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    <p>
+      © {new Date().getFullYear()} {site.name}. {t.footer.rights}.
+    </p>
+  </div>
+</footer>

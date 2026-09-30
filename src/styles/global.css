@@ -1,0 +1,121 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens – kolory wywodzą się z logo (granat i odcienie błękitu).
+ * Używamy nazw opisowych zamiast numerów skali, żeby łatwo było rozmawiać z klientem.
+ */
+@theme {
+  --color-night: #04152f; /* niebo w hero, stopka */
+  --color-summit: #003174; /* granat marki */
+  --color-glacier: #004ab3; /* drugi odcień marki, linki na jasnym tle */
+  --color-signal: #006aff; /* akcent: przyciski, szczyt na wykresie */
+  --color-snow: #f4f7fb; /* tło jasnych sekcji */
+  --color-mist: #dbe5f3; /* linie, obramowania */
+  --color-ink: #0d1b33; /* tekst */
+  --color-slate: #44536f; /* tekst drugorzędny (kontrast 7:1 na snow) */
+
+  --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-serif: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+
+  --breakpoint-xs: 30rem;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-ink);
+    background: var(--color-snow);
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Widoczny fokus dla nawigacji klawiaturą – nigdy go nie wyłączamy. */
+  :focus-visible {
+    outline: 3px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: #fff;
+  }
+}
+
+/* Wspólne klasy layoutu, żeby sekcje miały identyczne marginesy. */
+@utility container-page {
+  width: 100%;
+  max-width: 75rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@utility section-y {
+  padding-block: clamp(4rem, 9vw, 8rem);
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.85rem 1.75rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.1;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .btn-primary {
+    background: var(--color-signal);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--color-glacier);
+  }
+  .btn-primary:disabled {
+    background: var(--color-slate);
+    cursor: not-allowed;
+  }
+  .btn-ghost {
+    border: 1.5px solid rgb(255 255 255 / 0.55);
+    color: #fff;
+  }
+  .btn-ghost:hover {
+    background: rgb(255 255 255 / 0.12);
+    border-color: #fff;
+  }
+}

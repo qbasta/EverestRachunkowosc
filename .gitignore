@@ -1,2 +1,21 @@
-*.agdai
-**/MAlonzo/**
+# build
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# env – NIGDY nie commitujemy sekretów (SMTP, klucze Turnstile itd.)
+.env
+.env.*
+!.env.example
+
+# system / edytor
+.DS_Store
+Thumbs.db
+.idea/

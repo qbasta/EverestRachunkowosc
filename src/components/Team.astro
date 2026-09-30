@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import dominik from '../assets/team/dominik.jpg';
+import julita from '../assets/team/julita.jpg';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const photos = { dominik, julita } as const;
+---
+
+<section id="team" aria-labelledby="team-title" class="section-y">
+  <div class="container-page">
+    <h2 id="team-title" class="text-summit text-4xl font-bold md:text-5xl">
+      {t.team.title}
+    </h2>
+
+    <div class="mt-14 grid gap-14 md:grid-cols-2 md:gap-10">
+      {t.team.members.map((m) => (
+        <article class="flex flex-col">
+          <Image
+            src={photos[m.key as keyof typeof photos]}
+            alt={m.name}
+            widths={[360, 540, 720]}
+            sizes="(min-width: 768px) 45vw, 92vw"
+            class="aspect-[4/5] w-full max-w-md rounded-2xl object-cover object-top"
+            loading="lazy"
+          />
+          <h3 class="text-ink mt-6 text-3xl font-semibold">{m.name}</h3>
+          <p class="font-display text-glacier mt-1 text-lg font-medium">{m.role}</p>
+
+          <details class="group mt-4 max-w-[60ch]">
+            <summary class="font-display text-glacier cursor-pointer list-none text-base font-semibold underline underline-offset-4">
+              <span class="group-open:hidden">{t.team.more}</span>
+              <span class="hidden group-open:inline">{t.team.less}</span>
+            </summary>
+            <p class="text-slate mt-3 text-base leading-relaxed">{m.description}</p>
+          </details>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

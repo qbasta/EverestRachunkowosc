@@ -1,0 +1,80 @@
+---
+import '@fontsource-variable/bricolage-grotesque/opsz.css';
+import '@fontsource-variable/source-serif-4/opsz.css';
+import '../styles/global.css';
+import { site } from '../config/site';
+import { getDict, homePath, otherLang, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { lang, noindex = false } = Astro.props;
+const t = getDict(lang);
+const title = Astro.props.title ?? t.meta.title;
+const description = Astro.props.description ?? t.meta.description;
+
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const plUrl = new URL(homePath('pl'), site.url).href;
+const enUrl = new URL(homePath('en'), site.url).href;
+
+// Dane strukturalne dla wyszukiwarek (wizytówka lokalna).
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  name: site.legalName,
+  url: site.url,
+  telephone: site.phone,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    postalCode: site.address.postalCode,
+    addressLocality: site.address.city,
+    addressCountry: site.address.country,
+  },
+  areaServed: 'PL',
+  inLanguage: ['pl', 'en'],
+};
+// Zamiana „<” zapobiega zamknięciu tagu <script> przez dane (XSS-hardening).
+const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang={t.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#003174" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="pl" href={plUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={plUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.legalName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={t.locale} />
+    <meta property="og:locale:alternate" content={getDict(otherLang(lang)).locale} />
+
+    <script type="application/ld+json" set:html={jsonLdString} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="focus:bg-signal sr-only z-[100] rounded-md px-4 py-2 font-[var(--font-display)] text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      {t.a11y.skip}
+    </a>
+    <slot />
+  </body>
+</html>

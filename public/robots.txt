@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://everest-rachunkowosc.pl/sitemap-index.xml

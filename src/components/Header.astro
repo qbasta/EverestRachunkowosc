@@ -1,0 +1,163 @@
+---
+import Logo from './Logo.astro';
+import { homePath, otherLang, type Lang } from '../i18n';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+  lang: Lang;
+}
+const { t, lang } = Astro.props;
+const home = homePath(lang);
+const alt = otherLang(lang);
+
+const links = [
+  { id: 'about', label: t.nav.about },
+  { id: 'cooperation', label: t.nav.cooperation },
+  { id: 'services', label: t.nav.services },
+  { id: 'info', label: t.nav.info },
+  { id: 'team', label: t.nav.team },
+];
+---
+
+<header class="site-header fixed inset-x-0 top-0 z-50 text-white">
+  <div class="container-page flex h-20 items-center justify-between gap-6">
+    <a href={home} aria-label={t.a11y.home} class="rounded-md">
+      <Logo />
+    </a>
+
+    <nav aria-label={t.a11y.mainNav} class="hidden lg:block">
+      <ul class="font-display flex items-center gap-7 text-[0.95rem] font-medium">
+        {links.map((l) => (
+          <li>
+            <a
+              href={`${home}#${l.id}`}
+              class="decoration-signal underline-offset-[10px] hover:underline hover:decoration-2"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="font-display flex items-center gap-3">
+      <a
+        href={homePath(alt)}
+        hreflang={alt}
+        lang={alt}
+        aria-label={t.a11y.switchLang}
+        class="rounded-md px-2 py-1 text-sm font-semibold tracking-wide opacity-80 hover:opacity-100"
+      >
+        {alt.toUpperCase()}
+      </a>
+      <a href={`${home}#contact`} class="btn btn-primary hidden !py-2.5 lg:inline-flex">
+        {t.nav.contact}
+      </a>
+      <button
+        type="button"
+        popovertarget="menu"
+        aria-label={t.a11y.openMenu}
+        class="-mr-2 rounded-md p-2 lg:hidden"
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M4 7h16M4 12h16M4 17h16"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="menu" popover class="mobile-menu">
+    <div class="flex h-20 items-center justify-between">
+      <Logo />
+      <button
+        type="button"
+        popovertarget="menu"
+        popovertargetaction="hide"
+        aria-label={t.a11y.closeMenu}
+        class="-mr-2 rounded-md p-2"
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <nav aria-label={t.a11y.mainNav} class="font-display mt-10">
+      <ul class="space-y-1 text-3xl font-semibold">
+        {links.map((l) => (
+          <li>
+            <a href={`${home}#${l.id}`} class="block py-3">
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a href={`${home}#contact`} class="btn btn-primary mt-8">
+        {t.nav.contact}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Bez wsparcia scroll-driven animations nagłówek jest po prostu pełnym granatem. */
+  .site-header {
+    background: var(--color-night);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .site-header {
+      background: transparent;
+      /* Osobne właściwości zamiast skrótu `animation` – minifikator CSS scala skrót z
+         animation-timeline, a część przeglądarek odrzuca taki zapis. */
+      animation-name: header-solid;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root);
+      animation-range: 0 140px;
+    }
+    @keyframes header-solid {
+      to {
+        background: rgb(4 21 47 / 0.92);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 1px 0 rgb(255 255 255 / 0.08);
+      }
+    }
+  }
+
+  /* `display` ustawiamy tylko dla otwartego popovera, by nie nadpisać domyślnego ukrywania. */
+  .mobile-menu {
+    margin: 0;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    padding: 0 1.5rem 2rem;
+    background: var(--color-night);
+    color: #fff;
+    overflow-y: auto;
+  }
+  .mobile-menu:popover-open {
+    display: block;
+  }
+</style>
+
+<script>
+  // Po kliknięciu linku w menu mobilnym zamykamy popover (przeskok do sekcji).
+  const menu = document.getElementById('menu');
+  menu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => menu.hidePopover());
+  });
+</script>

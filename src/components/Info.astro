@@ -1,0 +1,31 @@
+---
+import type { Dict } from '../i18n/pl';
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<section id="info" aria-labelledby="info-title" class="section-y bg-summit text-white">
+  <div class="container-page">
+    <h2 id="info-title" class="text-4xl font-bold md:text-5xl">
+      {t.info.title}
+    </h2>
+
+    <div class="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div class="max-w-[52ch]">
+        <h3 class="text-2xl font-semibold">{t.info.software.title}</h3>
+        <p class="mt-4 text-white/85">{t.info.software.text}</p>
+      </div>
+      <div class="max-w-[52ch]">
+        <h3 class="text-2xl font-semibold">{t.info.pricing.title}</h3>
+        <p class="mt-4 text-white/85">{t.info.pricing.text}</p>
+        <ul class="mt-4 divide-y divide-white/20 border-y border-white/20">
+          {t.info.pricing.items.map((item) => (
+            <li class="py-3 text-base">{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
