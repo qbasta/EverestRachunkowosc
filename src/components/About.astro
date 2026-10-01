@@ -1,5 +1,11 @@
 ---
+import MapPin from '@lucide/astro/icons/map-pin';
+import ExternalLink from '@lucide/astro/icons/external-link';
+import Logo from './Logo.astro';
+import LinkedInIcon from './LinkedInIcon.astro';
+import { site } from '../config/site';
 import type { Dict } from '../i18n/pl';
+
 interface Props {
   t: Dict;
 }
@@ -9,14 +15,50 @@ const [lead, ...rest] = t.about.paragraphs;
 
 <section id="about" aria-labelledby="about-title" class="section-y">
   <div class="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
-    <h2 id="about-title" class="text-summit text-4xl font-bold md:text-5xl lg:col-span-5">
-      {t.about.title}
-    </h2>
-    <div class="max-w-[62ch] space-y-6 lg:col-span-7">
+    <div class="flex flex-col lg:col-span-5">
+      <h2 id="about-title" class="text-summit text-h2">
+        {t.about.title}
+      </h2>
+      <!-- Panel na wysokość kolumny z tekstem; logo wyśrodkowane w pionie i w poziomie. -->
+      <div class="bg-ice mt-8 flex min-h-[16rem] flex-1 items-center justify-center rounded p-8">
+        <Logo variant="dark" class="h-auto w-full max-w-[22rem]" />
+      </div>
+    </div>
+
+    <div class="max-w-[62ch] lg:col-span-7">
       <p class="text-ink text-xl leading-snug md:text-2xl">{lead}</p>
-      {rest.map((p) => (
-        <p class="text-slate">{p}</p>
-      ))}
+      <div class="text-slate mt-6 space-y-5">
+        {rest.map((p) => (
+          <p>{p}</p>
+        ))}
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        {site.social.linkedin && (
+          <a
+            href={site.social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            <LinkedInIcon size={18} />
+            {t.about.linkedin}
+            <ExternalLink size={15} stroke-width={2} aria-hidden="true" />
+          </a>
+        )}
+        {site.social.google && (
+          <a
+            href={site.social.google}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            <MapPin size={18} stroke-width={2} aria-hidden="true" />
+            {t.about.map}
+            <ExternalLink size={15} stroke-width={2} aria-hidden="true" />
+          </a>
+        )}
+      </div>
     </div>
   </div>
 </section>

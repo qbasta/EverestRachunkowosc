@@ -19,8 +19,10 @@ export const pl = {
   nav: {
     services: 'Oferta',
     info: 'Dodatkowe informacje',
+    cooperation: 'Współpraca',
     about: 'O nas',
     contact: 'Skontaktuj się',
+    langName: 'English',
   },
   hero: {
     title: 'Rzetelna księgowość dla organizacji i firm',
@@ -38,8 +40,8 @@ export const pl = {
   aboutTeaser: {
     title: 'O nas',
     paragraphs: [
-      'Nasza obsługa i współpraca z klientami opierają się na rzetelności oraz profesjonalizmie.',
       'Posiadamy wieloletnie doświadczenie w prowadzeniu księgowości jednostek gospodarczych i stale podwyższamy nasze kwalifikacje.',
+      'Współpracujemy także z innymi firmami specjalizującymi się w zakresie świadczenia usług doradztwa gospodarczego, doradztwa podatkowego, audytu finansowego oraz księgowości.',
     ],
     cta: 'Poznaj nasz zespół',
   },
@@ -50,9 +52,13 @@ export const pl = {
   about: {
     title: 'O naszym biurze',
     paragraphs: [
-      'Everest Biuro Rachunkowe & NGO oferuje profesjonalną obsługę rachunkową, podatkową oraz kadrowo-płacową dla jednostek działających w sferze zadań publicznych oraz innych podmiotów gospodarczych. Nasza obsługa i współpraca z klientami opierają się na rzetelności oraz profesjonalizmie.',
-      'Posiadamy wieloletnie doświadczenie w prowadzeniu księgowości jednostek gospodarczych i stale podwyższamy nasze kwalifikacje. Współpracujemy także z innymi firmami specjalizującymi się w zakresie świadczenia usług doradztwa gospodarczego, doradztwa podatkowego, audytu finansowego oraz księgowości. Dzięki temu jesteśmy w stanie zapewnić Państwu kompleksową obsługę finansową oraz wspierać Państwa firmę w pracy i bieżącej działalności.',
+      'Everest Biuro Rachunkowe & NGO oferuje profesjonalną obsługę rachunkową, podatkową oraz kadrowo-płacową dla jednostek działających w sferze zadań publicznych oraz innych podmiotów gospodarczych.',
+      'Nasza obsługa i współpraca z klientami opierają się na rzetelności oraz profesjonalizmie.',
+      'Posiadamy wieloletnie doświadczenie w prowadzeniu księgowości jednostek gospodarczych i stale podwyższamy nasze kwalifikacje.',
+      'Współpracujemy także z innymi firmami specjalizującymi się w zakresie świadczenia usług doradztwa gospodarczego, doradztwa podatkowego, audytu finansowego oraz księgowości. Dzięki temu jesteśmy w stanie zapewnić Państwu kompleksową obsługę finansową oraz wspierać Państwa firmę w pracy i bieżącej działalności.',
     ],
+    linkedin: 'Nasz profil na LinkedIn',
+    map: 'Zobacz lokalizację w Google Maps',
   },
   cooperation: {
     title: 'Współpraca',
@@ -95,7 +101,20 @@ export const pl = {
     title: 'Dodatkowe informacje',
     software: {
       title: 'Oprogramowanie',
-      text: 'Księgi rachunkowe prowadzimy przy użyciu oprogramowania Sage Symfonia, natomiast rozliczenia kadrowo-płacowe z użyciem oprogramowania Enova365.',
+      text: 'Korzystamy z następującego oprogramowania:',
+      // TODO: opisy do potwierdzenia z klientem (można rozbudować o jedno zdanie o programie).
+      items: [
+        {
+          key: 'symfonia',
+          role: 'Księgi rachunkowe',
+          description: 'System finansowo-księgowy (dawniej Sage Symfonia).',
+        },
+        {
+          key: 'enova',
+          role: 'Kadry i płace',
+          description: 'System klasy ERP z modułem kadrowo-płacowym.',
+        },
+      ],
     },
     pricing: {
       title: 'Wycena',
@@ -112,20 +131,27 @@ export const pl = {
     title: 'Nasz zespół',
     more: 'Czytaj więcej',
     less: 'Zwiń',
+    linkedin: 'Profil na LinkedIn',
     members: [
       {
         key: 'dominik',
-        role: 'Główny księgowy, właściciel biura',
+        role: 'Główny księgowy',
         name: 'Dominik Markiewicz',
-        description:
-          'Od wielu lat współpracuje z organizacjami pozarządowymi oraz spółkami prawa handlowego w zakresie prowadzenia ksiąg rachunkowych. Doświadczenie zdobywał zarówno w pracy w wewnętrznych działach finansowych organizacji pozarządowych oraz na stanowisku księgowego w biurach rachunkowych. Ukończył studia na kierunku finanse i rachunkowość w Szkole Głównej Handlowej w Warszawie ze specjalizacją rachunkowość, podatki i finanse przedsiębiorstwa. Posiada certyfikaty w obrębie zawodu głównego księgowego wydane przez Stowarzyszenie Księgowych w Polsce. Ukończył wiele kursów o tematyce rachunkowości i rozliczeń w organizacjach pozarządowych.',
+        description: [
+          'Od wielu lat współpracuje z organizacjami pozarządowymi oraz spółkami prawa handlowego w zakresie prowadzenia ksiąg rachunkowych. Doświadczenie zdobywał zarówno w pracy w wewnętrznych działach finansowych organizacji pozarządowych oraz na stanowisku księgowego w biurach rachunkowych.',
+          'Ukończył studia na kierunku finanse i rachunkowość w Szkole Głównej Handlowej w Warszawie ze specjalizacją rachunkowość, podatki i finanse przedsiębiorstwa.',
+          'Posiada certyfikaty w obrębie zawodu głównego księgowego wydane przez Stowarzyszenie Księgowych w Polsce. Ukończył wiele kursów o tematyce rachunkowości i rozliczeń w organizacjach pozarządowych.',
+        ],
       },
       {
         key: 'julita',
         role: 'Specjalistka ds. kadr i płac',
         name: 'Julita Markiewicz',
-        description:
-          'Od wielu lat współpracuje z jednostkami gospodarczymi w zakresie rozliczeń kadrowo-płacowych. Wspiera organizacje w wyjaśnianiu bieżących zmian podatkowych i składkowych oraz we wdrażaniu systemów informatycznych do rozliczeń płac. Doświadczenie zdobywała pracując w biurach rachunkowych na stanowisku specjalisty ds. kadr i płac. Absolwentka Szkoły Głównej Handlowej w Warszawie na kierunku Finanse i Rachunkowość. Posiada certyfikaty głównego specjalisty w zakresie kadr i płac wydane przez Stowarzyszenie Księgowych w Polsce.',
+        description: [
+          'Od wielu lat współpracuje z jednostkami gospodarczymi w zakresie rozliczeń kadrowo-płacowych. Wspiera organizacje w wyjaśnianiu bieżących zmian podatkowych i składkowych oraz we wdrażaniu systemów informatycznych do rozliczeń płac.',
+          'Doświadczenie zdobywała pracując w biurach rachunkowych na stanowisku specjalisty ds. kadr i płac. Absolwentka Szkoły Głównej Handlowej w Warszawie na kierunku Finanse i Rachunkowość.',
+          'Posiada certyfikaty głównego specjalisty w zakresie kadr i płac wydane przez Stowarzyszenie Księgowych w Polsce.',
+        ],
       },
     ],
   },
@@ -142,6 +168,14 @@ export const pl = {
     // TODO: klauzula do zatwierdzenia przez klienta / prawnika (dane administratora: nazwa, NIP, adres)
     consent:
       'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu odpowiedzi na zapytanie. Administratorem danych jest [NAZWA FIRMY – do uzupełnienia].',
+    map: {
+      label: 'Mapa z lokalizacją biura',
+      show: 'Pokaż mapę',
+      notice:
+        'Po kliknięciu załaduje się mapa z serwisu Google Maps, który może zapisywać dane o Twoim urządzeniu.',
+      open: 'Otwórz w Google Maps',
+      iframeTitle: 'Mapa Google z lokalizacją biura Everest',
+    },
     submit: 'Wyślij wiadomość',
     sending: 'Wysyłanie…',
     success: 'Wiadomość została wysłana. Odpowiemy możliwie szybko.',
@@ -161,7 +195,7 @@ export const pl = {
     rights: 'Wszystkie prawa zastrzeżone',
     facebook: 'Facebook',
     linkedin: 'LinkedIn',
-    google: 'Wizytówka w Google',
+    google: 'Lokalizacja w Google Maps',
   },
   notFound: {
     title: 'Nie znaleziono strony',

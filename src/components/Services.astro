@@ -2,6 +2,7 @@
 import Calculator from '@lucide/astro/icons/calculator';
 import Users from '@lucide/astro/icons/users';
 import FileCheck from '@lucide/astro/icons/file-check';
+import Contours from './Contours.astro';
 import type { Dict } from '../i18n/pl';
 
 interface Props {
@@ -11,31 +12,114 @@ const { t } = Astro.props;
 
 // Kolejność ikon odpowiada kolejności grup w słowniku (księgowość, kadry i płace, sprawozdawczość).
 const icons = [Calculator, Users, FileCheck];
+// Każdy wiersz ma własny fragment warstwic (inny „szczyt”), o niskim kontraście.
+const spots = [
+  { cx: 1150, cy: 380, rot: -14 },
+  { cx: 980, cy: 520, rot: 10 },
+  { cx: 1230, cy: 440, rot: -4 },
+];
 ---
 
 <section id="services" aria-labelledby="services-title" class="section-y">
   <div class="container-page">
-    <h2 id="services-title" class="text-summit max-w-[22ch] text-4xl font-bold md:text-5xl">
+    <h2 id="services-title" class="text-summit text-h2 max-w-[22ch]">
       {t.services.title}
     </h2>
 
-    <div class="mt-14 grid gap-12 lg:grid-cols-3 lg:gap-10">
+    <!-- Każda grupa usług to jeden wiersz rozdzielony linią (jak pozycje w spisie). -->
+    <div class="border-summit mt-14 border-t-[3px]">
       {t.services.groups.map((group, i) => {
         const Icon = icons[i] ?? Calculator;
+        const spot = spots[i] ?? spots[0]!;
         return (
-          <div class="border-summit border-t-4 pt-6">
-            <span class="text-glacier inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[#e3ecfa]">
-              <Icon size={30} stroke-width={1.75} aria-hidden="true" />
-            </span>
-            <h3 class="text-summit mt-4 text-2xl font-semibold">{group.title}</h3>
-            <ul class="divide-mist mt-5 divide-y">
-              {group.items.map((item) => (
-                <li class="text-ink py-4 text-base leading-relaxed">{item}</li>
-              ))}
-            </ul>
+          <div class="svc-row border-mist relative isolate overflow-hidden border-b">
+            <Contours
+              class="svc-contours text-summit pointer-events-none absolute inset-0 -z-10 h-full w-full"
+              cx={spot.cx}
+              cy={spot.cy}
+              rings={8}
+              r0={22}
+              dr={36}
+              rot={spot.rot}
+            />
+            <div class="grid gap-7 py-11 lg:grid-cols-12 lg:gap-14 lg:px-6 lg:py-14">
+              <div class="lg:col-span-4">
+                <span class="svc-tile bg-summit inline-flex h-16 w-16 items-center justify-center rounded text-white">
+                  <Icon class="size-8" stroke-width={1.75} aria-hidden="true" />
+                </span>
+                <h3 class="text-summit text-h3 mt-5">{group.title}</h3>
+              </div>
+              <ul class="service-list lg:col-span-8">
+                {group.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         );
       })}
     </div>
   </div>
 </section>
+
+<style>
+  .service-list {
+    list-style: none;
+    columns: 1;
+  }
+  @media (min-width: 768px) {
+    .service-list {
+      columns: 2;
+      column-gap: 3rem;
+    }
+  }
+  .service-list li {
+    position: relative;
+    break-inside: avoid;
+    margin-bottom: 1.1rem;
+    padding-left: 1.15rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .service-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 7px;
+    height: 7px;
+    background: var(--color-summit);
+  }
+
+  /* Warstwice w tle wiersza: widoczne po prawej, zanikają ku tekstowi. */
+  .svc-contours {
+    opacity: 0.8;
+    -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 70%);
+    mask-image: linear-gradient(to left, #000 0%, transparent 70%);
+  }
+
+  /* Reakcja na najechanie / fokus: wiersz się rozjaśnia, a kafelek zamienia kolory. */
+  .svc-row {
+    transition: background-color 0.25s ease;
+  }
+  .svc-tile {
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+  .svc-row:hover,
+  .svc-row:focus-within {
+    background-color: #fff;
+  }
+  .svc-row:hover .svc-tile,
+  .svc-row:focus-within .svc-tile {
+    background-color: var(--color-ice);
+    color: var(--color-summit);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-row,
+    .svc-tile {
+      transition: none;
+    }
+  }
+</style>

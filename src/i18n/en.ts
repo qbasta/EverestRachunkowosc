@@ -22,8 +22,10 @@ export const en: Dict = {
   nav: {
     services: 'Services',
     info: 'Additional information',
+    cooperation: 'Cooperation',
     about: 'About us',
     contact: 'Contact us',
+    langName: 'Polski',
   },
   hero: {
     title: 'Reliable accounting for organisations and businesses',
@@ -41,8 +43,8 @@ export const en: Dict = {
   aboutTeaser: {
     title: 'About us',
     paragraphs: [
-      'Our service and our relationships with clients are built on reliability and professionalism.',
       'We have many years of experience in keeping the accounts of business entities, and we continually improve our qualifications.',
+      'We also work with other firms specialising in business consulting, tax advice, financial auditing and accounting.',
     ],
     cta: 'Meet our team',
   },
@@ -53,9 +55,13 @@ export const en: Dict = {
   about: {
     title: 'About our office',
     paragraphs: [
-      'Everest Accounting Office & NGO provides professional bookkeeping, tax and payroll services for entities operating in the field of public tasks and for other businesses. Our service and our relationships with clients are built on reliability and professionalism.',
-      'We have many years of experience in keeping the accounts of business entities, and we continually improve our qualifications. We also work with other firms specialising in business consulting, tax advice, financial auditing and accounting. This allows us to offer you comprehensive financial services and to support your company in its daily work and operations.',
+      'Everest Accounting Office & NGO provides professional bookkeeping, tax and payroll services for entities operating in the field of public tasks and for other businesses.',
+      'Our service and our relationships with clients are built on reliability and professionalism.',
+      'We have many years of experience in keeping the accounts of business entities, and we continually improve our qualifications.',
+      'We also work with other firms specialising in business consulting, tax advice, financial auditing and accounting. This allows us to offer you comprehensive financial services and to support your company in its daily work and operations.',
     ],
+    linkedin: 'Our LinkedIn profile',
+    map: 'See our location on Google Maps',
   },
   cooperation: {
     title: 'Cooperation',
@@ -98,7 +104,19 @@ export const en: Dict = {
     title: 'Additional information',
     software: {
       title: 'Software',
-      text: 'We keep the books of account using Sage Symfonia, and we handle payroll and HR using Enova365.',
+      text: 'We use the following software:',
+      items: [
+        {
+          key: 'symfonia',
+          role: 'Books of account',
+          description: 'A finance and accounting system (formerly Sage Symfonia).',
+        },
+        {
+          key: 'enova',
+          role: 'HR and payroll',
+          description: 'An ERP system with an HR and payroll module.',
+        },
+      ],
     },
     pricing: {
       title: 'Pricing',
@@ -115,20 +133,27 @@ export const en: Dict = {
     title: 'Our team',
     more: 'Read more',
     less: 'Show less',
+    linkedin: 'LinkedIn profile',
     members: [
       {
         key: 'dominik',
-        role: 'Chief accountant, owner of the office',
+        role: 'Chief accountant',
         name: 'Dominik Markiewicz',
-        description:
-          'For many years he has worked with non-governmental organisations and commercial companies on keeping books of account. He gained experience both in the internal finance departments of non-governmental organisations and as an accountant in accounting offices. He graduated in finance and accounting from the Warsaw School of Economics (SGH), specialising in accounting, taxes and corporate finance. He holds chief accountant certificates issued by the Accountants Association in Poland (SKwP). He has completed many courses on accounting and settlements in non-governmental organisations.',
+        description: [
+          'For many years he has worked with non-governmental organisations and commercial companies on keeping books of account. He gained experience both in the internal finance departments of non-governmental organisations and as an accountant in accounting offices.',
+          'He graduated in finance and accounting from the Warsaw School of Economics (SGH), specialising in accounting, taxes and corporate finance.',
+          'He holds chief accountant certificates issued by the Accountants Association in Poland (SKwP). He has completed many courses on accounting and settlements in non-governmental organisations.',
+        ],
       },
       {
         key: 'julita',
         role: 'HR and payroll specialist',
         name: 'Julita Markiewicz',
-        description:
-          'For many years she has worked with business entities on HR and payroll settlements. She helps organisations understand current tax and social security changes and implement IT systems for payroll. She gained her experience working in accounting offices as an HR and payroll specialist. She is a graduate of the Warsaw School of Economics (SGH) in finance and accounting. She holds chief HR and payroll specialist certificates issued by the Accountants Association in Poland (SKwP).',
+        description: [
+          'For many years she has worked with business entities on HR and payroll settlements. She helps organisations understand current tax and social security changes and implement IT systems for payroll.',
+          'She gained her experience working in accounting offices as an HR and payroll specialist. She is a graduate of the Warsaw School of Economics (SGH) in finance and accounting.',
+          'She holds chief HR and payroll specialist certificates issued by the Accountants Association in Poland (SKwP).',
+        ],
       },
     ],
   },
@@ -144,6 +169,13 @@ export const en: Dict = {
     },
     consent:
       'I consent to the processing of my personal data in order to reply to my enquiry. The data controller is [COMPANY NAME – to be completed].',
+    map: {
+      label: 'Map showing the office location',
+      show: 'Show map',
+      notice: 'Clicking loads a map from Google Maps, which may store data about your device.',
+      open: 'Open in Google Maps',
+      iframeTitle: 'Google map showing the location of the Everest office',
+    },
     submit: 'Send message',
     sending: 'Sending…',
     success: 'Your message has been sent. We will reply as soon as we can.',
@@ -164,7 +196,7 @@ export const en: Dict = {
     rights: 'All rights reserved',
     facebook: 'Facebook',
     linkedin: 'LinkedIn',
-    google: 'Google profile',
+    google: 'Location on Google Maps',
   },
   notFound: {
     title: 'Page not found',

@@ -1,32 +1,26 @@
 ---
+import Contours from './Contours.astro';
+
 interface Props {
   title: string;
 }
 const { title } = Astro.props;
 ---
 
-<section
-  class="page-header relative isolate overflow-hidden text-white"
-  aria-labelledby="page-title"
->
-  <div class="ledger absolute inset-0 -z-10" aria-hidden="true"></div>
+<section class="bg-ice text-ink relative isolate overflow-hidden" aria-labelledby="page-title">
+  <Contours
+    class="text-summit pointer-events-none absolute inset-0 -z-10 h-full w-full"
+    style="-webkit-mask-image: linear-gradient(to left, #000 0%, transparent 70%); mask-image: linear-gradient(to left, #000 0%, transparent 70%);"
+    cx={1120}
+    cy={260}
+    rings={12}
+    r0={26}
+    dr={44}
+    rot={-10}
+  />
   <div class="container-page pt-36 pb-16 md:pt-44 md:pb-20">
-    <h1 id="page-title" class="text-[clamp(2.75rem,7vw,5.5rem)] font-bold">
+    <h1 id="page-title" class="text-h1">
       {title}
     </h1>
   </div>
 </section>
-
-<style>
-  .page-header {
-    background: linear-gradient(180deg, #04152f 0%, #052250 100%);
-  }
-  .ledger {
-    background-image: repeating-linear-gradient(
-      to bottom,
-      transparent 0 55px,
-      rgb(255 255 255 / 0.055) 55px 56px
-    );
-    mask-image: linear-gradient(to bottom, #000 30%, transparent 100%);
-  }
-</style>

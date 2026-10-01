@@ -1,5 +1,7 @@
 ---
 import { site } from '../config/site';
+import MapConsent from './MapConsent.astro';
+import Contours from './Contours.astro';
 import type { Lang } from '../i18n';
 import type { Dict } from '../i18n/pl';
 
@@ -19,15 +21,29 @@ const statusTexts = JSON.stringify({
 });
 ---
 
-<section id="contact" aria-labelledby="contact-title" class="section-y bg-night text-white">
-  <div class="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
-    <div class="lg:col-span-5">
-      <h2 id="contact-title" class="text-4xl font-bold md:text-5xl">
+<section
+  id="contact"
+  aria-labelledby="contact-title"
+  class="section-y bg-night relative isolate overflow-hidden text-white"
+>
+  <Contours
+    class="pointer-events-none absolute inset-0 -z-10 h-full w-full text-[#9db8e6]"
+    style="opacity:.55"
+    cx={1180}
+    cy={120}
+    rings={12}
+    r0={30}
+    dr={44}
+    rot={12}
+  />
+  <div class="container-page grid gap-12 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-10">
+    <div class="lg:col-span-5 lg:col-start-1 lg:row-start-1">
+      <h2 id="contact-title" class="text-h2">
         {t.contact.title}
       </h2>
       <p class="mt-5 max-w-[40ch] text-white/80">{t.contact.intro}</p>
 
-      <dl class="font-display mt-10 space-y-6">
+      <dl class="mt-10 space-y-6">
         <div>
           <dt class="text-sm text-white/60">{t.footer.phone}</dt>
           <dd class="mt-1 text-xl font-medium">
@@ -59,7 +75,7 @@ const statusTexts = JSON.stringify({
 
     <form
       id="contact-form"
-      class="text-ink rounded-2xl bg-white p-6 sm:p-8 lg:col-span-7"
+      class="text-ink flex flex-col rounded bg-white p-6 sm:p-9 lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1"
       method="post"
       action={endpoint}
       novalidate
@@ -122,7 +138,7 @@ const statusTexts = JSON.stringify({
         <p id="cf-phone-err" class="field-error" hidden></p>
       </div>
 
-      <div class="mt-5">
+      <div class="mt-5 flex flex-1 flex-col">
         <label for="cf-message" class="field-label">
           {t.contact.labels.message}
         </label>
@@ -133,7 +149,7 @@ const statusTexts = JSON.stringify({
           required
           minlength="10"
           maxlength="4000"
-          class="field-input resize-y"
+          class="field-input min-h-[9rem] flex-1 resize-y"
           data-validate
           aria-describedby="cf-message-err"
         ></textarea>
@@ -156,7 +172,7 @@ const statusTexts = JSON.stringify({
           type="checkbox"
           value="1"
           required
-          class="accent-signal mt-1.5 h-5 w-5 shrink-0"
+          class="accent-summit mt-1.5 h-5 w-5 shrink-0"
           data-validate
           aria-describedby="cf-consent-err"
         />
@@ -170,22 +186,22 @@ const statusTexts = JSON.stringify({
         <button type="submit" class="btn btn-primary">
           {t.contact.submit}
         </button>
-        <p
-          id="cf-status"
-          role="status"
-          aria-live="polite"
-          class="font-display text-sm font-medium"
-        ></p>
+        <p id="cf-status" role="status" aria-live="polite" class="text-sm font-medium"></p>
       </div>
     </form>
+
+    <div class="lg:col-span-5 lg:col-start-1 lg:row-start-2">
+      <MapConsent t={t} />
+    </div>
   </div>
 </section>
 
 <style is:global>
+  /* Formularz na białym panelu: wyraźne pola z ramką o kontraście min. 3:1 względem tła. */
   .field-label {
     display: block;
     margin-bottom: 0.4rem;
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-summit);
@@ -193,11 +209,11 @@ const statusTexts = JSON.stringify({
   .field-input {
     display: block;
     width: 100%;
-    border: 1.5px solid #b7c6de;
-    border-radius: 0.6rem;
+    border: 1.5px solid #7b8ea8;
+    border-radius: 0.25rem;
     background: #fff;
     padding: 0.75rem 0.9rem;
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-size: 1rem;
     color: var(--color-ink);
   }
@@ -209,7 +225,7 @@ const statusTexts = JSON.stringify({
   }
   .field-error {
     margin-top: 0.35rem;
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-size: 0.85rem;
     font-weight: 500;
     color: #b42318;

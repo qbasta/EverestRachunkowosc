@@ -15,9 +15,11 @@ export const site = {
     city: 'Warszawa',
     country: 'PL',
   },
+  /** Współrzędne biura (z wizytówki Google) – dokładna pinezka w osadzonej mapie. */
+  mapQuery: '52.2274419,21.011388',
   social: {
-    facebook: '', // TODO: adres profilu od klienta
-    linkedin: '', // TODO: adres profilu od klienta
-    google: '', // TODO: link do wizytówki w Google
+    facebook: '', // TODO: adres profilu od klienta (na razie brak – ikona się nie wyświetla)
+    linkedin: 'https://www.linkedin.com/company/everest-biuro-rachunkowe-ngo/',
+    google: 'https://maps.app.goo.gl/Hv5SJFFGStQskV867',
   },
 } as const;

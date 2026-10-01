@@ -1,5 +1,7 @@
 ---
+import Contours from './Contours.astro';
 import type { Dict } from '../i18n/pl';
+
 interface Props {
   t: Dict;
 }
@@ -9,17 +11,26 @@ const { t } = Astro.props;
 <section
   id="cooperation"
   aria-labelledby="cooperation-title"
-  class="section-y border-mist border-y bg-white"
+  class="section-y bg-ice relative isolate overflow-hidden"
 >
-  <div class="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
-    <h2 id="cooperation-title" class="text-summit text-4xl font-bold md:text-5xl lg:col-span-5">
+  <Contours
+    class="text-summit pointer-events-none absolute inset-0 -z-10 h-full w-full"
+    style="-webkit-mask-image: linear-gradient(to left, #000 0%, transparent 62%); mask-image: linear-gradient(to left, #000 0%, transparent 62%);"
+    cx={1250}
+    cy={330}
+    rings={14}
+    r0={30}
+    dr={46}
+    rot={8}
+  />
+  <div class="container-page">
+    <h2 id="cooperation-title" class="text-summit text-h2">
       {t.cooperation.title}
     </h2>
-    <div class="max-w-[62ch] lg:col-span-7">
-      <p class="font-display text-glacier text-2xl leading-tight font-semibold md:text-3xl">
-        {t.cooperation.lead}
-      </p>
-      <p class="text-slate mt-6">{t.cooperation.text}</p>
-    </div>
+    <!-- Hasło jako duży cytat na całą szerokość: inny rytm niż pozostałe sekcje. -->
+    <p class="font-display text-summit mt-10 max-w-[24ch] text-[clamp(1.9rem,1.1rem+3vw,3.6rem)] leading-[1.1] font-semibold">
+      {t.cooperation.lead}
+    </p>
+    <p class="text-ink/85 mt-8 max-w-[62ch] lg:ml-[33.333%]">{t.cooperation.text}</p>
   </div>
 </section>

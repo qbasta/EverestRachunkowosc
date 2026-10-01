@@ -1,0 +1,93 @@
+---
+import MapPin from '@lucide/astro/icons/map-pin';
+import ExternalLink from '@lucide/astro/icons/external-link';
+import { site } from '../config/site';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+
+// Mapa Google ładuje się dopiero po kliknięciu („dwa kliknięcia”): do tego czasu strona
+// nie wysyła żadnych danych do Google, więc nie potrzebujemy zgody z banera cookies.
+const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&z=16&hl=${t.lang}&output=embed`;
+---
+
+<div class="map-card text-ink overflow-hidden rounded border border-white/25 bg-white">
+  <div
+    class="map-frame relative aspect-[16/10] w-full"
+    data-src={embedSrc}
+    data-title={t.contact.map.iframeTitle}
+  >
+    <!-- Ilustracja mapy: ulice i pinezka (bez zewnętrznych zasobów) -->
+    <svg
+      class="absolute inset-0 h-full w-full"
+      viewBox="0 0 400 250"
+      preserveAspectRatio="xMidYMid slice"
+      role="img"
+      aria-label={t.contact.map.label}
+    >
+      <rect width="400" height="250" fill="#e4ecf4"></rect>
+      <g stroke="#ffffff" stroke-width="10" stroke-linecap="round" fill="none">
+        <path d="M-10 60 L410 40"></path>
+        <path d="M-10 150 L410 175"></path>
+        <path d="M90 -10 L110 260"></path>
+        <path d="M290 -10 L270 260"></path>
+      </g>
+      <g stroke="#cfdbe8" stroke-width="5" stroke-linecap="round" fill="none">
+        <path d="M-10 105 L410 100"></path>
+        <path d="M-10 215 L410 205"></path>
+        <path d="M190 -10 L200 260"></path>
+        <path d="M-10 10 L120 260"></path>
+      </g>
+      <rect x="215" y="112" width="52" height="34" rx="2" fill="#d3e0ee"></rect>
+      <rect x="120" y="68" width="48" height="26" rx="2" fill="#d3e0ee"></rect>
+    </svg>
+
+    <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 text-center">
+      <span class="bg-signal flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg">
+        <MapPin size={26} stroke-width={2} aria-hidden="true" />
+      </span>
+      <p class="text-ink text-sm font-medium">
+        {site.address.street}, {site.address.postalCode} {site.address.city}
+      </p>
+      <button type="button" class="map-load btn btn-primary !py-2.5">
+        {t.contact.map.show}
+      </button>
+    </div>
+  </div>
+
+  <div class="border-mist text-slate flex flex-col gap-2 border-t px-4 py-3 text-sm">
+    <p class="map-notice">{t.contact.map.notice}</p>
+    {site.social.google && (
+      <a
+        href={site.social.google}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex w-fit items-center gap-1.5 font-semibold text-glacier underline underline-offset-4"
+      >
+        {t.contact.map.open}
+        <ExternalLink size={14} stroke-width={2} aria-hidden="true" />
+      </a>
+    )}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.map-frame').forEach((frame) => {
+    const button = frame.querySelector<HTMLButtonElement>('.map-load');
+    button?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = frame.dataset.src ?? '';
+      iframe.title = frame.dataset.title ?? '';
+      iframe.className = 'absolute inset-0 h-full w-full border-0';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.allowFullscreen = true;
+      frame.replaceChildren(iframe);
+      // Informację o przekazywaniu danych ukrywamy dopiero po świadomym wczytaniu mapy.
+      frame.closest('.map-card')?.querySelector('.map-notice')?.remove();
+    });
+  });
+</script>

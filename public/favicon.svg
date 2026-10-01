@@ -1,8 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
-  <rect width="480" height="480" rx="96" fill="#fff"/>
-  <g transform="translate(48 48) scale(0.8)" stroke="#003174" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="23.2" y1="30.6" x2="23.2" y2="459.4" fill="none"/>
-    <polyline fill="#003174" points="23.2,383.4 105,282.9 198.6,395.5 286.8,219.5 370.9,320.7 456.8,279.1 456.8,459.4 23.2,459.4"/>
-    <polyline fill="none" points="456.8,279.1 456.8,170.6 377.8,219.5 287.9,90.3 198.6,258.3 116.4,176.2 23.2,266.1"/>
+  <!-- Oryginalny znak Everest (logo1) z pogrubioną kreską, żeby był czytelny w rozmiarze 16–48 px.
+       W ciemnym motywie przeglądarki znak jest biały. -->
+  <style>
+    .s { fill: none; stroke: #003174; stroke-width: 24; stroke-linecap: round; stroke-linejoin: round; }
+    .f { fill: #003174; stroke: #003174; stroke-width: 24; stroke-linecap: round; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .s { stroke: #fff; }
+      .f { fill: #fff; stroke: #fff; }
+    }
+  </style>
+  <g transform="translate(-8 -14) scale(1.02)">
+    <line class="s" x1="23.2" y1="30.6" x2="23.2" y2="459.4"/>
+    <polyline class="f" points="23.2,383.4 105,282.9 198.6,395.5 286.8,219.5 370.9,320.7 456.8,279.1 456.8,459.4 23.2,459.4"/>
+    <polyline class="s" points="456.8,279.1 456.8,170.6 377.8,219.5 287.9,90.3 198.6,258.3 116.4,176.2 23.2,266.1"/>
   </g>
 </svg>

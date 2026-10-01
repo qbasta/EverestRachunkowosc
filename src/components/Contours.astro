@@ -1,0 +1,39 @@
+---
+import { contourRings } from '../lib/contours';
+
+/**
+ * Statyczne warstwice jako tło sekcji. Kolor linii = `currentColor` (ustawiamy klasą text-*),
+ * a całość można wygasić maską przez właściwość `style`.
+ */
+interface Props {
+  cx: number;
+  cy: number;
+  rings?: number;
+  r0?: number;
+  dr?: number;
+  rot?: number;
+  class?: string;
+  style?: string;
+}
+const { cx, cy, rings = 12, r0 = 30, dr = 44, rot = -18, class: className, style } = Astro.props;
+const lines = contourRings({ cx, cy, rings, r0, dr, rot });
+---
+
+<svg
+  class={className}
+  style={style}
+  viewBox="0 0 1440 900"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  {lines.map((r) => (
+    <path
+      d={r.d}
+      fill="none"
+      stroke="currentColor"
+      stroke-opacity={r.major ? 0.26 : 0.13}
+      stroke-width={r.major ? 1.4 : 0.9}
+    />
+  ))}
+</svg>

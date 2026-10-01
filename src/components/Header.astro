@@ -1,4 +1,5 @@
 ---
+import Globe from '@lucide/astro/icons/globe';
 import Logo from './Logo.astro';
 import { homePath, aboutPath, pagePath, otherLang, type Lang, type PageKey } from '../i18n';
 import type { Dict } from '../i18n/pl';
@@ -15,14 +16,15 @@ const alt = otherLang(lang);
 const links = [
   { href: `${home}#services`, label: t.nav.services, current: false },
   { href: `${home}#info`, label: t.nav.info, current: false },
+  { href: `${home}#cooperation`, label: t.nav.cooperation, current: false },
   { href: aboutPath(lang), label: t.nav.about, current: page === 'about' },
 ];
 ---
 
-<header class="site-header fixed inset-x-0 top-0 z-50 text-white">
+<header class="site-header text-ink fixed inset-x-0 top-0 z-50">
   <div class="container-page flex h-20 items-center justify-between gap-6">
     <a href={home} aria-label={t.a11y.home} class="rounded-md">
-      <Logo class="h-14" />
+      <Logo variant="dark" class="h-14" />
     </a>
 
     <nav aria-label={t.a11y.mainNav} class="hidden lg:block">
@@ -33,7 +35,7 @@ const links = [
               href={l.href}
               aria-current={l.current ? 'page' : undefined}
               class:list={[
-                'decoration-signal underline-offset-[10px] hover:underline hover:decoration-2',
+                'decoration-glacier underline-offset-[10px] hover:underline hover:decoration-2',
                 l.current && 'underline decoration-2',
               ]}
             >
@@ -50,9 +52,11 @@ const links = [
         hreflang={alt}
         lang={alt}
         aria-label={t.a11y.switchLang}
-        class="rounded-md px-2 py-1 text-sm font-semibold tracking-wide opacity-80 hover:opacity-100"
+        class="hover:bg-summit/10 inline-flex items-center gap-2 rounded px-2.5 py-1.5 text-sm font-semibold"
       >
-        {alt.toUpperCase()}
+        <Globe size={18} stroke-width={1.9} aria-hidden="true" />
+        <span class="hidden sm:inline">{t.nav.langName}</span>
+        <span class="sm:hidden">{alt.toUpperCase()}</span>
       </a>
       <a href={`${home}#contact`} class="btn btn-primary hidden !py-2.5 lg:inline-flex">
         {t.nav.contact}
@@ -77,7 +81,7 @@ const links = [
 
   <div id="menu" popover class="mobile-menu">
     <div class="flex h-20 items-center justify-between">
-      <Logo class="h-14" />
+      <Logo variant="dark" class="h-14" />
       <button
         type="button"
         popovertarget="menu"
@@ -113,28 +117,29 @@ const links = [
 </header>
 
 <style>
-  /* Bez wsparcia scroll-driven animations nagłówek jest po prostu pełnym granatem. */
+  /* Nagłówek jest przezroczysty nad hero, a po przewinięciu staje się jasnym paskiem.
+     Stan ustawia skrypt (data-scrolled) – działa tak samo we wszystkich przeglądarkach
+     (animacje sterowane przewijaniem nie są jeszcze wszędzie obsługiwane). */
   .site-header {
-    background: var(--color-night);
+    background: transparent;
+    transition:
+      background-color 0.25s ease,
+      box-shadow 0.25s ease;
   }
-
-  @supports (animation-timeline: scroll()) {
+  .site-header[data-scrolled] {
+    background: rgb(243 246 250 / 0.94);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--color-mist);
+  }
+  /* Bez JavaScriptu pasek jest zawsze pełny, żeby nie zlewał się z treścią pod spodem. */
+  @media (scripting: none) {
     .site-header {
-      background: transparent;
-      /* Osobne właściwości zamiast skrótu `animation` – minifikator CSS scala skrót z
-         animation-timeline, a część przeglądarek odrzuca taki zapis. */
-      animation-name: header-solid;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: scroll(root);
-      animation-range: 0 140px;
+      background: var(--color-snow);
     }
-    @keyframes header-solid {
-      to {
-        background: rgb(4 21 47 / 0.92);
-        backdrop-filter: blur(12px);
-        box-shadow: 0 1px 0 rgb(255 255 255 / 0.08);
-      }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-header {
+      transition: none;
     }
   }
 
@@ -148,8 +153,8 @@ const links = [
     max-height: none;
     border: 0;
     padding: 0 1.5rem 2rem;
-    background: var(--color-night);
-    color: #fff;
+    background: var(--color-snow);
+    color: var(--color-ink);
     overflow-y: auto;
   }
   .mobile-menu:popover-open {
@@ -158,6 +163,14 @@ const links = [
 </style>
 
 <script>
+  // Stan „przewinięty”: pasek zyskuje tło, gdy strona zjedzie choćby o kilka pikseli.
+  const header = document.querySelector<HTMLElement>('.site-header');
+  if (header) {
+    const update = () => header.toggleAttribute('data-scrolled', window.scrollY > 8);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+
   // Po kliknięciu linku w menu mobilnym zamykamy popover (przeskok do sekcji / nowa strona).
   const menu = document.getElementById('menu');
   menu?.querySelectorAll('a').forEach((a) => {

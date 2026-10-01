@@ -5,22 +5,30 @@
  * Używamy nazw opisowych zamiast numerów skali, żeby łatwo było rozmawiać z klientem.
  */
 @theme {
-  --color-night: #04152f; /* niebo w hero, stopka */
+  --color-night: #0b1f3f; /* sekcja kontaktu, strona 404 */
+  --color-deep: #07142b; /* stopka */
   --color-summit: #003174; /* granat marki */
-  --color-glacier: #004ab3; /* drugi odcień marki, linki na jasnym tle */
-  --color-signal: #006aff; /* akcent: przyciski, szczyt na wykresie */
-  --color-snow: #f4f7fb; /* tło jasnych sekcji */
-  --color-mist: #dbe5f3; /* linie, obramowania */
-  --color-ink: #0d1b33; /* tekst */
-  --color-slate: #44536f; /* tekst drugorzędny (kontrast 7:1 na snow) */
+  --color-glacier: #004ab3; /* drugi odcień marki: linki na jasnym tle */
+  --color-signal: #f26a1b; /* jaskrawy pomarańcz „ekspedycyjny”: tylko flaga i pinezka mapy */
+  --color-snow: #f3f6fa; /* tło strony */
+  --color-ice: #e4ecf4; /* tło hero i sekcji „lodowcowych” */
+  --color-mist: #c3cfdd; /* linie, obramowania */
+  --color-ink: #0b1f3f; /* tekst */
+  --color-slate: #4a5b76; /* tekst drugorzędny */
 
-  --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  /* Poważniejszy zestaw: szeryfowe nagłówki + neutralny, bardzo czytelny tekst.
+     Zmiana kroju = podmiana tych dwóch linii (i importów w layouts/Base.astro). */
+  --font-display: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Public Sans Variable', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 
   --breakpoint-xs: 30rem;
 }
 
 @layer base {
   html {
+    /* Płynny rozmiar bazowy: ok. 15 px na telefonie, 16 px od tabletu w górę.
+       Cała typografia i odstępy są w rem, więc skalują się razem. */
+    font-size: clamp(0.9375rem, 0.86rem + 0.35vw, 1rem);
     scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -32,8 +40,26 @@
     }
   }
 
+  /* Duże monitory: skalujemy całą typografię i odstępy (wszystko jest w rem),
+     żeby strona nie wyglądała na „małą” w wąskim pasku pośrodku ekranu. */
+  @media (min-width: 1920px) {
+    html {
+      font-size: 112.5%;
+    }
+  }
+  @media (min-width: 2560px) {
+    html {
+      font-size: 137.5%;
+    }
+  }
+  @media (min-width: 3400px) {
+    html {
+      font-size: 175%;
+    }
+  }
+
   body {
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-size: 1.0625rem;
     line-height: 1.65;
     color: var(--color-ink);
@@ -46,9 +72,11 @@
   h2,
   h3 {
     font-family: var(--font-display);
+    font-weight: 600;
     text-wrap: balance;
-    letter-spacing: -0.02em;
-    line-height: 1.08;
+    letter-spacing: -0.015em;
+    line-height: 1.12;
+    font-optical-sizing: auto;
   }
 
   p {
@@ -57,18 +85,36 @@
 
   /* Widoczny fokus dla nawigacji klawiaturą – nigdy go nie wyłączamy. */
   :focus-visible {
-    outline: 3px solid var(--color-signal);
+    outline: 3px solid var(--color-glacier);
     outline-offset: 3px;
     border-radius: 2px;
   }
+  /* Na ciemnych tłach fokus jest biały (granatowy by zniknął). */
+  .bg-summit :focus-visible,
+  .bg-night :focus-visible,
+  .bg-deep :focus-visible {
+    outline-color: #fff;
+  }
 
   ::selection {
-    background: var(--color-signal);
+    background: var(--color-summit);
     color: #fff;
   }
 }
 
 /* Wspólne klasy layoutu, żeby sekcje miały identyczne marginesy. */
+/* Płynne rozmiary nagłówków – mniejsze na telefonach, pełne od ok. 1200 px. */
+@utility text-h1 {
+  font-size: clamp(2.1rem, 1.25rem + 4.4vw, 5.25rem);
+  line-height: 1.06;
+}
+@utility text-h2 {
+  font-size: clamp(1.75rem, 1.3rem + 2vw, 3rem);
+}
+@utility text-h3 {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+}
+
 @utility container-page {
   width: 100%;
   max-width: 75rem;
@@ -81,14 +127,16 @@
 }
 
 @layer components {
+  /* Przyciski: prostokątne, z lekkim zaokrągleniem (bez „pigułek”). */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    border-radius: 9999px;
-    padding: 0.85rem 1.75rem;
-    font-family: var(--font-display);
+    border: 1.5px solid transparent;
+    border-radius: 0.25rem;
+    padding: 0.9rem 1.75rem;
+    font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.1;
@@ -98,23 +146,62 @@
       color 0.2s ease,
       border-color 0.2s ease;
   }
+  /* Na jasnym tle */
   .btn-primary {
-    background: var(--color-signal);
+    background: var(--color-summit);
+    border-color: var(--color-summit);
     color: #fff;
   }
   .btn-primary:hover {
-    background: var(--color-glacier);
+    background: var(--color-ink);
+    border-color: var(--color-ink);
   }
   .btn-primary:disabled {
     background: var(--color-slate);
+    border-color: var(--color-slate);
+    cursor: not-allowed;
+  }
+  .btn-outline {
+    border-color: var(--color-summit);
+    color: var(--color-summit);
+    background: transparent;
+  }
+  .btn-outline:hover {
+    background: var(--color-summit);
+    color: #fff;
+  }
+  /* Na ciemnym tle */
+  .btn-light {
+    background: #fff;
+    border-color: #fff;
+    color: var(--color-summit);
+  }
+  .btn-light:hover {
+    background: var(--color-ice);
+    border-color: var(--color-ice);
+  }
+  .btn-light:disabled {
+    background: var(--color-mist);
+    border-color: var(--color-mist);
     cursor: not-allowed;
   }
   .btn-ghost {
-    border: 1.5px solid rgb(255 255 255 / 0.55);
+    border-color: rgb(255 255 255 / 0.6);
     color: #fff;
   }
   .btn-ghost:hover {
     background: rgb(255 255 255 / 0.12);
     border-color: #fff;
+  }
+  /* Link tekstowy zamiast przycisku (np. „Poznaj nasz zespół”). */
+  .tlink {
+    font-weight: 600;
+    color: var(--color-glacier);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 2px;
+  }
+  .tlink:hover {
+    color: var(--color-summit);
   }
 }
