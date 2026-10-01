@@ -2,7 +2,6 @@
 import Calculator from '@lucide/astro/icons/calculator';
 import Users from '@lucide/astro/icons/users';
 import FileCheck from '@lucide/astro/icons/file-check';
-import Contours from './Contours.astro';
 import type { Dict } from '../i18n/pl';
 
 interface Props {
@@ -12,12 +11,6 @@ const { t } = Astro.props;
 
 // Kolejność ikon odpowiada kolejności grup w słowniku (księgowość, kadry i płace, sprawozdawczość).
 const icons = [Calculator, Users, FileCheck];
-// Każdy wiersz ma własny fragment warstwic (inny „szczyt”), o niskim kontraście.
-const spots = [
-  { cx: 1150, cy: 380, rot: -14 },
-  { cx: 980, cy: 520, rot: 10 },
-  { cx: 1230, cy: 440, rot: -4 },
-];
 ---
 
 <section id="services" aria-labelledby="services-title" class="section-y">
@@ -30,18 +23,8 @@ const spots = [
     <div class="border-summit mt-14 border-t-[3px]">
       {t.services.groups.map((group, i) => {
         const Icon = icons[i] ?? Calculator;
-        const spot = spots[i] ?? spots[0]!;
         return (
           <div class="svc-row border-mist relative isolate overflow-hidden border-b">
-            <Contours
-              class="svc-contours text-summit pointer-events-none absolute inset-0 -z-10 h-full w-full"
-              cx={spot.cx}
-              cy={spot.cy}
-              rings={8}
-              r0={22}
-              dr={36}
-              rot={spot.rot}
-            />
             <div class="grid gap-7 py-11 lg:grid-cols-12 lg:gap-14 lg:px-6 lg:py-14">
               <div class="lg:col-span-4">
                 <span class="svc-tile bg-summit inline-flex h-16 w-16 items-center justify-center rounded text-white">
@@ -89,13 +72,6 @@ const spots = [
     width: 7px;
     height: 7px;
     background: var(--color-summit);
-  }
-
-  /* Warstwice w tle wiersza: widoczne po prawej, zanikają ku tekstowi. */
-  .svc-contours {
-    opacity: 0.8;
-    -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 70%);
-    mask-image: linear-gradient(to left, #000 0%, transparent 70%);
   }
 
   /* Reakcja na najechanie / fokus: wiersz się rozjaśnia, a kafelek zamienia kolory. */
