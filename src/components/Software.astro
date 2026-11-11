@@ -1,0 +1,48 @@
+---
+import ImageOff from '@lucide/astro/icons/image-off';
+import { Image } from 'astro:assets';
+import { softwareBrands } from '../config/software';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<section id="software" aria-labelledby="software-title" class="section-y bg-summit text-white">
+  <div class="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-5">
+      <h2 id="software-title" class="text-h2">
+        {t.software.title}
+      </h2>
+      <p class="mt-6 max-w-[52ch] text-lg leading-relaxed text-white/85">{t.software.text}</p>
+    </div>
+
+    <ul class="grid grid-cols-2 content-start gap-x-5 gap-y-9 sm:grid-cols-3 lg:col-span-7">
+      {softwareBrands.map((brand) => (
+        <li class="flex flex-col">
+          {brand.logo ? (
+            <span class="flex h-24 items-center justify-center rounded bg-white px-5">
+              <Image
+                src={brand.logo}
+                alt={brand.name}
+                class="max-h-12 w-auto max-w-full object-contain"
+              />
+            </span>
+          ) : (
+            // TODO(klient): brak pliku logo – tymczasowy placeholder (ikona obrazka z krzyżykiem).
+            <span
+              class="flex h-24 items-center justify-center rounded border-2 border-dashed border-white/45 text-white/70"
+              role="img"
+              aria-label={brand.name}
+            >
+              <ImageOff class="size-8" stroke-width={1.5} aria-hidden="true" />
+            </span>
+          )}
+          <span class="mt-3 text-base leading-snug font-medium text-white/90">{brand.name}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

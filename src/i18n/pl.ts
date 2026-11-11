@@ -110,30 +110,42 @@ export const pl = {
     title: 'Oferujemy następujące usługi',
     groups: [
       {
-        title: 'Księgowość i podatki',
+        title: 'Księgowość',
         items: [
-          'Stałą obsługę rachunkową, sporządzanie miesięcznych / kwartalnych / rocznych deklaracji podatkowych.',
-          'Comiesięczne podsumowanie sytuacji finansowej jednostki gospodarczej poprzez przekazywanie danych i zestawień księgowych oraz przeprowadzanie analiz finansowych.',
-          'Pomoc przy wyprowadzaniu zaległości w obrębie prowadzonych ksiąg rachunkowych.',
-          'Analizę sytuacji finansowej oraz danych księgowych w celu ustalenia planów naprawczych dla systemu rachunkowości organizacji.',
+          'Stała obsługa rachunkowa – księgowa',
+          'Bieżące wyjaśnianie braków w dokumentach',
+          'Przygotowanie, rozliczenie i wysyłka deklaracji podatkowych: VAT, CIT, PIT, PCC',
+          'Wsparcie przy obsłudze KSeF, w tym wystawianiu faktur',
+          'Przygotowanie polityki rachunkowości',
+          'Doradztwo w zakresie bieżącej działalności, organizacji rachunkowości, obiegu dokumentów finansowych',
+          'Wsparcie w kontaktach z urzędem skarbowym i czynne uczestnictwo w kontrolach',
+          'Pomoc w wyjaśnianiu zaległości podatkowych i składkowych',
+        ],
+      },
+      {
+        title: 'Sprawozdawczość finansowa, projektowa oraz audyt',
+        items: [
+          'Przygotowanie rocznych sprawozdań finansowych',
+          'Pomoc przy przygotowaniu sprawozdań merytorycznych, do GUS, NIW',
+          'Przeprowadzanie analiz bieżącej sytuacji finansowej',
+          'Ustalanie zgodności kont projektowych z raportami i dokumentami wewnętrznymi',
+          'Wykonywanie przeksięgowań merytorycznych',
+          'Współpraca z audytorem przy badaniu sprawozdań finansowych i konkretnych projektów',
+          'Przygotowanie wymaganej dokumentacji do audytów',
         ],
       },
       {
         title: 'Kadry i płace',
         items: [
-          'Obsługę kadrowo-płacową w zakresie naliczania list płac, wystawiania rachunków do umów cywilnoprawnych, rejestracji umów, rozliczania deklaracji ZUS, obsługę PPK.',
-          'Sporządzanie zestawień urlopowych, wystawianie dokumentów związanych z zatrudnieniem – umów o pracę, umów cywilnoprawnych, świadectw pracy, itp.',
-        ],
-      },
-      {
-        title: 'Sprawozdawczość, audyt i doradztwo',
-        items: [
-          'Doradztwo w zakresie bieżącej działalności, organizacji rachunkowości, obiegu dokumentów finansowych.',
-          'Stałe wsparcie organizacji w kwestiach związanych z rachunkowością, podatkami oraz rozliczeniami kadrowo-płacowymi.',
-          'Sporządzanie sprawozdań finansowych organizacji.',
-          'Pomoc przy sporządzaniu rocznych sprawozdań merytorycznych z działalności.',
-          'Pomoc przy sporządzaniu polityki rachunkowości.',
-          'Współpracę przy audytach sprawozdań finansowych jednostek gospodarczych.',
+          'Obsługa kadrowo-płacowa w zakresie naliczania list płac, wystawiania rachunków do umów cywilnoprawnych',
+          'Przygotowanie deklaracji zgłoszeniowych i rozliczeniowych do ZUS',
+          'Obsługa PPK',
+          'Prowadzenie akt osobowych',
+          'Sporządzanie zestawień urlopowych',
+          'Wystawianie dokumentów związanych z zatrudnieniem, m.in. świadectw pracy, zaświadczeń o zarobkach',
+          'Przygotowanie deklaracji do PFRON',
+          'Przygotowanie deklaracji PIT-4R, PIT-8AR, PIT-11, IFT-1R',
+          'Wsparcie w kontaktach z ZUS, urzędem skarbowym oraz uczestnictwo w kontrolach',
         ],
       },
     ],
@@ -146,35 +158,9 @@ export const pl = {
     title: 'Masz pytanie? Zajrzyj do sekcji FAQ',
     cta: 'Zobacz wszystkie pytania',
   },
-  info: {
-    title: 'Dodatkowe informacje',
-    software: {
-      title: 'Oprogramowanie',
-      text: 'Korzystamy z następującego oprogramowania:',
-      // TODO: opisy do potwierdzenia z klientem (można rozbudować o jedno zdanie o programie).
-      items: [
-        {
-          key: 'symfonia',
-          role: 'Księgi rachunkowe',
-          description: 'System finansowo-księgowy (dawniej Sage Symfonia).',
-        },
-        {
-          key: 'enova',
-          role: 'Kadry i płace',
-          description: 'System klasy ERP z modułem kadrowo-płacowym.',
-        },
-      ],
-    },
-    pricing: {
-      title: 'Wycena',
-      text: 'Przy ustalaniu cen bierzemy pod uwagę następujące czynniki:',
-      items: [
-        'Specyfikę organizacji – zakres działalności, status podatkowy jednostki',
-        'Liczbę dokumentów księgowych',
-        'Liczbę zatrudnionych osób',
-        'Zakres powierzonych obowiązków',
-      ],
-    },
+  software: {
+    title: 'Oprogramowanie',
+    text: 'Korzystamy ze sprawdzonych programów księgowych i kadrowo-płacowych, które są na bieżąco aktualizowane w odpowiedzi na zmiany w przepisach. Wykorzystujemy również dedykowane narzędzie do zdalnego przekazywania dokumentów, do którego dostęp mają wyłącznie osoby upoważnione. Nad prawidłowym funkcjonowaniem naszego zaplecza informatycznego czuwa specjalista IT posiadający szerokie doświadczenie w obsłudze biur rachunkowych.',
   },
   team: {
     title: 'Nasz zespół',
