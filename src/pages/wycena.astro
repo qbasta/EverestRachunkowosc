@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import QuotePage from '../components/QuotePage.astro';
+import { getDict } from '../i18n';
+
+const t = getDict('pl');
+---
+
+<Base
+  lang="pl"
+  page="quote"
+  title={t.quotePage.metaTitle}
+  description={t.quotePage.metaDescription}
+>
+  <QuotePage lang="pl" />
+</Base>

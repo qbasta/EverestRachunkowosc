@@ -15,12 +15,17 @@ export const pl = {
     switchLang: 'English version',
     pause: 'Zatrzymaj animację',
     play: 'Wznów animację',
+    expandSubmenu: 'Rozwiń podmenu',
   },
   nav: {
-    services: 'Oferta',
-    info: 'Dodatkowe informacje',
+    about: 'O biurze',
     cooperation: 'Współpraca',
-    about: 'O nas',
+    team: 'Nasz zespół',
+    offer: 'Oferta',
+    services: 'Usługi',
+    software: 'Oprogramowanie',
+    faq: 'Najczęściej zadawane pytania (FAQ)',
+    pricing: 'Wycena usług',
     contact: 'Skontaktuj się',
     langName: 'English',
   },
@@ -31,19 +36,24 @@ export const pl = {
     secondary: 'Zobacz ofertę',
     chartLabel: 'Ilustracja: grzbiet górski będący jednocześnie wykresem wzrostu',
   },
-  aboutPage: {
-    metaTitle: 'O nas | Everest – Rachunkowość & NGO',
+  pageSoon: 'Treść tej podstrony jest w przygotowaniu.',
+  teamPage: {
+    metaTitle: 'Nasz zespół | Everest – Rachunkowość & NGO',
     metaDescription:
-      'Poznaj biuro rachunkowe Everest: doświadczenie w obsłudze organizacji pozarządowych i firm, nasz zespół oraz zasady współpracy.',
-    title: 'O nas',
+      'Poznaj zespół biura rachunkowego Everest: księgowość, kadry i płace oraz wsparcie informatyczne.',
+    title: 'Nasz zespół',
   },
-  aboutTeaser: {
-    title: 'O nas',
-    paragraphs: [
-      'Posiadamy wieloletnie doświadczenie w prowadzeniu księgowości jednostek gospodarczych i stale podwyższamy nasze kwalifikacje.',
-      'Współpracujemy także z innymi firmami specjalizującymi się w zakresie świadczenia usług doradztwa gospodarczego, doradztwa podatkowego, audytu finansowego oraz księgowości.',
-    ],
-    cta: 'Poznaj nasz zespół',
+  faqPage: {
+    metaTitle: 'Najczęściej zadawane pytania | Everest – Rachunkowość & NGO',
+    metaDescription:
+      'Odpowiedzi na najczęstsze pytania o obsługę księgową organizacji pozarządowych i firm, rozliczanie dotacji oraz zasady współpracy z biurem Everest.',
+    title: 'Najczęściej zadawane pytania',
+  },
+  quotePage: {
+    metaTitle: 'Wycena usług | Everest – Rachunkowość & NGO',
+    metaDescription:
+      'Wypełnij krótki formularz, a przygotujemy wstępną wycenę obsługi księgowej i kadrowo-płacowej dla Twojej organizacji lub firmy.',
+    title: 'Wycena usług',
   },
   trust: {
     title: 'Zaufali nam już',
@@ -59,6 +69,7 @@ export const pl = {
     ],
     linkedin: 'Nasz profil na LinkedIn',
     map: 'Zobacz lokalizację w Google Maps',
+    teamCta: 'Poznaj nasz zespół',
   },
   cooperation: {
     title: 'Współpraca',
@@ -96,6 +107,14 @@ export const pl = {
         ],
       },
     ],
+  },
+  pricing: {
+    title: 'Wycena usług',
+    cta: 'Poproś o wycenę',
+  },
+  faq: {
+    title: 'Masz pytanie? Zajrzyj do sekcji FAQ',
+    cta: 'Zobacz wszystkie pytania',
   },
   info: {
     title: 'Dodatkowe informacje',

@@ -1,0 +1,22 @@
+---
+import { pagePath, type Lang } from '../i18n';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+  lang: Lang;
+}
+const { t, lang } = Astro.props;
+---
+
+<!-- TODO(krok 4): pełna sekcja wyceny – tekst, cennik, przyciski „Poproś o wycenę” i „Umów bezpłatną konsultację”. -->
+<section id="pricing" aria-labelledby="pricing-title" class="section-y bg-ice">
+  <div class="container-page">
+    <h2 id="pricing-title" class="text-summit text-h2">
+      {t.pricing.title}
+    </h2>
+    <a href={pagePath('quote', lang)} class="btn btn-primary mt-8">
+      {t.pricing.cta}
+    </a>
+  </div>
+</section>

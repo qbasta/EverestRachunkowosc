@@ -3,10 +3,12 @@ import type { Lang } from '../i18n';
 import { getDict } from '../i18n';
 import Header from './Header.astro';
 import Hero from './Hero.astro';
+import About from './About.astro';
+import Cooperation from './Cooperation.astro';
 import Services from './Services.astro';
 import Info from './Info.astro';
-import Cooperation from './Cooperation.astro';
-import AboutTeaser from './AboutTeaser.astro';
+import PricingTeaser from './PricingTeaser.astro';
+import FaqTeaser from './FaqTeaser.astro';
 import Contact from './Contact.astro';
 import Trust from './Trust.astro';
 import Footer from './Footer.astro';
@@ -21,10 +23,12 @@ const t = getDict(lang);
 <Header t={t} lang={lang} page="home" />
 <main id="main">
   <Hero t={t} lang={lang} />
+  <About t={t} lang={lang} />
+  <Cooperation t={t} />
   <Services t={t} />
   <Info t={t} />
-  <Cooperation t={t} />
-  <AboutTeaser t={t} lang={lang} />
+  <PricingTeaser t={t} lang={lang} />
+  <FaqTeaser t={t} lang={lang} />
   <Contact t={t} lang={lang} />
   <Trust t={t} />
 </main>

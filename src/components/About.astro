@@ -4,12 +4,14 @@ import ExternalLink from '@lucide/astro/icons/external-link';
 import Logo from './Logo.astro';
 import LinkedInIcon from './LinkedInIcon.astro';
 import { site } from '../config/site';
+import { pagePath, type Lang } from '../i18n';
 import type { Dict } from '../i18n/pl';
 
 interface Props {
   t: Dict;
+  lang: Lang;
 }
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
 const [lead, ...rest] = t.about.paragraphs;
 ---
 
@@ -34,6 +36,9 @@ const [lead, ...rest] = t.about.paragraphs;
       </div>
 
       <div class="mt-8 flex flex-wrap gap-3">
+        <a href={pagePath('team', lang)} class="btn btn-primary">
+          {t.about.teamCta}
+        </a>
         {site.social.linkedin && (
           <a
             href={site.social.linkedin}

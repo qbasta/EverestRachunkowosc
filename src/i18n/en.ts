@@ -18,12 +18,17 @@ export const en: Dict = {
     switchLang: 'Wersja polska',
     pause: 'Pause animation',
     play: 'Play animation',
+    expandSubmenu: 'Expand submenu',
   },
   nav: {
-    services: 'Services',
-    info: 'Additional information',
+    about: 'About the office',
     cooperation: 'Cooperation',
-    about: 'About us',
+    team: 'Our team',
+    offer: 'Offer',
+    services: 'Services',
+    software: 'Software',
+    faq: 'Frequently asked questions (FAQ)',
+    pricing: 'Pricing',
     contact: 'Contact us',
     langName: 'Polski',
   },
@@ -34,19 +39,24 @@ export const en: Dict = {
     secondary: 'See our services',
     chartLabel: 'Illustration: a mountain ridge that is also a growth chart',
   },
-  aboutPage: {
-    metaTitle: 'About us | Everest – Accounting & NGO',
+  pageSoon: 'The content of this page is being prepared.',
+  teamPage: {
+    metaTitle: 'Our team | Everest – Accounting & NGO',
     metaDescription:
-      'Get to know Everest accounting office: our experience serving non-governmental organisations and businesses, our team and the way we work.',
-    title: 'About us',
+      'Meet the team of Everest accounting office: bookkeeping, payroll and IT support.',
+    title: 'Our team',
   },
-  aboutTeaser: {
-    title: 'About us',
-    paragraphs: [
-      'We have many years of experience in keeping the accounts of business entities, and we continually improve our qualifications.',
-      'We also work with other firms specialising in business consulting, tax advice, financial auditing and accounting.',
-    ],
-    cta: 'Meet our team',
+  faqPage: {
+    metaTitle: 'Frequently asked questions | Everest – Accounting & NGO',
+    metaDescription:
+      'Answers to the most common questions about accounting for non-governmental organisations and businesses, grant accounting and how we work with clients.',
+    title: 'Frequently asked questions',
+  },
+  quotePage: {
+    metaTitle: 'Request a quote | Everest – Accounting & NGO',
+    metaDescription:
+      'Fill in a short form and we will prepare a preliminary quote for bookkeeping and payroll services for your organisation or business.',
+    title: 'Request a quote',
   },
   trust: {
     title: 'Trusted by',
@@ -62,6 +72,7 @@ export const en: Dict = {
     ],
     linkedin: 'Our LinkedIn profile',
     map: 'See our location on Google Maps',
+    teamCta: 'Meet our team',
   },
   cooperation: {
     title: 'Cooperation',
@@ -99,6 +110,14 @@ export const en: Dict = {
         ],
       },
     ],
+  },
+  pricing: {
+    title: 'Pricing',
+    cta: 'Request a quote',
+  },
+  faq: {
+    title: 'Got a question? Check our FAQ',
+    cta: 'See all questions',
   },
   info: {
     title: 'Additional information',

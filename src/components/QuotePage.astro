@@ -1,0 +1,25 @@
+---
+import type { Lang } from '../i18n';
+import { getDict } from '../i18n';
+import Header from './Header.astro';
+import PageHeader from './PageHeader.astro';
+import Footer from './Footer.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = getDict(lang);
+---
+
+<Header t={t} lang={lang} page="quote" />
+<main id="main">
+  <PageHeader title={t.quotePage.title} />
+  <!-- TODO: treść podstrony w kolejnych krokach (FAQ – krok 5, formularz wyceny – krok 4). -->
+  <section class="section-y">
+    <div class="container-page">
+      <p class="text-slate max-w-[60ch]">{t.pageSoon}</p>
+    </div>
+  </section>
+</main>
+<Footer t={t} lang={lang} />
