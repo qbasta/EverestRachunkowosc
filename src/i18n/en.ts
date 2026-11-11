@@ -33,8 +33,8 @@ export const en: Dict = {
     langName: 'Polski',
   },
   hero: {
-    title: 'Reliable accounting for organisations and businesses',
-    text: 'Professional bookkeeping, tax and payroll services for entities operating in the field of public tasks and for other businesses.',
+    title: 'Reliable accounting for NGOs and business',
+    text: 'At Everest Accounting Office & NGO we combine knowledge and experience in accounting, taxes, payroll and HR. We rely on partnership and an individual approach to every client.',
     primary: 'Contact us',
     secondary: 'See our services',
     chartLabel: 'Illustration: a mountain ridge that is also a growth chart',
@@ -65,19 +65,49 @@ export const en: Dict = {
   about: {
     title: 'About our office',
     paragraphs: [
-      'Everest Accounting Office & NGO provides professional bookkeeping, tax and payroll services for entities operating in the field of public tasks and for other businesses.',
-      'Our service and our relationships with clients are built on reliability and professionalism.',
-      'We have many years of experience in keeping the accounts of business entities, and we continually improve our qualifications.',
-      'We also work with other firms specialising in business consulting, tax advice, financial auditing and accounting. This allows us to offer you comprehensive financial services and to support your company in its daily work and operations.',
+      'Everest Accounting Office & NGO provides bookkeeping, tax and payroll services to entities operating in the field of public tasks and to businesses.',
+      'We specialise in serving small and medium-sized entities at every stage of their development. We support new organisations from the moment they are founded, helping them through the formalities of starting their activity. We also work with established organisations, offering continuous, comprehensive management of their finances. This lets our clients focus on achieving their goals, confident that their accounting and payroll matters are in good hands.',
+      'We have many years of experience keeping the books of, among others, foundations, associations and companies. We also keep improving our qualifications by taking part in courses and training. We believe a good accountant should have an open mind and be ready for continuous development and improvement of their skills.',
+      'In our relationships with clients we rely on professionalism, an individual approach and mutual trust.',
     ],
     linkedin: 'Our LinkedIn profile',
     map: 'See our location on Google Maps',
     teamCta: 'Meet our team',
   },
   cooperation: {
-    title: 'Cooperation',
-    lead: 'Reliability and professionalism come first',
-    text: 'We base our service and our cooperation with clients on reliability and professionalism. We believe that a good accountant should keep improving their qualifications, stay open to new experiences and keep deepening their knowledge. From the organisations we serve, we expect reliability and openness to cooperation based on mutual trust. We believe this is the foundation for the financial growth of your company.',
+    title: 'What sets our cooperation apart?',
+    items: [
+      {
+        key: 'punctuality',
+        title: 'Punctuality and reliability',
+        text: 'The foundation of our work is keeping accounts correctly and meeting tax and social-insurance deadlines on time.',
+      },
+      {
+        key: 'regulations',
+        title: 'We keep our finger on the pulse',
+        text: 'We continuously monitor changes in regulations and keep our clients informed, so they are ready for them.',
+      },
+      {
+        key: 'remote',
+        title: 'Convenient remote cooperation',
+        text: 'We serve entities from all over Poland, and thanks to dedicated tools we give you convenient access to your accounting documents from anywhere.',
+      },
+      {
+        key: 'advice',
+        title: 'Advice and ongoing support',
+        text: 'We not only help solve our clients’ day-to-day problems, but also support decisions that shape the long-term development and operation of the organisation.',
+      },
+      {
+        key: 'control',
+        title: 'Full control over your finances',
+        text: 'Every month we send clients up-to-date financial statements and a summary of expenses in individual projects, so they can keep track of their financial situation.',
+      },
+      {
+        key: 'flexibility',
+        title: 'Flexibility',
+        text: 'We are open to different solutions and adapt the terms of cooperation to the needs and specifics of each entity.',
+      },
+    ],
   },
   services: {
     title: 'We offer the following services',

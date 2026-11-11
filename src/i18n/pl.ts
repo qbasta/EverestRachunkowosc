@@ -30,8 +30,8 @@ export const pl = {
     langName: 'English',
   },
   hero: {
-    title: 'Rzetelna księgowość dla organizacji i firm',
-    text: 'Profesjonalna obsługa rachunkowa, podatkowa oraz kadrowo-płacowa dla jednostek działających w sferze zadań publicznych oraz innych podmiotów gospodarczych.',
+    title: 'Rzetelna księgowość dla NGO i biznesu',
+    text: 'W Everest Biuro Rachunkowe & NGO łączymy wiedzę i doświadczenie w obszarze księgowości, podatków oraz kadr i płac. Stawiamy na partnerską współpracę i indywidualne podejście do każdego klienta.',
     primary: 'Skontaktuj się',
     secondary: 'Zobacz ofertę',
     chartLabel: 'Ilustracja: grzbiet górski będący jednocześnie wykresem wzrostu',
@@ -62,19 +62,49 @@ export const pl = {
   about: {
     title: 'O naszym biurze',
     paragraphs: [
-      'Everest Biuro Rachunkowe & NGO oferuje profesjonalną obsługę rachunkową, podatkową oraz kadrowo-płacową dla jednostek działających w sferze zadań publicznych oraz innych podmiotów gospodarczych.',
-      'Nasza obsługa i współpraca z klientami opierają się na rzetelności oraz profesjonalizmie.',
-      'Posiadamy wieloletnie doświadczenie w prowadzeniu księgowości jednostek gospodarczych i stale podwyższamy nasze kwalifikacje.',
-      'Współpracujemy także z innymi firmami specjalizującymi się w zakresie świadczenia usług doradztwa gospodarczego, doradztwa podatkowego, audytu finansowego oraz księgowości. Dzięki temu jesteśmy w stanie zapewnić Państwu kompleksową obsługę finansową oraz wspierać Państwa firmę w pracy i bieżącej działalności.',
+      'Everest Biuro Rachunkowe & NGO świadczy usługi księgowe, podatkowe oraz kadrowo-płacowe na rzecz jednostek działających w sferze zadań publicznych oraz przedsiębiorstw.',
+      'Specjalizujemy się w obsłudze małych i średnich podmiotów na każdym etapie ich rozwoju. Wspieramy nowe organizacje już od momentu ich powstania, pomagając im przejść przez formalności związane z rozpoczęciem działalności. Towarzyszymy również podmiotom o ugruntowanej pozycji na rynku. Oferujemy stałą, kompleksową obsługę ich finansów. Dzięki temu nasi klienci mogą skupić się na realizacji założonych celów organizacji, mając pewność, że kwestie księgowe i kadrowo-płacowe są pod właściwą opieką.',
+      'Posiadamy wieloletnie doświadczenie w prowadzeniu księgowości m.in. fundacji, stowarzyszeń i spółek. Ponadto stale podwyższamy nasze kwalifikacje, uczestnicząc w kursach i szkoleniach. Wierzymy, że dobry księgowy powinien mieć otwarty umysł oraz być gotowy do ciągłego rozwoju i doskonalenia swoich umiejętności.',
+      'W relacji z naszymi klientami stawiamy na profesjonalizm, indywidualne podejście i relacje oparte na wzajemnym zaufaniu.',
     ],
     linkedin: 'Nasz profil na LinkedIn',
     map: 'Zobacz lokalizację w Google Maps',
     teamCta: 'Poznaj nasz zespół',
   },
   cooperation: {
-    title: 'Współpraca',
-    lead: 'Rzetelność i profesjonalizm na pierwszym miejscu',
-    text: 'Naszą obsługę i współpracę z klientami opieramy na rzetelności oraz profesjonalizmie. Wychodzimy z założenia, że dobry księgowy powinien stale podwyższać swoje kwalifikacje, musi mieć umysł otwarty na nowe doświadczenia i stałe pogłębianie wiedzy. Od organizacji, które obsługujemy oczekujemy rzetelności oraz otwartości na współpracę opartą na wzajemnym zaufaniu. Uważamy bowiem, iż jest to podstawa umożliwiająca finansowy rozwój Państwa firmy.',
+    title: 'Co wyróżnia naszą współpracę?',
+    items: [
+      {
+        key: 'punctuality',
+        title: 'Terminowość i rzetelność',
+        text: 'Podstawą naszej działalności jest dbanie o prawidłowe prowadzenie księgowości oraz terminową realizację rozliczeń podatkowych i składkowych.',
+      },
+      {
+        key: 'regulations',
+        title: 'Trzymamy rękę na pulsie',
+        text: 'Na bieżąco monitorujemy i informujemy o zmianach w przepisach, tak aby nasi klienci byli na nie gotowi.',
+      },
+      {
+        key: 'remote',
+        title: 'Wygodna współpraca zdalna',
+        text: 'Obsługujemy podmioty z całej Polski, a dzięki dedykowanym narzędziom zapewniamy wygodny dostęp do dokumentacji księgowej z dowolnego miejsca.',
+      },
+      {
+        key: 'advice',
+        title: 'Doradztwo i bieżące wsparcie',
+        text: 'Nie tylko pomagamy rozwiązywać bieżące problemy klientów, ale również wspieramy w podejmowaniu decyzji, które rzutują na wieloletni rozwój i funkcjonowanie organizacji.',
+      },
+      {
+        key: 'control',
+        title: 'Pełna kontrola nad finansami',
+        text: 'Co miesiąc wysyłamy klientom aktualne zestawienia finansowe oraz podsumowanie wydatków w poszczególnych projektach, co pozwala stale monitorować ich sytuację finansową.',
+      },
+      {
+        key: 'flexibility',
+        title: 'Elastyczność',
+        text: 'Jesteśmy otwarci na różne rozwiązania i dostosujemy zasady współpracy do potrzeb oraz specyfiki podmiotu.',
+      },
+    ],
   },
   services: {
     title: 'Oferujemy następujące usługi',
