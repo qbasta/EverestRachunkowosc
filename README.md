@@ -30,10 +30,10 @@ src/
   config/team.ts      zdjęcia i linki LinkedIn osób z zespołu
   config/software.ts  logo programów (Sage Symfonia, enova365) – obecnie plakietki z nazwą
   i18n/pl.ts, en.ts   WSZYSTKIE teksty strony (podmiana treści = edycja tych plików)
-  i18n/index.ts       ścieżki podstron w obu językach (/o-nas, /en/about)
+  i18n/index.ts       ścieżki podstron w obu językach (/nasz-zespol, /faq, /wycena i ich odpowiedniki /en/…)
   components/         sekcje strony (Hero, Services, Info, AboutTeaser, Trust, Contact, ...)
   layouts/Base.astro  <head>, SEO, hreflang, dane strukturalne JSON-LD
-  pages/              index (PL), en/index, o-nas, en/about, 404
+  pages/              index (PL), en/index, nasz-zespol, faq, wycena (+ en/our-team, en/faq, en/quote), 404
   styles/global.css   design tokens (kolory, font) i wspólne klasy
   assets/brand/       oryginalne logo (jasne, ciemne, sam znak)
   assets/team/        zdjęcia zespołu (optymalizowane automatycznie)
@@ -41,7 +41,7 @@ src/
 ```
 
 **Podział stron:** strona główna = hero, oferta, dodatkowe informacje, współpraca, zajawka „O nas”, kontakt (z mapą), karuzela klientów.
-Podstrona `/o-nas` (EN: `/en/about`) = o biurze (logo, akapity, LinkedIn, Google Maps) i zespół.
+Podstrony: `/nasz-zespol` (EN `/en/our-team`), `/faq` (`/en/faq`), `/wycena` (`/en/quote`). Sekcje strony głównej mają stałe identyfikatory używane w menu: `#about`, `#cooperation`, `#services`, `#software`, `#pricing`, `#faq`, `#contact`.
 
 ### Jak dodać nową osobę do zespołu
 
@@ -87,7 +87,7 @@ Oryginalny znak firmy: `public/favicon.svg` (w ciemnym motywie przeglądarki bia
 
 ## Co jest gotowe, a co jeszcze nie
 
-Gotowe (etap 1): szkielet, design tokens, PL/EN, podział na stronę główną i `/o-nas`, oryginalne logo, ikony, hero z animowanym wykresem (geometria z logo), karuzela klientów (makiety, z przyciskiem pauzy i obsługą „ogranicz ruch”), formularz (UI + walidacja po stronie przeglądarki + zgoda + honeypot), SEO (meta, hreflang, JSON-LD, sitemap, robots), CI.
+Gotowe (etap 1): szkielet, design tokens, PL/EN, podział na stronę główną i podstrony, oryginalne logo, ikony, hero z animowanym wykresem (geometria z logo), karuzela klientów (makiety, z przyciskiem pauzy i obsługą „ogranicz ruch”), formularz (UI + walidacja po stronie przeglądarki + zgoda + honeypot), SEO (meta, hreflang, JSON-LD, sitemap, robots), CI.
 
 Do zrobienia (kolejne etapy):
 

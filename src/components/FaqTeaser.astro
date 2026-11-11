@@ -1,0 +1,22 @@
+---
+import { pagePath, type Lang } from '../i18n';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+  lang: Lang;
+}
+const { t, lang } = Astro.props;
+---
+
+<!-- TODO(krok 5): ręczna karuzela z 4 najkrótszymi pytaniami + przycisk „Masz więcej pytań?”. -->
+<section id="faq" aria-labelledby="faq-title" class="section-y">
+  <div class="container-page">
+    <h2 id="faq-title" class="text-summit text-h2 max-w-[24ch]">
+      {t.faq.title}
+    </h2>
+    <a href={pagePath('faq', lang)} class="btn btn-outline mt-8">
+      {t.faq.cta}
+    </a>
+  </div>
+</section>

@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import FaqPage from '../components/FaqPage.astro';
+import { getDict } from '../i18n';
+
+const t = getDict('pl');
+---
+
+<Base lang="pl" page="faq" title={t.faqPage.metaTitle} description={t.faqPage.metaDescription}>
+  <FaqPage lang="pl" />
+</Base>

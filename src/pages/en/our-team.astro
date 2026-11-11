@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import TeamPage from '../../components/TeamPage.astro';
+import { getDict } from '../../i18n';
+
+const t = getDict('en');
+---
+
+<Base lang="en" page="team" title={t.teamPage.metaTitle} description={t.teamPage.metaDescription}>
+  <TeamPage lang="en" />
+</Base>

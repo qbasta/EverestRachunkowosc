@@ -3,7 +3,6 @@ import type { Lang } from '../i18n';
 import { getDict } from '../i18n';
 import Header from './Header.astro';
 import PageHeader from './PageHeader.astro';
-import About from './About.astro';
 import Team from './Team.astro';
 import CtaBand from './CtaBand.astro';
 import Footer from './Footer.astro';
@@ -15,10 +14,9 @@ const { lang } = Astro.props;
 const t = getDict(lang);
 ---
 
-<Header t={t} lang={lang} page="about" />
+<Header t={t} lang={lang} page="team" />
 <main id="main">
-  <PageHeader title={t.aboutPage.title} />
-  <About t={t} />
+  <PageHeader title={t.teamPage.title} />
   <Team t={t} />
   <CtaBand t={t} lang={lang} />
 </main>

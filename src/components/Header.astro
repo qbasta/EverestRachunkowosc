@@ -1,7 +1,8 @@
 ---
 import Globe from '@lucide/astro/icons/globe';
+import ChevronDown from '@lucide/astro/icons/chevron-down';
 import Logo from './Logo.astro';
-import { homePath, aboutPath, pagePath, otherLang, type Lang, type PageKey } from '../i18n';
+import { homePath, pagePath, otherLang, type Lang, type PageKey } from '../i18n';
 import type { Dict } from '../i18n/pl';
 
 interface Props {
@@ -13,11 +14,45 @@ const { t, lang, page } = Astro.props;
 const home = homePath(lang);
 const alt = otherLang(lang);
 
-const links = [
-  { href: `${home}#services`, label: t.nav.services, current: false },
-  { href: `${home}#info`, label: t.nav.info, current: false },
-  { href: `${home}#cooperation`, label: t.nav.cooperation, current: false },
-  { href: aboutPath(lang), label: t.nav.about, current: page === 'about' },
+interface Child {
+  href: string;
+  label: string;
+  current: boolean;
+}
+interface Item {
+  id: string;
+  href: string;
+  label: string;
+  /** Wyróżnienie w pasku (np. gdy jesteśmy na podstronie z tej grupy). */
+  active: boolean;
+  children?: Child[];
+}
+
+// Pozycje grupowe: nazwa jest zwykłym linkiem do sekcji, a rozwijana lista jest osobnym przyciskiem
+// (działa na najechanie, klik, dotyk i klawiaturę).
+const items: Item[] = [
+  {
+    id: 'about',
+    href: `${home}#about`,
+    label: t.nav.about,
+    active: page === 'team',
+    children: [
+      { href: `${home}#cooperation`, label: t.nav.cooperation, current: false },
+      { href: pagePath('team', lang), label: t.nav.team, current: page === 'team' },
+    ],
+  },
+  {
+    id: 'offer',
+    href: `${home}#services`,
+    label: t.nav.offer,
+    active: page === 'faq',
+    children: [
+      { href: `${home}#services`, label: t.nav.services, current: false },
+      { href: `${home}#software`, label: t.nav.software, current: false },
+      { href: pagePath('faq', lang), label: t.nav.faq, current: page === 'faq' },
+    ],
+  },
+  { id: 'pricing', href: `${home}#pricing`, label: t.nav.pricing, active: page === 'quote' },
 ];
 ---
 
@@ -29,18 +64,35 @@ const links = [
 
     <nav aria-label={t.a11y.mainNav} class="hidden lg:block">
       <ul class="flex items-center gap-8 text-[0.95rem] font-medium">
-        {links.map((l) => (
-          <li>
-            <a
-              href={l.href}
-              aria-current={l.current ? 'page' : undefined}
-              class:list={[
-                'decoration-glacier underline-offset-[10px] hover:underline hover:decoration-2',
-                l.current && 'underline decoration-2',
-              ]}
-            >
-              {l.label}
-            </a>
+        {items.map((item) => (
+          <li class:list={['nav-item', item.children && 'has-menu']}>
+            <div class="flex items-center gap-0.5">
+              <a href={item.href} class:list={['nav-link', item.active && 'is-active']}>
+                {item.label}
+              </a>
+              {item.children && (
+                <button
+                  type="button"
+                  class="submenu-toggle"
+                  aria-expanded="false"
+                  aria-controls={`submenu-${item.id}`}
+                  aria-label={`${t.a11y.expandSubmenu}: ${item.label}`}
+                >
+                  <ChevronDown size={16} stroke-width={2.2} aria-hidden="true" />
+                </button>
+              )}
+            </div>
+            {item.children && (
+              <ul id={`submenu-${item.id}`} class="submenu">
+                {item.children.map((c) => (
+                  <li>
+                    <a href={c.href} aria-current={c.current ? 'page' : undefined}>
+                      {c.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>
@@ -101,11 +153,26 @@ const links = [
     </div>
     <nav aria-label={t.a11y.mainNav} class="mt-10">
       <ul class="space-y-1 text-3xl font-semibold">
-        {links.map((l) => (
+        {items.map((item) => (
           <li>
-            <a href={l.href} aria-current={l.current ? 'page' : undefined} class="block py-3">
-              {l.label}
+            <a href={item.href} class="block py-3">
+              {item.label}
             </a>
+            {item.children && (
+              <ul class="border-mist mb-3 ml-1 space-y-0.5 border-l-2 pl-5 text-xl font-medium">
+                {item.children.map((c) => (
+                  <li>
+                    <a
+                      href={c.href}
+                      aria-current={c.current ? 'page' : undefined}
+                      class="block py-2"
+                    >
+                      {c.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>
@@ -143,6 +210,94 @@ const links = [
     }
   }
 
+  .nav-link {
+    text-decoration-color: var(--color-glacier);
+    text-underline-offset: 10px;
+  }
+  .nav-link:hover,
+  .nav-link.is-active {
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .submenu-toggle {
+    display: inline-flex;
+    padding: 0.35rem;
+    border-radius: 0.25rem;
+  }
+  .submenu-toggle svg {
+    transition: transform 0.2s ease;
+  }
+  .has-menu[data-open] .submenu-toggle svg,
+  .has-menu:hover:not([data-suppress]) .submenu-toggle svg {
+    transform: rotate(180deg);
+  }
+
+  .has-menu {
+    position: relative;
+  }
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: -1rem;
+    min-width: 17rem;
+    margin-top: 0.75rem;
+    padding: 0.4rem;
+    background: var(--color-snow);
+    border: 1px solid var(--color-mist);
+    border-radius: 0.375rem;
+    box-shadow: 0 12px 28px -12px rgb(11 31 63 / 0.25);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease,
+      visibility 0s linear 0.15s;
+  }
+  /* Niewidzialny mostek, żeby lista nie znikała, gdy kursor przechodzi nad odstępem. */
+  .submenu::before {
+    content: '';
+    position: absolute;
+    inset: -0.9rem 0 auto 0;
+    height: 0.9rem;
+  }
+  .has-menu[data-open] .submenu,
+  .has-menu:hover:not([data-suppress]) .submenu {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
+  /* Bez JavaScriptu klawiatura i dotyk też mają dostęp do list. */
+  @media (scripting: none) {
+    .has-menu:focus-within .submenu {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .submenu a {
+    display: block;
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.25rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  .submenu a:hover,
+  .submenu a[aria-current='page'] {
+    background: var(--color-ice);
+  }
+  .submenu a[aria-current='page'] {
+    font-weight: 600;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .submenu,
+    .submenu-toggle svg {
+      transition: none;
+    }
+  }
+
   /* `display` ustawiamy tylko dla otwartego popovera, by nie nadpisać domyślnego ukrywania. */
   .mobile-menu {
     margin: 0;
@@ -170,6 +325,43 @@ const links = [
     update();
     window.addEventListener('scroll', update, { passive: true });
   }
+
+  // Listy rozwijane: najechanie działa w CSS, a klik/dotyk/klawiatura przez data-open.
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('.has-menu'));
+  const setOpen = (li: HTMLElement, open: boolean) => {
+    li.toggleAttribute('data-open', open);
+    li.querySelector('.submenu-toggle')?.setAttribute('aria-expanded', String(open));
+  };
+  groups.forEach((li) => {
+    const toggle = li.querySelector<HTMLElement>('.submenu-toggle');
+    toggle?.addEventListener('click', () => {
+      const open = !li.hasAttribute('data-open');
+      groups.forEach((g) => setOpen(g, false));
+      setOpen(li, open);
+    });
+    li.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && li.hasAttribute('data-open')) {
+        setOpen(li, false);
+        toggle?.focus();
+      }
+    });
+    li.addEventListener('focusout', (e) => {
+      if (!li.contains(e.relatedTarget as Node | null)) setOpen(li, false);
+    });
+    // Po wyborze pozycji lista chowa się, nawet gdy kursor nadal nad nią stoi.
+    li.querySelectorAll('.submenu a').forEach((a) =>
+      a.addEventListener('click', () => {
+        setOpen(li, false);
+        li.setAttribute('data-suppress', '');
+      }),
+    );
+    li.addEventListener('mouseleave', () => li.removeAttribute('data-suppress'));
+  });
+  document.addEventListener('click', (e) => {
+    groups.forEach((g) => {
+      if (!g.contains(e.target as Node)) setOpen(g, false);
+    });
+  });
 
   // Po kliknięciu linku w menu mobilnym zamykamy popover (przeskok do sekcji / nowa strona).
   const menu = document.getElementById('menu');
