@@ -34,7 +34,10 @@ export const en: Dict = {
   },
   hero: {
     title: 'Reliable accounting for NGOs and business',
-    text: 'At Everest Accounting Office & NGO we combine knowledge and experience in accounting, taxes, payroll and HR. We rely on partnership and an individual approach to every client.',
+    paragraphs: [
+      'At Everest Accounting Office & NGO we combine knowledge and experience in accounting, taxes, payroll and HR',
+      'We rely on partnership and an individual approach to every client',
+    ],
     primary: 'Contact us',
     secondary: 'See our services',
     chartLabel: 'Illustration: a mountain ridge that is also a growth chart',
@@ -57,6 +60,11 @@ export const en: Dict = {
     metaDescription:
       'Fill in a short form and we will prepare a preliminary quote for bookkeeping and payroll services for your organisation or business.',
     title: 'Request a quote',
+    intro:
+      'Fill in a short form to give us the most important information about your organisation. It will only take you a few minutes. Based on the data you provide, we will prepare a preliminary quote and send you our offer within 2 working days.',
+    consultation:
+      'For interested clients we also offer a free consultation, during which we will discuss your organisation’s needs in detail and present solutions tailored to its specifics. We offer flexible meeting formats – you are welcome at our office in central Warsaw or for an online consultation.',
+    consultationCta: 'Book a consultation',
   },
   trust: {
     title: 'Trusted by',
@@ -155,7 +163,95 @@ export const en: Dict = {
   },
   pricing: {
     title: 'Pricing',
+    paragraphs: [
+      'Every organisation and business has different needs and its own specifics, so we price our services individually. Among other things, we take into account the monthly number and type of accounting documents, the employment structure (employment contracts, civil-law contracts), the tax status and the nature of the activity. We also consider the current state of the books, including any arrears in bookkeeping and settlements that need to be completed or put in order.',
+      'Besides ongoing bookkeeping and payroll services, the agreement may also cover additional services, such as preparing financial statements for previous years or help in drawing up an accounting policy.',
+    ],
+    priceList: {
+      title: 'Price list',
+      intro: 'Below are indicative prices of selected services:',
+      items: [
+        { label: 'Bookkeeping', price: 'From PLN 400 net / month' },
+        { label: 'Civil-law contracts administration', price: 'From PLN 30 net / contract' },
+        { label: 'Additional services related to the activity', price: 'From PLN 150 net / hour' },
+        { label: 'Payroll for employment contracts', price: 'From PLN 110 / person / month' },
+      ],
+    },
+    closing:
+      'Want to know the cost of services tailored to your organisation or business? Use our quote form or book a free consultation!',
     cta: 'Request a quote',
+    ctaConsult: 'Book a free consultation',
+  },
+  quoteForm: {
+    stepLabel: 'Step',
+    stepOf: 'of',
+    steps: [
+      'Organisation',
+      'Documents and staff',
+      'Organisation status',
+      'Additional information',
+      'Summary',
+    ],
+    optionalHint:
+      'All fields except the consent are optional, but the more details you give, the more accurate the quote will be.',
+    next: 'Next',
+    back: 'Back',
+    edit: 'Edit',
+    submit: 'Send quote request',
+    summaryTitle: 'Check your details before sending',
+    empty: 'Not provided',
+    sending: 'Sending…',
+    success:
+      'Thank you! Your request has been sent. We will send you a quote within 2 working days.',
+    error: 'We could not send your request. Please try again or call us.',
+    yes: 'Yes',
+    no: 'No',
+    org: {
+      firstName: 'First name',
+      lastName: 'Last name',
+      orgName: 'Organisation name',
+      nip: 'Tax ID (NIP)',
+      email: 'Contact e-mail address',
+      phone: 'Phone (optional)',
+    },
+    docs: {
+      title: 'Approximate number of accounting documents per month',
+      hint: 'Enter numbers. Payroll lists follow from the number of employees, so you do not need to count them.',
+      invoices: 'Invoices (number)',
+      statements: 'Bank statements (number of PDF pages)',
+      receipts: 'Receipts (number)',
+      other: 'Other documents (number)',
+    },
+    staff: {
+      title: 'Number of people employed',
+      employees: 'Employees on employment contracts',
+      civil: 'People on civil-law contracts',
+      appointments: 'Appointments (e.g. board members)',
+    },
+    status: {
+      vat: 'Is the organisation a VAT payer?',
+      activities: 'What types of activity does the organisation carry out? (tick all that apply)',
+      activityFree: 'Statutory, free of charge',
+      activityPaid: 'Statutory, paid',
+      activityBusiness: 'Business activity',
+      opp: 'Does the organisation have public benefit organisation (OPP) status?',
+      current: 'Are the organisation’s accounts up to date?',
+      currentYes: 'Yes, there are no arrears',
+      currentNo: 'No, there are arrears',
+      currentNa: 'Not applicable – the organisation has not had its books kept so far',
+    },
+    more: {
+      info: 'Other relevant information about the organisation',
+      extra:
+        'Is the organisation interested in additional services, e.g. preparing an accounting policy? Describe what you need',
+      consent:
+        'I consent to the processing of my personal data in order to prepare a quote. The data controller is [COMPANY NAME – to be completed].',
+    },
+    errors: {
+      consent: 'Consent is required to send the request.',
+      email: 'Enter a valid e-mail address.',
+      number: 'Enter a whole number, e.g. 0 or 12.',
+    },
   },
   faq: {
     title: 'Got a question? Check our FAQ',

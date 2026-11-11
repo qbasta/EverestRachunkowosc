@@ -31,7 +31,10 @@ export const pl = {
   },
   hero: {
     title: 'Rzetelna księgowość dla NGO i biznesu',
-    text: 'W Everest Biuro Rachunkowe & NGO łączymy wiedzę i doświadczenie w obszarze księgowości, podatków oraz kadr i płac. Stawiamy na partnerską współpracę i indywidualne podejście do każdego klienta.',
+    paragraphs: [
+      'W Everest Biuro Rachunkowe & NGO łączymy wiedzę i doświadczenie w obszarze księgowości, podatków oraz kadr i płac',
+      'Stawiamy na partnerską współpracę i indywidualne podejście do każdego klienta',
+    ],
     primary: 'Skontaktuj się',
     secondary: 'Zobacz ofertę',
     chartLabel: 'Ilustracja: grzbiet górski będący jednocześnie wykresem wzrostu',
@@ -54,6 +57,11 @@ export const pl = {
     metaDescription:
       'Wypełnij krótki formularz, a przygotujemy wstępną wycenę obsługi księgowej i kadrowo-płacowej dla Twojej organizacji lub firmy.',
     title: 'Wycena usług',
+    intro:
+      'Wypełnij krótki formularz, aby przekazać nam najważniejsze informacje o swojej organizacji. Jego uzupełnienie zajmie Ci tylko kilka minut. Na podstawie przekazanych danych przygotujemy wstępną wycenę usług i prześlemy Ci naszą ofertę w ciągu 2 dni roboczych.',
+    consultation:
+      'Dla zainteresowanych klientów oferujemy również bezpłatną konsultację, podczas której omówimy szczegółowo potrzeby Twojej organizacji i przedstawimy rozwiązania dopasowane do jej specyfiki. Oferujemy elastyczne formy spotkań – zapraszamy do naszego biura w centrum Warszawy lub na konsultację online.',
+    consultationCta: 'Umów konsultację',
   },
   trust: {
     title: 'Zaufali nam już',
@@ -152,7 +160,97 @@ export const pl = {
   },
   pricing: {
     title: 'Wycena usług',
+    paragraphs: [
+      'Każda organizacja i przedsiębiorstwo ma inne potrzeby i swoją specyfikę, więc do wyceny usług podchodzimy indywidualnie. Uwzględniamy między innymi miesięczną liczbę i rodzaj dokumentów księgowych, strukturę zatrudnienia (umowy o pracę, umowy cywilnoprawne), status podatkowy oraz charakter prowadzonej działalności. Bierzemy pod uwagę aktualny stan księgowości, w tym ewentualne zaległości w prowadzeniu ksiąg i rozliczeniach, wymagające uzupełnienia lub uporządkowania.',
+      'Oprócz bieżącej obsługi księgowej i kadrowo-płacowej umowa może obejmować również usługi dodatkowe, takie jak sporządzanie sprawozdań finansowych za lata ubiegłe lub pomoc w opracowaniu polityki rachunkowości.',
+    ],
+    priceList: {
+      title: 'Cennik usług',
+      intro: 'Poniżej przedstawiamy orientacyjne ceny wybranych usług:',
+      items: [
+        { label: 'Obsługa księgowa', price: 'Od 400 zł netto / miesiąc' },
+        { label: 'Obsługa umów cywilnoprawnych', price: 'Od 30 zł netto / umowę' },
+        { label: 'Usługi dodatkowe w zakresie działalności', price: 'Od 150 zł netto / godzinę' },
+        // TODO(klient): czy 110 zł jest kwotą netto?
+        { label: 'Obsługa kadrowo-płacowa umów o pracę', price: 'Od 110 zł / osobę / miesiąc' },
+      ],
+    },
+    closing:
+      'Chcesz poznać koszt obsługi dopasowany do potrzeb Twojej organizacji lub firmy? Skorzystaj z naszego formularza wyceny lub umów się na bezpłatną konsultację!',
     cta: 'Poproś o wycenę',
+    ctaConsult: 'Umów bezpłatną konsultację',
+  },
+  quoteForm: {
+    stepLabel: 'Krok',
+    stepOf: 'z',
+    steps: [
+      'Organizacja',
+      'Dokumenty i zatrudnienie',
+      'Status organizacji',
+      'Dodatkowe informacje',
+      'Podsumowanie',
+    ],
+    optionalHint:
+      'Wszystkie pola poza zgodą są nieobowiązkowe, ale im więcej danych podasz, tym dokładniejsza będzie wycena.',
+    next: 'Dalej',
+    back: 'Wstecz',
+    edit: 'Zmień',
+    submit: 'Wyślij zapytanie o wycenę',
+    summaryTitle: 'Sprawdź dane przed wysłaniem',
+    empty: 'Nie podano',
+    sending: 'Wysyłanie…',
+    success: 'Dziękujemy! Zapytanie zostało wysłane. Wycenę prześlemy w ciągu 2 dni roboczych.',
+    error: 'Nie udało się wysłać zapytania. Spróbuj ponownie lub zadzwoń do nas.',
+    yes: 'Tak',
+    no: 'Nie',
+    org: {
+      firstName: 'Imię',
+      lastName: 'Nazwisko',
+      orgName: 'Nazwa organizacji',
+      nip: 'NIP',
+      email: 'Adres e-mail do kontaktu',
+      phone: 'Telefon (opcjonalnie)',
+    },
+    docs: {
+      title: 'Orientacyjna liczba dokumentów księgowych miesięcznie',
+      hint: 'Wpisz liczby. Listy płac wynikają z liczby zatrudnionych osób, więc nie musisz ich liczyć.',
+      invoices: 'Faktury (liczba)',
+      statements: 'Wyciągi bankowe (liczba stron w PDF)',
+      receipts: 'Rachunki (liczba)',
+      other: 'Inne dokumenty (liczba)',
+    },
+    staff: {
+      title: 'Liczba zatrudnionych osób',
+      employees: 'Pracownicy etatowi',
+      civil: 'Osoby na umowach cywilnoprawnych',
+      appointments: 'Powołania',
+    },
+    status: {
+      vat: 'Czy organizacja jest podatnikiem VAT?',
+      activities:
+        'Jakie rodzaje działalności prowadzi organizacja? (zaznacz wszystkie, które dotyczą)',
+      activityFree: 'Nieodpłatna statutowa',
+      activityPaid: 'Odpłatna statutowa',
+      activityBusiness: 'Gospodarcza',
+      opp: 'Czy organizacja posiada status OPP (organizacji pożytku publicznego)?',
+      current: 'Czy dotychczasowe rozliczenia księgowe są prowadzone na bieżąco?',
+      currentYes: 'Tak, nie ma zaległości',
+      currentNo: 'Nie, są zaległości',
+      currentNa: 'Nie dotyczy – organizacja nie miała dotychczas prowadzonej księgowości',
+    },
+    more: {
+      info: 'Inne istotne informacje o organizacji',
+      extra:
+        'Czy organizacja jest zainteresowana usługami dodatkowymi, np. przygotowaniem polityki rachunkowości? Opisz, czego potrzebujesz',
+      // TODO(klient): klauzula do zatwierdzenia przez klienta / prawnika (dane administratora: nazwa, NIP, adres)
+      consent:
+        'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu przygotowania wyceny. Administratorem danych jest [NAZWA FIRMY – do uzupełnienia].',
+    },
+    errors: {
+      consent: 'Zgoda jest wymagana, aby wysłać zapytanie.',
+      email: 'Podaj poprawny adres e-mail.',
+      number: 'Podaj liczbę całkowitą, np. 0 lub 12.',
+    },
   },
   faq: {
     title: 'Masz pytanie? Zajrzyj do sekcji FAQ',
