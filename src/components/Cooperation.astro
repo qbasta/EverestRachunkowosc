@@ -1,4 +1,10 @@
 ---
+import CalendarCheck from '@lucide/astro/icons/calendar-check';
+import Activity from '@lucide/astro/icons/activity';
+import Laptop from '@lucide/astro/icons/laptop';
+import MessagesSquare from '@lucide/astro/icons/messages-square';
+import ChartColumn from '@lucide/astro/icons/chart-column';
+import SlidersHorizontal from '@lucide/astro/icons/sliders-horizontal';
 import Contours from './Contours.astro';
 import type { Dict } from '../i18n/pl';
 
@@ -6,6 +12,16 @@ interface Props {
   t: Dict;
 }
 const { t } = Astro.props;
+
+// Ikona dobierana po kluczu pozycji (klucze są wspólne dla PL i EN w słownikach).
+const icons = {
+  punctuality: CalendarCheck,
+  regulations: Activity,
+  remote: Laptop,
+  advice: MessagesSquare,
+  control: ChartColumn,
+  flexibility: SlidersHorizontal,
+} as const;
 ---
 
 <section
@@ -13,24 +29,37 @@ const { t } = Astro.props;
   aria-labelledby="cooperation-title"
   class="section-y bg-ice relative isolate overflow-hidden"
 >
+  <!-- Warstwice tylko w rogu obok nagłówka – nie leżą pod tekstem pozycji. -->
   <Contours
     class="text-summit pointer-events-none absolute inset-0 -z-10 h-full w-full"
-    style="-webkit-mask-image: linear-gradient(to left, #000 0%, transparent 62%); mask-image: linear-gradient(to left, #000 0%, transparent 62%);"
-    cx={1250}
-    cy={330}
-    rings={14}
+    style="-webkit-mask-image: radial-gradient(ellipse 48% 34% at 90% 0%, #000 0%, transparent 100%); mask-image: radial-gradient(ellipse 48% 34% at 90% 0%, #000 0%, transparent 100%);"
+    cx={1280}
+    cy={120}
+    rings={12}
     r0={30}
     dr={46}
     rot={8}
   />
   <div class="container-page">
-    <h2 id="cooperation-title" class="text-summit text-h2">
+    <h2 id="cooperation-title" class="text-summit text-h2 max-w-[22ch]">
       {t.cooperation.title}
     </h2>
-    <!-- Hasło jako duży cytat na całą szerokość: inny rytm niż pozostałe sekcje. -->
-    <p class="font-display text-summit mt-10 max-w-[24ch] text-[clamp(1.9rem,1.1rem+3vw,3.6rem)] leading-[1.1] font-semibold">
-      {t.cooperation.lead}
-    </p>
-    <p class="text-ink/85 mt-8 max-w-[62ch] lg:ml-[33.333%]">{t.cooperation.text}</p>
+
+    <ul class="mt-12 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-14">
+      {t.cooperation.items.map((item) => {
+        const Icon = icons[item.key as keyof typeof icons];
+        return (
+          <li class="flex flex-col items-start">
+            <span class="bg-summit mb-5 inline-flex h-14 w-14 items-center justify-center rounded text-white">
+              <Icon class="size-7" stroke-width={1.8} aria-hidden="true" />
+            </span>
+            <h3 class="font-display text-summit text-[1.4rem] leading-snug font-semibold">
+              {item.title}
+            </h3>
+            <p class="text-ink/85 mt-3 max-w-[40ch]">{item.text}</p>
+          </li>
+        );
+      })}
+    </ul>
   </div>
 </section>
