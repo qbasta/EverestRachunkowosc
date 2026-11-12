@@ -22,3 +22,37 @@ jobs:
       - run: npm run build
       # Zależności produkcyjne z lukami o wysokiej wadze blokują merge.
       - run: npm run audit:prod
+
+  # Testy w przeglądarkach: Chromium (Chrome/Edge), Firefox i WebKit (Safari) oraz iPhone w WebKit.
+  e2e:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: chromium
+            browser: chromium
+          - project: firefox
+            browser: firefox
+          - project: webkit
+            browser: webkit
+          - project: mobile-safari
+            browser: webkit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: npm run build
+      - run: npx playwright test --project=${{ matrix.project }}
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-${{ matrix.project }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

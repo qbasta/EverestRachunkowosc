@@ -13,13 +13,18 @@ npm run dev        # http://localhost:4321
 
 Po otwarciu folderu VS Code zaproponuje zalecane rozszerzenia (Astro, Tailwind, Prettier).
 
-| Polecenie            | Co robi                                           |
-| -------------------- | ------------------------------------------------- |
-| `npm run dev`        | serwer deweloperski                               |
-| `npm run build`      | kontrola typów (`astro check`) + build do `dist/` |
-| `npm run preview`    | podgląd zbudowanej strony                         |
-| `npm run format`     | formatowanie Prettierem                           |
-| `npm run audit:prod` | `npm audit` dla zależności produkcyjnych          |
+| Polecenie            | Co robi                                                 |
+| -------------------- | ------------------------------------------------------- |
+| `npm run dev`        | serwer deweloperski                                     |
+| `npm run build`      | kontrola typów (`astro check`) + build do `dist/`       |
+| `npm run preview`    | podgląd zbudowanej strony                               |
+| `npm run format`     | formatowanie Prettierem                                 |
+| `npm run audit:prod` | `npm audit` dla zależności produkcyjnych                |
+| `npm run test:e2e`   | testy w przeglądarkach (Playwright), po `npm run build` |
+
+### Testy w przeglądarkach
+
+Testy (`tests/e2e/`) sprawdzają kluczowe funkcje (menu, FAQ, kreator wyceny, brak przewijania w poziomie, wersje bez JavaScriptu) w Chromium, Firefoksie i WebKit (silnik Safari, także w emulacji iPhone'a). W CI uruchamiają się automatycznie przy każdym pull requeście. Lokalnie: `npx playwright install` (raz), potem `npm run build && npm run test:e2e`; pojedynczy silnik: `npx playwright test --project=firefox`.
 
 ## Struktura
 
