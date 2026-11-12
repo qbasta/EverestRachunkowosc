@@ -54,6 +54,125 @@ export const en: Dict = {
     metaDescription:
       'Answers to the most common questions about accounting for non-governmental organisations and businesses, grant accounting and how we work with clients.',
     title: 'Frequently asked questions',
+    // TODO(klient): confirm the intro.
+    intro:
+      'Here are the answers to the questions we hear most often from clients. Cannot find yours? Write or call us – we are happy to help.',
+    searchLabel: 'Search questions and answers',
+    searchPlaceholder: 'Type a keyword, e.g. grants',
+    categoriesLabel: 'Categories',
+    all: 'All',
+    expandAll: 'Expand all',
+    collapseAll: 'Collapse all',
+    resultsCount: 'Questions shown: {n}',
+    noResults: 'We could not find any questions matching “{q}”. Try another word or contact us.',
+    clearSearch: 'Clear search',
+    closing: {
+      title: 'Did not find your answer?',
+      text: 'Write or call us – we will answer your questions.',
+      cta: 'Contact us',
+      ctaQuote: 'Request a quote',
+    },
+    categories: [
+      { key: 'cooperation', label: 'Cooperation' },
+      { key: 'grants', label: 'Grants and funding' },
+      { key: 'scope', label: 'Scope of services' },
+      { key: 'pricing', label: 'Settlements and pricing' },
+    ],
+    items: [
+      {
+        id: 'ksiegowosc-fundacji-i-stowarzyszen',
+        category: 'scope',
+        q: 'Do you keep the books of foundations and associations?',
+        a: [
+          'Yes. We specialise in accounting for non-governmental organisations – they currently make up about 90% of our clients. We work with smaller and larger organisations, with different funding structures and scopes of activity. We serve entities that carry out free-of-charge, paid and business activities.',
+        ],
+      },
+      {
+        id: 'formy-ksiegowosci',
+        category: 'scope',
+        q: 'What forms of accounting does your office handle?',
+        a: [
+          'The office provides accounting services in the form of full accounting books kept in accordance with the Accounting Act. We do not handle simplified forms – the tax revenue and expense ledger or the simplified record of revenue and costs.',
+        ],
+      },
+      {
+        id: 'doswiadczenie-w-rozliczaniu-dotacji',
+        category: 'grants',
+        q: 'Do you have experience in accounting for subsidies and grants?',
+        a: [
+          'Yes. We have experience in the accounting of subsidies and grants from various sources, including public funds, European Union funds, the EEA, international cooperation programmes and private sources.',
+          'We are responsible for the correct accounting recognition of the funding received, in line with the Accounting Act, tax regulations and the organisation’s adopted accounting policy.',
+        ],
+      },
+      {
+        id: 'wspolpraca-przy-rozliczaniu-dotacji',
+        category: 'grants',
+        q: 'How does cooperation on grant accounting work?',
+        a: [
+          'After the funding agreement is signed, we ask for the project budget. On that basis we prepare a suitable structure of accounts that allows expenses to be recorded and monitored correctly. Documents are booked on the basis of materials described by the client in terms of their substance. The description should in particular include approval of the expense by an authorised person, an indication of the type of activity the expense relates to, and the source of its funding.',
+          'Worth remembering: we are responsible for the accounting side of the grant settlement. The organisation is responsible for assigning expenses to the project on the substantive side and for preparing and settling the project with the grantor.',
+        ],
+      },
+      {
+        id: 'zmiany-we-wczesniejszych-okresach',
+        category: 'grants',
+        q: 'Is it possible to make changes in earlier periods of a given year?',
+        a: [
+          'During the project it is also possible to make changes to the accounting records, including reclassifying entries between budget items or projects, if necessary.',
+          'Before the final settlement of funding or the closing of the financial year, we give the client a summary of accounting entries relating to the grants being implemented. This makes it possible to verify that the accounting records match the reports submitted to grantors.',
+        ],
+      },
+      {
+        id: 'ubezpieczenie-oc',
+        category: 'cooperation',
+        q: 'Do you have civil liability (OC) insurance?',
+        a: [
+          'Yes. We hold the mandatory civil liability (OC) insurance, as well as additional insurance covering VAT settlements, payroll and social security (ZUS) settlements, personal data protection (GDPR) and cybersecurity.',
+        ],
+      },
+      {
+        id: 'polityka-rachunkowosci',
+        category: 'scope',
+        q: 'Do you help prepare an organisation’s accounting policy?',
+        a: [
+          'Yes. We support organisations in drawing up and adapting their accounting policy (principles) to their individual needs.',
+          'We prepare each policy individually, in consultation with the Management Board and taking into account the specifics of the organisation’s activities, its sources of funding and its current needs.',
+        ],
+      },
+      {
+        id: 'doradztwo-podatkowe',
+        category: 'scope',
+        q: 'Do you provide tax advisory services?',
+        a: [
+          'We do not currently provide tax advisory services. However, as part of our work we offer ongoing support related to the organisation’s accounting.',
+        ],
+      },
+      {
+        id: 'wspolpraca-z-bieglymi-rewidentami',
+        category: 'cooperation',
+        q: 'Do you cooperate with statutory auditors during audits and the audit of financial statements?',
+        a: [
+          'Yes. We cooperate with statutory auditors on project audits and on the audit of organisations’ financial statements. The scope and rules of cooperation are agreed individually with the client and adapted to the organisation’s needs and the nature of the audit.',
+        ],
+      },
+      {
+        id: 'umowy-z-pracownikami-i-kontrahentami',
+        category: 'scope',
+        q: 'Do you prepare contracts with employees and contractors and supervise how they are concluded?',
+        a: [
+          'We do not prepare contracts with employees or contractors, because drafting them and supervising the process of concluding them fall within legal and administrative services.',
+          'As part of our accounting services we do, however, provide templates of the documents needed for correct settlements, including tax and contribution declarations, templates of bills for civil-law contracts and other documents related to concluding contracts.',
+        ],
+      },
+      {
+        id: 'miesiace-bez-dokumentow',
+        category: 'pricing',
+        q: 'How does settlement with the office work in months when the organisation has no accounting documents?',
+        a: [
+          'The basic accounting fee covers the document limit set in the agreement and also applies in months when the organisation submits no documents for booking. In our experience, however, such situations are very rare. The fee covers not only the day-to-day booking of documents but also constant readiness to cooperate, support in accounting matters and ongoing consultations – regardless of the number of documents in a given month.',
+        ],
+      },
+    ],
   },
   quotePage: {
     metaTitle: 'Request a quote | Everest – Accounting & NGO',
@@ -255,7 +374,11 @@ export const en: Dict = {
   },
   faq: {
     title: 'Got a question? Check our FAQ',
-    cta: 'See all questions',
+    cta: 'More questions?',
+    more: 'Full answer',
+    prev: 'Previous question',
+    next: 'Next question',
+    slide: 'Question {n} of {total}',
   },
   software: {
     title: 'Software',

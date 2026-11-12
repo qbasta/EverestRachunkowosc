@@ -1,22 +1,173 @@
 ---
+import ChevronLeft from '@lucide/astro/icons/chevron-left';
+import ChevronRight from '@lucide/astro/icons/chevron-right';
 import { pagePath, type Lang } from '../i18n';
 import type { Dict } from '../i18n/pl';
+import { FAQ_TEASER_IDS } from '../config/faq';
 
 interface Props {
   t: Dict;
   lang: Lang;
 }
 const { t, lang } = Astro.props;
+
+// Pytania z listy w config/faq.ts, w tej samej kolejności.
+const items = FAQ_TEASER_IDS.flatMap((id) => t.faqPage.items.filter((item) => item.id === id));
+const faqHref = pagePath('faq', lang);
 ---
 
-<!-- TODO(krok 5): ręczna karuzela z 4 najkrótszymi pytaniami + przycisk „Masz więcej pytań?”. -->
 <section id="faq" aria-labelledby="faq-title" class="section-y">
   <div class="container-page">
-    <h2 id="faq-title" class="text-summit text-h2 max-w-[24ch]">
-      {t.faq.title}
-    </h2>
-    <a href={pagePath('faq', lang)} class="btn btn-outline mt-8">
+    <div class="flex items-end justify-between gap-6">
+      <h2 id="faq-title" class="text-summit text-h2 max-w-[24ch]">
+        {t.faq.title}
+      </h2>
+      <!-- Przyciski pokazuje dopiero skrypt – bez JS karuzela nadal przewija się palcem lub klawiaturą. -->
+      <div data-faq-controls hidden>
+        <div class="flex gap-2">
+          <button type="button" class="faq-arrow" data-faq-prev aria-label={t.faq.prev}>
+            <ChevronLeft class="size-6" aria-hidden="true" />
+          </button>
+          <button type="button" class="faq-arrow" data-faq-next aria-label={t.faq.next}>
+            <ChevronRight class="size-6" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      data-faq-carousel
+      role="region"
+      aria-roledescription="carousel"
+      aria-labelledby="faq-title"
+      class="mt-10"
+    >
+      <div class="faq-track" data-faq-track tabindex="0">
+        {items.map((item, i) => (
+          <article
+            role="group"
+            aria-roledescription="slide"
+            aria-label={t.faq.slide
+              .replace('{n}', String(i + 1))
+              .replace('{total}', String(items.length))}
+            class="faq-card"
+          >
+            <h3 class="font-display text-summit text-[1.35rem] leading-snug font-semibold">
+              {item.q}
+            </h3>
+            <p class="text-ink/85 mt-4 line-clamp-6">{item.a[0]}</p>
+            <a
+              href={`${faqHref}#${item.id}`}
+              class="tlink mt-auto inline-block pt-6"
+              aria-label={`${t.faq.more}: ${item.q}`}
+            >
+              {t.faq.more}
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <a href={faqHref} class="btn btn-outline mt-10">
       {t.faq.cta}
     </a>
   </div>
 </section>
+
+<style>
+  .faq-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    padding-bottom: 0.75rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .faq-track {
+      scroll-behavior: smooth;
+    }
+  }
+  .faq-card {
+    display: flex;
+    flex: 0 0 88%;
+    flex-direction: column;
+    scroll-snap-align: start;
+    background: var(--color-ice);
+    border-top: 3px solid var(--color-summit);
+    padding: 1.75rem;
+  }
+  @media (min-width: 40rem) {
+    .faq-card {
+      flex-basis: calc(50% - 0.75rem);
+    }
+  }
+  .faq-arrow {
+    display: inline-flex;
+    height: 3rem;
+    width: 3rem;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--color-summit);
+    border-radius: 0.25rem;
+    color: var(--color-summit);
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .faq-arrow:hover:not([aria-disabled='true']) {
+    background: var(--color-summit);
+    color: #fff;
+  }
+  .faq-arrow[aria-disabled='true'] {
+    opacity: 0.35;
+    cursor: default;
+  }
+</style>
+
+<script>
+  // Ręczna karuzela: przewijanie o jedną kartę, stan przycisków wynika z pozycji przewinięcia.
+  const root = document.querySelector<HTMLElement>('[data-faq-carousel]');
+  const track = root?.querySelector<HTMLElement>('[data-faq-track]');
+  const controls = document.querySelector<HTMLElement>('[data-faq-controls]');
+  const prev = document.querySelector<HTMLButtonElement>('[data-faq-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-faq-next]');
+
+  if (track && controls && prev && next) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const max = track.scrollWidth - track.clientWidth;
+      // Wszystkie karty mieszczą się naraz – strzałki są zbędne.
+      controls.hidden = max <= 1;
+      prev.setAttribute('aria-disabled', String(track.scrollLeft <= 1));
+      next.setAttribute('aria-disabled', String(track.scrollLeft >= max - 1));
+    };
+    const schedule = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    const step = () => {
+      const card = track.firstElementChild as HTMLElement | null;
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return (card?.getBoundingClientRect().width ?? track.clientWidth) + gap;
+    };
+    const move = (dir: 1 | -1) => (button: HTMLButtonElement) => {
+      if (button.getAttribute('aria-disabled') === 'true') return;
+      track.scrollBy({ left: dir * step(), behavior: reduce.matches ? 'auto' : 'smooth' });
+    };
+
+    prev.addEventListener('click', () => move(-1)(prev));
+    next.addEventListener('click', () => move(1)(next));
+    track.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+  }
+</script>

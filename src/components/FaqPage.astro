@@ -1,6 +1,9 @@
 ---
+import ChevronDown from '@lucide/astro/icons/chevron-down';
+import Search from '@lucide/astro/icons/search';
+import X from '@lucide/astro/icons/x';
 import type { Lang } from '../i18n';
-import { getDict } from '../i18n';
+import { getDict, homePath, pagePath } from '../i18n';
 import Header from './Header.astro';
 import PageHeader from './PageHeader.astro';
 import Footer from './Footer.astro';
@@ -10,16 +13,304 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = getDict(lang);
+const f = t.faqPage;
+const categoryLabel = Object.fromEntries(f.categories.map((c) => [c.key, c.label]));
 ---
 
 <Header t={t} lang={lang} page="faq" />
 <main id="main">
-  <PageHeader title={t.faqPage.title} />
-  <!-- TODO: treść podstrony w kolejnych krokach (FAQ – krok 5, formularz wyceny – krok 4). -->
-  <section class="section-y">
-    <div class="container-page">
-      <p class="text-slate max-w-[60ch]">{t.pageSoon}</p>
+  <PageHeader title={f.title} />
+
+  <section class="section-y" aria-label={f.title}>
+    <div class="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
+      <p class="text-ink max-w-[52ch] text-xl leading-snug md:text-2xl lg:col-span-4">{f.intro}</p>
+
+      <div
+        class="lg:col-span-8"
+        data-faq-app
+        data-count-tpl={f.resultsCount}
+        data-empty-tpl={f.noResults}
+        data-expand={f.expandAll}
+        data-collapse={f.collapseAll}
+      >
+        <!-- Wyszukiwarka i filtry działają dzięki skryptowi; bez JS widać po prostu całą listę pytań. -->
+        <div data-faq-tools hidden>
+          <div class="mb-6">
+            <label for="faq-search" class="field-label">
+              {f.searchLabel}
+            </label>
+            <div class="relative">
+              <Search
+                class="text-slate pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2"
+                aria-hidden="true"
+              />
+              <input
+                id="faq-search"
+                type="search"
+                class="field-input faq-search"
+                placeholder={f.searchPlaceholder}
+                autocomplete="off"
+                spellcheck="false"
+                data-faq-search
+              />
+              <button
+                type="button"
+                class="faq-clear"
+                aria-label={f.clearSearch}
+                data-faq-clear
+                hidden
+              >
+                <X class="size-5" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+
+          <div role="group" aria-label={f.categoriesLabel} class="flex flex-wrap gap-2">
+            <button type="button" class="faq-chip" data-faq-cat="all" aria-pressed="true">
+              {f.all}
+            </button>
+            {f.categories.map((c) => (
+              <button type="button" class="faq-chip" data-faq-cat={c.key} aria-pressed="false">
+                {c.label}
+              </button>
+            ))}
+          </div>
+
+          <div class="border-mist mt-6 flex flex-wrap items-center justify-between gap-3 border-b pb-4">
+            <p class="text-slate text-sm" role="status" aria-live="polite" data-faq-count></p>
+            <button type="button" class="tlink text-sm" data-faq-toggle-all>
+              {f.expandAll}
+            </button>
+          </div>
+        </div>
+
+        <div data-faq-list>
+          {f.items.map((item) => (
+            <details id={item.id} class="faq-item" data-cat={item.category}>
+              <summary class="faq-summary">
+                <span class="min-w-0">
+                  <span class="text-slate block text-xs font-semibold tracking-wide uppercase">
+                    {categoryLabel[item.category]}
+                  </span>
+                  <h3 class="font-display text-summit mt-1 text-[1.2rem] leading-snug font-semibold md:text-[1.35rem]">
+                    {item.q}
+                  </h3>
+                </span>
+                <ChevronDown class="faq-chevron size-6 shrink-0" aria-hidden="true" />
+              </summary>
+              <div class="faq-body">
+                {item.a.map((p) => (
+                  <p>{p}</p>
+                ))}
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <p class="text-ink mt-8" role="status" data-faq-empty hidden></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="faq-cta-title" class="section-y bg-summit text-white">
+    <div class="container-page flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+      <div>
+        <h2 id="faq-cta-title" class="text-h3">
+          {f.closing.title}
+        </h2>
+        <p class="mt-3 max-w-[44ch] text-white/85">{f.closing.text}</p>
+      </div>
+      <div class="flex shrink-0 flex-wrap gap-3">
+        <a href={`${homePath(lang)}#contact`} class="btn btn-light">
+          {f.closing.cta}
+        </a>
+        <a href={pagePath('quote', lang)} class="btn btn-ghost">
+          {f.closing.ctaQuote}
+        </a>
+      </div>
     </div>
   </section>
 </main>
 <Footer t={t} lang={lang} />
+
+<style>
+  .faq-item {
+    border-bottom: 1px solid var(--color-mist);
+  }
+  .faq-summary {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.5rem;
+    list-style: none;
+  }
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-summary:hover h3 {
+    color: var(--color-glacier);
+  }
+  .faq-chevron {
+    color: var(--color-summit);
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-body {
+    max-width: 68ch;
+    padding-bottom: 1.75rem;
+    color: color-mix(in srgb, var(--color-ink) 90%, transparent);
+  }
+  .faq-body p + p {
+    margin-top: 1rem;
+  }
+  .faq-search {
+    padding-inline: 2.75rem;
+  }
+  /* Usuwa natywny krzyżyk pola wyszukiwania – mamy własny przycisk, taki sam w każdej przeglądarce. */
+  .faq-search::-webkit-search-cancel-button {
+    display: none;
+    -webkit-appearance: none;
+  }
+  .faq-clear {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    display: inline-flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    transform: translateY(-50%);
+    align-items: center;
+    justify-content: center;
+    color: var(--color-slate);
+    cursor: pointer;
+  }
+  .faq-clear:hover {
+    color: var(--color-summit);
+  }
+  .faq-chip {
+    border: 1.5px solid var(--color-summit);
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-summit);
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .faq-chip:hover {
+    background: var(--color-ice);
+  }
+  .faq-chip[aria-pressed='true'] {
+    background: var(--color-summit);
+    color: #fff;
+  }
+</style>
+
+<script>
+  const app = document.querySelector<HTMLElement>('[data-faq-app]');
+  if (app) {
+    const tools = app.querySelector<HTMLElement>('[data-faq-tools]')!;
+    const search = app.querySelector<HTMLInputElement>('[data-faq-search]')!;
+    const clear = app.querySelector<HTMLButtonElement>('[data-faq-clear]')!;
+    const chips = [...app.querySelectorAll<HTMLButtonElement>('[data-faq-cat]')];
+    const count = app.querySelector<HTMLElement>('[data-faq-count]')!;
+    const toggleAll = app.querySelector<HTMLButtonElement>('[data-faq-toggle-all]')!;
+    const empty = app.querySelector<HTMLElement>('[data-faq-empty]')!;
+    const items = [...app.querySelectorAll<HTMLDetailsElement>('details.faq-item')];
+    const { countTpl, emptyTpl, expand, collapse } = app.dataset as Record<string, string>;
+
+    // Bez ogonków i wielkości liter: „ksiegowosc” znajdzie „księgowość” (ł nie rozkłada się w NFD).
+    const norm = (s: string) =>
+      s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
+    const haystack = new Map(items.map((d) => [d, norm(d.textContent ?? '')]));
+
+    let category = 'all';
+    const visible = () => items.filter((d) => !d.hidden);
+
+    const syncToggle = () => {
+      const shown = visible();
+      toggleAll.hidden = shown.length === 0;
+      toggleAll.textContent = shown.length > 0 && shown.every((d) => d.open) ? collapse : expand;
+    };
+
+    const apply = () => {
+      const query = search.value.trim();
+      const terms = norm(query).split(/\s+/).filter(Boolean);
+      let n = 0;
+      for (const d of items) {
+        const ok =
+          (category === 'all' || d.dataset.cat === category) &&
+          terms.every((term) => haystack.get(d)!.includes(term));
+        d.hidden = !ok;
+        if (ok) n++;
+      }
+      count.textContent = countTpl.replace('{n}', String(n));
+      // Zapytanie wstawiane przez textContent – nie da się w nim ukryć znaczników.
+      empty.textContent = n === 0 ? emptyTpl.replace('{q}', query) : '';
+      empty.hidden = n !== 0;
+      clear.hidden = query === '';
+      syncToggle();
+    };
+
+    const setCategory = (key: string) => {
+      category = key;
+      for (const chip of chips)
+        chip.setAttribute('aria-pressed', String(chip.dataset.faqCat === key));
+    };
+
+    search.addEventListener('input', apply);
+    clear.addEventListener('click', () => {
+      search.value = '';
+      apply();
+      search.focus();
+    });
+    for (const chip of chips) {
+      chip.addEventListener('click', () => {
+        setCategory(chip.dataset.faqCat ?? 'all');
+        apply();
+      });
+    }
+    toggleAll.addEventListener('click', () => {
+      const open = toggleAll.textContent === expand;
+      for (const d of visible()) d.open = open;
+      syncToggle();
+    });
+
+    // Otwarcie pytania zapisuje jego adres w pasku (do skopiowania i wysłania dalej), bez przewijania strony.
+    for (const d of items) {
+      d.querySelector('summary')!.addEventListener('click', () => {
+        const opening = !d.open;
+        const base = location.pathname + location.search;
+        if (opening) history.replaceState(null, '', `${base}#${d.id}`);
+        else if (location.hash === `#${d.id}`) history.replaceState(null, '', base);
+      });
+      d.addEventListener('toggle', syncToggle);
+    }
+
+    // Link do konkretnego pytania (/faq#id): czyści filtry, otwiera pytanie i ustawia na nim fokus.
+    const openFromHash = () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      const target = items.find((d) => d.id === id);
+      if (!target) return;
+      search.value = '';
+      setCategory('all');
+      apply();
+      target.open = true;
+      target.scrollIntoView({ block: 'start' });
+      // Fokus dopiero po tym, jak przeglądarka skończy własną obsługę #fragmentu (inaczej go zabiera).
+      requestAnimationFrame(() => target.querySelector('summary')!.focus({ preventScroll: true }));
+    };
+
+    tools.hidden = false;
+    apply();
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+  }
+</script>
