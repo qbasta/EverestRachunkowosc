@@ -1,8 +1,9 @@
 ---
 import type { Lang } from '../i18n';
-import { getDict } from '../i18n';
+import { getDict, homePath } from '../i18n';
 import Header from './Header.astro';
 import PageHeader from './PageHeader.astro';
+import QuoteForm from './QuoteForm.astro';
 import Footer from './Footer.astro';
 
 interface Props {
@@ -15,10 +16,26 @@ const t = getDict(lang);
 <Header t={t} lang={lang} page="quote" />
 <main id="main">
   <PageHeader title={t.quotePage.title} />
-  <!-- TODO: treść podstrony w kolejnych krokach (FAQ – krok 5, formularz wyceny – krok 4). -->
-  <section class="section-y">
-    <div class="container-page">
-      <p class="text-slate max-w-[60ch]">{t.pageSoon}</p>
+
+  <section class="section-y" aria-label={t.quotePage.title}>
+    <div class="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
+      <p class="text-ink max-w-[52ch] text-xl leading-snug md:text-2xl lg:col-span-4">
+        {t.quotePage.intro}
+      </p>
+      <div class="lg:col-span-8">
+        <QuoteForm t={t} lang={lang} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-summit text-white" aria-labelledby="consult-title">
+    <div class="container-page flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+      <p id="consult-title" class="max-w-[62ch] text-lg leading-relaxed text-white/90">
+        {t.quotePage.consultation}
+      </p>
+      <a href={`${homePath(lang)}#contact`} class="btn btn-light shrink-0">
+        {t.quotePage.consultationCta}
+      </a>
     </div>
   </section>
 </main>

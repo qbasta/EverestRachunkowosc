@@ -132,7 +132,11 @@ const rings = contourRings({ cx: 720, cy: 560, rings: 17, r0: 34, dr: 40 });
     <h1 id="hero-title" class="text-h1 max-w-[24ch]">
       {t.hero.title}
     </h1>
-    <p class="text-ink/85 mt-6 max-w-[52ch] text-lg leading-relaxed md:text-xl">{t.hero.text}</p>
+    <div class="text-ink/85 mt-6 max-w-[52ch] space-y-3 text-lg leading-relaxed md:text-xl">
+      {t.hero.paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
     <div class="mt-10 flex flex-wrap gap-4">
       <a href={`${home}#contact`} class="btn btn-primary">
         {t.hero.primary}

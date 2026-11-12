@@ -1,0 +1,710 @@
+---
+import type { Lang } from '../i18n';
+import type { Dict } from '../i18n/pl';
+
+interface Props {
+  t: Dict;
+  lang: Lang;
+}
+const { t, lang } = Astro.props;
+const f = t.quoteForm;
+
+// Adres endpointu (wartość publiczna – sekrety zostają wyłącznie na serwerze). Endpoint powstanie w części technicznej.
+const endpoint = import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? '/api/quote.php';
+
+const config = JSON.stringify({
+  errors: f.errors,
+  texts: { sending: f.sending, success: f.success, error: f.error },
+  empty: f.empty,
+  stepLabel: f.stepLabel,
+  stepOf: f.stepOf,
+  edit: f.edit,
+});
+
+interface TextField {
+  name: string;
+  label: string;
+  type: 'text' | 'email' | 'tel';
+  autocomplete?: string;
+  maxlength: number;
+}
+interface NumberField {
+  name: string;
+  label: string;
+}
+
+const orgFields: TextField[] = [
+  {
+    name: 'firstName',
+    label: f.org.firstName,
+    type: 'text',
+    autocomplete: 'given-name',
+    maxlength: 60,
+  },
+  {
+    name: 'lastName',
+    label: f.org.lastName,
+    type: 'text',
+    autocomplete: 'family-name',
+    maxlength: 80,
+  },
+  {
+    name: 'orgName',
+    label: f.org.orgName,
+    type: 'text',
+    autocomplete: 'organization',
+    maxlength: 160,
+  },
+  { name: 'nip', label: f.org.nip, type: 'text', maxlength: 20 },
+  { name: 'email', label: f.org.email, type: 'email', autocomplete: 'email', maxlength: 254 },
+  { name: 'phone', label: f.org.phone, type: 'tel', autocomplete: 'tel', maxlength: 25 },
+];
+const docFields: NumberField[] = [
+  { name: 'docInvoices', label: f.docs.invoices },
+  { name: 'docStatements', label: f.docs.statements },
+  { name: 'docReceipts', label: f.docs.receipts },
+  { name: 'docOther', label: f.docs.other },
+];
+const staffFields: NumberField[] = [
+  { name: 'staffEmployees', label: f.staff.employees },
+  { name: 'staffCivil', label: f.staff.civil },
+  { name: 'staffAppointments', label: f.staff.appointments },
+];
+const yesNo = [
+  { value: 'yes', label: f.yes },
+  { value: 'no', label: f.no },
+];
+const activities = [
+  { value: 'free', label: f.status.activityFree },
+  { value: 'paid', label: f.status.activityPaid },
+  { value: 'business', label: f.status.activityBusiness },
+];
+const current = [
+  { value: 'yes', label: f.status.currentYes },
+  { value: 'no', label: f.status.currentNo },
+  { value: 'na', label: f.status.currentNa },
+];
+---
+
+<form
+  id="quote-form"
+  method="post"
+  action={endpoint}
+  class="wz border-mist border bg-white p-6 md:p-10"
+  data-endpoint={endpoint}
+  data-config={config}
+>
+  <div class="wz-head" hidden>
+    <p class="wz-count text-summit font-semibold" aria-live="polite"></p>
+    <ol class="wz-progress" aria-label={f.steps.join(', ')}>
+      {f.steps.map((label, i) => (
+        <li data-n={i + 1}>
+          <span class="wz-dot">{i + 1}</span>
+          <span class="wz-label">{label}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <p class="text-slate mb-8 max-w-[62ch]">{f.optionalHint}</p>
+
+  <fieldset class="wz-step" data-step="1" data-title={f.steps[0]}>
+    <legend class="wz-legend" tabindex="-1">
+      {f.steps[0]}
+    </legend>
+    <div class="grid gap-5 sm:grid-cols-2">
+      {orgFields.map((fld) => (
+        <div data-field class={fld.name === 'orgName' ? 'sm:col-span-2' : undefined}>
+          <label for={`q-${fld.name}`} class="field-label">
+            {fld.label}
+          </label>
+          <input
+            id={`q-${fld.name}`}
+            name={fld.name}
+            type={fld.type}
+            autocomplete={fld.autocomplete}
+            maxlength={fld.maxlength}
+            class="field-input"
+            data-validate
+            aria-describedby={`q-${fld.name}-err`}
+          />
+          <p id={`q-${fld.name}-err`} class="field-error" hidden></p>
+        </div>
+      ))}
+    </div>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="2" data-title={f.steps[1]}>
+    <legend class="wz-legend" tabindex="-1">
+      {f.steps[1]}
+    </legend>
+
+    <p class="text-ink font-semibold">{f.docs.title}</p>
+    <p class="text-slate mt-1 text-sm">{f.docs.hint}</p>
+    <div class="mt-4 grid gap-5 sm:grid-cols-2">
+      {docFields.map((fld) => (
+        <div data-field>
+          <label for={`q-${fld.name}`} class="field-label">
+            {fld.label}
+          </label>
+          <input
+            id={`q-${fld.name}`}
+            name={fld.name}
+            type="number"
+            inputmode="numeric"
+            min="0"
+            max="1000000"
+            step="1"
+            class="field-input"
+            data-validate
+            aria-describedby={`q-${fld.name}-err`}
+          />
+          <p id={`q-${fld.name}-err`} class="field-error" hidden></p>
+        </div>
+      ))}
+    </div>
+
+    <p class="text-ink mt-10 font-semibold">{f.staff.title}</p>
+    <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {staffFields.map((fld) => (
+        <div data-field>
+          <label for={`q-${fld.name}`} class="field-label">
+            {fld.label}
+          </label>
+          <input
+            id={`q-${fld.name}`}
+            name={fld.name}
+            type="number"
+            inputmode="numeric"
+            min="0"
+            max="100000"
+            step="1"
+            class="field-input"
+            data-validate
+            aria-describedby={`q-${fld.name}-err`}
+          />
+          <p id={`q-${fld.name}-err`} class="field-error" hidden></p>
+        </div>
+      ))}
+    </div>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="3" data-title={f.steps[2]}>
+    <legend class="wz-legend" tabindex="-1">
+      {f.steps[2]}
+    </legend>
+    <div class="space-y-8">
+      <fieldset data-field>
+        <legend class="field-label">{f.status.vat}</legend>
+        <div class="wz-options">
+          {yesNo.map((o) => (
+            <label class="wz-option">
+              <input type="radio" name="vat" value={o.value} class="accent-summit" />
+              <span>{o.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset data-field>
+        <legend class="field-label">{f.status.activities}</legend>
+        <div class="wz-options wz-options-wide">
+          {activities.map((o) => (
+            <label class="wz-option">
+              <input type="checkbox" name="activities[]" value={o.value} class="accent-summit" />
+              <span>{o.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset data-field>
+        <legend class="field-label">{f.status.opp}</legend>
+        <div class="wz-options">
+          {yesNo.map((o) => (
+            <label class="wz-option">
+              <input type="radio" name="opp" value={o.value} class="accent-summit" />
+              <span>{o.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset data-field>
+        <legend class="field-label">{f.status.current}</legend>
+        <div class="wz-options wz-options-wide">
+          {current.map((o) => (
+            <label class="wz-option">
+              <input type="radio" name="current" value={o.value} class="accent-summit" />
+              <span>{o.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    </div>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="4" data-title={f.steps[3]}>
+    <legend class="wz-legend" tabindex="-1">
+      {f.steps[3]}
+    </legend>
+    <div class="space-y-6">
+      <div data-field>
+        <label for="q-info" class="field-label">
+          {f.more.info}
+        </label>
+        <textarea
+          id="q-info"
+          name="info"
+          rows="5"
+          maxlength="3000"
+          class="field-input resize-y"
+        ></textarea>
+      </div>
+      <div data-field>
+        <label for="q-extra" class="field-label">
+          {f.more.extra}
+        </label>
+        <textarea
+          id="q-extra"
+          name="extra"
+          rows="5"
+          maxlength="3000"
+          class="field-input resize-y"
+        ></textarea>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- Honeypot: niewidoczny dla ludzi, boty zwykle go wypełniają. -->
+  <div class="absolute -left-[9999px]" aria-hidden="true">
+    <label>
+      Website <input type="text" name="website" tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+  <input type="hidden" name="lang" value={lang} />
+  <input type="hidden" name="t" value="" />
+
+  <!-- Podsumowanie, zgoda i wysyłka. Bez JavaScriptu strona pokazuje wszystkie kroki jako jeden formularz,
+       więc zgoda i przycisk wysyłki są zawsze dostępne. -->
+  <div class="wz-final" data-title={f.steps[4]}>
+    <div class="wz-summary" hidden>
+      <h2 class="wz-legend" tabindex="-1">
+        {f.summaryTitle}
+      </h2>
+      <div class="wz-summary-list"></div>
+    </div>
+
+    <div class="mt-8 flex items-start gap-3">
+      <input
+        id="q-consent"
+        name="consent"
+        type="checkbox"
+        value="1"
+        required
+        class="accent-summit mt-1.5 h-5 w-5 shrink-0"
+        data-validate
+        aria-describedby="q-consent-err"
+      />
+      <label for="q-consent" class="text-slate text-sm leading-relaxed">
+        {f.more.consent}
+      </label>
+    </div>
+    <p id="q-consent-err" class="field-error" hidden></p>
+
+    <div class="mt-7 flex flex-wrap items-center gap-4">
+      <button type="button" class="btn btn-outline wz-back-final" data-wz="back" hidden>
+        {f.back}
+      </button>
+      <button type="submit" class="btn btn-primary wz-submit">
+        {f.submit}
+      </button>
+      <p id="q-status" role="status" aria-live="polite" class="text-sm font-medium"></p>
+    </div>
+  </div>
+
+  <div class="wz-nav mt-10 flex flex-wrap gap-3" hidden>
+    <button type="button" class="btn btn-outline" data-wz="back">
+      {f.back}
+    </button>
+    <button type="button" class="btn btn-primary" data-wz="next">
+      {f.next}
+    </button>
+  </div>
+
+  <div id="q-success" class="wz-success" role="status" tabindex="-1" hidden>
+    <p class="font-display text-summit text-h3">{f.success}</p>
+  </div>
+</form>
+
+<style is:global>
+  .wz {
+    position: relative;
+  }
+  .wz-step {
+    border: 0;
+    padding: 0;
+    margin: 0 0 2.5rem;
+    min-width: 0;
+  }
+  .wz-step[hidden],
+  .wz-final [hidden] {
+    display: none;
+  }
+  .wz-legend {
+    display: block;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 1.15rem + 1vw, 1.9rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-summit);
+  }
+  .wz-legend:focus {
+    outline: none;
+  }
+  .wz-options {
+    display: grid;
+    gap: 0.6rem;
+    grid-template-columns: repeat(2, minmax(0, 12rem));
+  }
+  .wz-options-wide {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 34rem;
+  }
+  .wz-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.75rem 0.9rem;
+    border: 1.5px solid #7b8ea8;
+    border-radius: 0.25rem;
+    background: #fff;
+    cursor: pointer;
+    line-height: 1.4;
+  }
+  .wz-option input {
+    margin-top: 0.2rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
+  }
+  .wz-option:hover {
+    border-color: var(--color-glacier);
+  }
+  .wz-option:has(input:checked) {
+    border-color: var(--color-summit);
+    background: var(--color-ice);
+  }
+
+  /* Pasek postępu: widoczny tylko po włączeniu kreatora przez JavaScript. */
+  .wz-head {
+    margin-bottom: 2rem;
+  }
+  .wz-progress {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+    list-style: none;
+    padding: 0;
+  }
+  .wz-progress li {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-top: 4px solid var(--color-mist);
+    padding-top: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--color-slate);
+  }
+  .wz-progress li[data-state='done'],
+  .wz-progress li[aria-current='step'] {
+    border-top-color: var(--color-summit);
+  }
+  .wz-progress li[aria-current='step'] {
+    color: var(--color-summit);
+    font-weight: 600;
+  }
+  .wz-dot {
+    display: none;
+  }
+  .wz-label {
+    display: none;
+    line-height: 1.3;
+  }
+  @media (min-width: 768px) {
+    .wz-label {
+      display: block;
+    }
+  }
+
+  .wz-summary-list h3 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-summit);
+  }
+  .wz-summary-group {
+    border-top: 1px solid var(--color-mist);
+    padding: 1.1rem 0;
+  }
+  .wz-summary-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .wz-summary-group dl {
+    display: grid;
+    gap: 0.55rem 1.5rem;
+    margin-top: 0.7rem;
+  }
+  @media (min-width: 640px) {
+    .wz-summary-group dl {
+      grid-template-columns: minmax(0, 18rem) 1fr;
+    }
+  }
+  .wz-summary-group dt {
+    color: var(--color-slate);
+    font-size: 0.92rem;
+  }
+  .wz-summary-group dd {
+    color: var(--color-ink);
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+  }
+  .wz-summary-group dd[data-empty] {
+    color: var(--color-slate);
+    font-style: italic;
+  }
+
+  #q-status[data-state='success'] {
+    color: #0f5132;
+  }
+  #q-status[data-state='error'] {
+    color: #b42318;
+  }
+  .wz-success:focus {
+    outline: none;
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#quote-form');
+
+  if (form) {
+    type Field = HTMLInputElement | HTMLTextAreaElement;
+    const config = JSON.parse(form.dataset.config ?? '{}') as {
+      errors: Record<string, string>;
+      texts: Record<string, string>;
+      empty: string;
+      stepLabel: string;
+      stepOf: string;
+      edit: string;
+    };
+    const endpoint = form.dataset.endpoint ?? '';
+    const steps = Array.from(form.querySelectorAll<HTMLElement>('.wz-step'));
+    const total = steps.length + 1; // ostatni krok = podsumowanie + zgoda + wysyłka
+    const final = form.querySelector<HTMLElement>('.wz-final')!;
+    const summary = form.querySelector<HTMLElement>('.wz-summary')!;
+    const summaryList = form.querySelector<HTMLElement>('.wz-summary-list')!;
+    const head = form.querySelector<HTMLElement>('.wz-head')!;
+    const count = form.querySelector<HTMLElement>('.wz-count')!;
+    const progress = Array.from(form.querySelectorAll<HTMLElement>('.wz-progress li'));
+    const nav = form.querySelector<HTMLElement>('.wz-nav')!;
+    const back = nav.querySelector<HTMLButtonElement>('[data-wz="back"]')!;
+    const backFinal = final.querySelector<HTMLButtonElement>('[data-wz="back"]')!;
+    const next = nav.querySelector<HTMLButtonElement>('[data-wz="next"]')!;
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const status = form.querySelector<HTMLElement>('#q-status')!;
+    const success = form.querySelector<HTMLElement>('#q-success')!;
+    const timer = form.elements.namedItem('t') as HTMLInputElement | null;
+    const consent = form.querySelector<HTMLInputElement>('#q-consent')!;
+    let current = 1;
+
+    // Znacznik czasu wczytania – serwer odrzuca formularze „wysłane” w ułamku sekundy.
+    const stamp = () => {
+      if (timer) timer.value = String(Date.now());
+    };
+    stamp();
+
+    const errorFor = (el: Field): string => {
+      const v = el.validity;
+      if (el.type === 'checkbox') return v.valueMissing ? (config.errors.consent ?? '') : '';
+      if (el.type === 'email' && (v.typeMismatch || v.tooLong)) return config.errors.email ?? '';
+      if (
+        el.type === 'number' &&
+        (v.badInput || v.rangeUnderflow || v.rangeOverflow || v.stepMismatch)
+      )
+        return config.errors.number ?? '';
+      return '';
+    };
+
+    const show = (el: Field, message: string) => {
+      const out = form.querySelector<HTMLElement>(`#${el.id}-err`);
+      el.setAttribute('aria-invalid', message ? 'true' : 'false');
+      if (out) {
+        out.textContent = message;
+        out.hidden = !message;
+      }
+    };
+
+    const validate = (scope: ParentNode): Field | undefined => {
+      let first: Field | undefined;
+      scope.querySelectorAll<Field>('[data-validate]').forEach((el) => {
+        const message = errorFor(el);
+        show(el, message);
+        if (message && !first) first = el;
+      });
+      return first;
+    };
+
+    form.querySelectorAll<Field>('[data-validate]').forEach((el) => {
+      el.addEventListener('blur', () => show(el, errorFor(el)));
+      el.addEventListener('input', () => {
+        if (el.getAttribute('aria-invalid') === 'true') show(el, errorFor(el));
+      });
+    });
+
+    const labelText = (group: HTMLElement): string =>
+      (group.querySelector('label.field-label, legend.field-label')?.textContent ?? '').trim();
+
+    const valueText = (group: HTMLElement): string => {
+      const text = group.querySelector<Field>(
+        'input:not([type="radio"]):not([type="checkbox"]), textarea',
+      );
+      if (text) return text.value.trim();
+      const checked = Array.from(group.querySelectorAll<HTMLInputElement>('input:checked'));
+      return checked.map((c) => c.closest('label')?.textContent?.trim() ?? c.value).join(', ');
+    };
+
+    const renderSummary = () => {
+      summaryList.replaceChildren();
+      steps.forEach((step, i) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'wz-summary-group';
+
+        const headRow = document.createElement('div');
+        headRow.className = 'wz-summary-head';
+        const h = document.createElement('h3');
+        h.textContent = step.dataset.title ?? '';
+        const edit = document.createElement('button');
+        edit.type = 'button';
+        edit.className = 'tlink';
+        edit.textContent = config.edit;
+        edit.addEventListener('click', () => go(i + 1));
+        headRow.append(h, edit);
+
+        const dl = document.createElement('dl');
+        step.querySelectorAll<HTMLElement>('[data-field]').forEach((group) => {
+          const dt = document.createElement('dt');
+          dt.textContent = labelText(group);
+          const dd = document.createElement('dd');
+          const value = valueText(group);
+          dd.textContent = value || config.empty;
+          if (!value) dd.setAttribute('data-empty', '');
+          dl.append(dt, dd);
+        });
+        wrap.append(headRow, dl);
+        summaryList.append(wrap);
+      });
+    };
+
+    const go = (n: number, focus = true) => {
+      current = n;
+      steps.forEach((s, i) => (s.hidden = i + 1 !== n));
+      const last = n === total;
+      final.hidden = !last;
+      summary.hidden = !last;
+      nav.hidden = last;
+      backFinal.hidden = !last;
+      back.hidden = n === 1;
+      next.hidden = last;
+      submit.hidden = !last;
+      progress.forEach((li, i) => {
+        if (i + 1 === n) li.setAttribute('aria-current', 'step');
+        else li.removeAttribute('aria-current');
+        li.dataset.state = i + 1 < n ? 'done' : 'todo';
+      });
+      count.textContent = `${config.stepLabel} ${n} ${config.stepOf} ${total}`;
+      if (last) renderSummary();
+      if (focus) {
+        const target = last
+          ? summary.querySelector<HTMLElement>('.wz-legend')
+          : steps[n - 1].querySelector<HTMLElement>('.wz-legend');
+        target?.focus({ preventScroll: true });
+        form.scrollIntoView({
+          block: 'start',
+          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        });
+      }
+    };
+
+    // Włączamy kreator (bez JavaScriptu wszystkie kroki są widoczne jako jeden formularz).
+    form.noValidate = true;
+    head.hidden = false;
+    go(1, false);
+
+    next.addEventListener('click', () => {
+      const bad = validate(steps[current - 1]);
+      if (bad) {
+        bad.focus();
+        return;
+      }
+      go(current + 1);
+    });
+    back.addEventListener('click', () => go(current - 1));
+    backFinal.addEventListener('click', () => go(current - 1));
+
+    const setStatus = (state: string, message: string) => {
+      status.dataset.state = state;
+      status.textContent = message;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      // Enter w polu tekstowym na wcześniejszym kroku działa jak „Dalej”, a nie wysyła formularza.
+      if (current < total) {
+        next.click();
+        return;
+      }
+      for (let i = 0; i < steps.length; i++) {
+        const bad = validate(steps[i]);
+        if (bad) {
+          go(i + 1);
+          bad.focus();
+          return;
+        }
+      }
+      const noConsent = validate(final);
+      if (noConsent) {
+        noConsent.focus();
+        return;
+      }
+
+      submit.disabled = true;
+      setStatus('pending', config.texts.sending ?? '');
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        Array.from(form.children).forEach((c) => {
+          if (c !== success) (c as HTMLElement).hidden = true;
+        });
+        success.hidden = false;
+        success.focus();
+      } catch {
+        setStatus('error', config.texts.error ?? '');
+      } finally {
+        submit.disabled = false;
+      }
+    });
+
+    consent.addEventListener('change', () => show(consent, errorFor(consent)));
+  }
+</script>
