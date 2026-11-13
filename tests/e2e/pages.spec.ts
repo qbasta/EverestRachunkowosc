@@ -21,7 +21,8 @@ for (const path of pages) {
       for (const width of [1440, 390]) {
         await page.setViewportSize({ width, height: 900 });
         const response = await page.goto(path);
-        expect(response?.status()).toBe(200);
+        // 304 = ta sama strona wczytana ponownie z pamięci podręcznej (przy zmianie szerokości okna).
+        expect([200, 304]).toContain(response?.status());
         await expect(page.locator('h1')).toBeVisible();
         expect(await horizontalOverflow(page), `szerokość ${width}`).toBeLessThanOrEqual(0);
       }

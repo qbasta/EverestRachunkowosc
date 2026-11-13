@@ -305,7 +305,17 @@ const categoryLabel = Object.fromEntries(f.categories.map((c) => [c.key, c.label
       target.open = true;
       target.scrollIntoView({ block: 'start' });
       // Fokus dopiero po tym, jak przeglądarka skończy własną obsługę #fragmentu (inaczej go zabiera).
-      requestAnimationFrame(() => target.querySelector('summary')!.focus({ preventScroll: true }));
+      const summary = target.querySelector('summary')!;
+      const focusSummary = () => summary.focus({ preventScroll: true });
+      requestAnimationFrame(focusSummary);
+      // Safari potrafi zabrać fokus jeszcze raz po załadowaniu strony – ponawiamy próbę.
+      if (document.readyState !== 'complete') {
+        window.addEventListener('load', () => setTimeout(focusSummary, 0), { once: true });
+      } else {
+        setTimeout(() => {
+          if (document.activeElement !== summary) focusSummary();
+        }, 100);
+      }
     };
 
     tools.hidden = false;
