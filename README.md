@@ -96,7 +96,7 @@ Gotowe (etap 1): szkielet, design tokens, PL/EN, podział na stronę główną i
 
 Do zrobienia (kolejne etapy):
 
-1. **Endpoint formularza** (`/api/contact.php`, PHP + SMTP): walidacja serwerowa, honeypot, minimalny czas wypełnienia, limit zapytań, sprawdzanie `Origin`, ochrona przed header injection, Turnstile/ALTCHA.
+1. **Endpoint formularza wyceny** (`/api/quote.php`, PHP + SMTP): walidacja serwerowa, honeypot, minimalny czas wypełnienia, limit zapytań, sprawdzanie `Origin`, ochrona przed header injection, Turnstile/ALTCHA.
 2. **Nagłówki bezpieczeństwa** (`.htaccess`): CSP, HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `frame-ancestors` + prawdziwe przekierowania 301 (`/signin`, `biuroeverest.pl` → domena główna).
 3. **Polityka prywatności** i klauzula RODO (dane administratora od klienta).
 4. Prawdziwe logo klientów (za ich zgodą), linki social, finalne treści i zdjęcia, obraz OG do udostępniania.

@@ -1,3 +1,11 @@
+/** Opis osoby: tekst = akapit, tablica tekstów = lista punktowana. */
+export interface TeamMember {
+  key: string;
+  role: string;
+  name: string;
+  description: (string | string[])[];
+}
+
 export const pl = {
   lang: 'pl',
   locale: 'pl_PL',
@@ -411,21 +419,49 @@ export const pl = {
           'Posiada certyfikaty głównego specjalisty w zakresie kadr i płac wydane przez Stowarzyszenie Księgowych w Polsce.',
         ],
       },
-    ],
+      {
+        key: 'marek',
+        role: 'Informatyk, programista',
+        name: 'Marek Kropiewnicki',
+        description: [
+          'Informatyk programista z kilkudziesięcioletnim doświadczeniem. Posiada wykształcenie ekonomiczne, ale od zawsze pracował w sferze IT. Od bardzo wielu lat prowadzi własną działalność gospodarczą. Zdobył doświadczenie w różnych dziedzinach IT jako:',
+          [
+            'Serwisant sprzętu komputerowego i oprogramowania',
+            'Instalator i administrator lokalnych sieci komputerowych',
+            'Instalator i administrator serwerów e-mail',
+            'Projektant i programista oprogramowania finansowo-księgowego i kadrowo-płacowego',
+            'Wdrożeniowiec oprogramowania kadrowo-płacowego własnego i innych producentów',
+          ],
+          'Od lat specjalizuje się w zarządzaniu infrastrukturą informatyczną biur rachunkowych. Zdobył certyfikat Google z ukończonego szkolenia „Umiejętności Jutra AI”. Wspomaga pracę biura przy wprowadzaniu danych do systemu finansowo-księgowego.',
+        ],
+      },
+      {
+        key: 'krzysztof',
+        role: 'Specjalista ds. rozliczeń kadrowo-płacowych',
+        name: 'Krzysztof Kuśmierowski',
+        description: [
+          'Prawo pracy, rachunkowość i podatki to jego sposób na życie i pasja od ponad 20 lat.',
+          'Absolwent Uniwersytetu Łódzkiego na kierunkach Finanse i bankowość oraz Prawo podatkowe i rachunkowość, a także Podyplomowych Studiów Cen Transferowych i Zarządzania Podatkami w Szkole Głównej Handlowej. Ukończył liczne kursy z zakresu rachunkowości, podatków oraz kadr i płac organizowane przez Stowarzyszenie Księgowych w Polsce oraz Akademię Prawa Pracy i Rachunkowości CEDOZ w Warszawie.',
+          'W swojej dotychczasowej pracy zawodowej zajmował się zarówno prowadzeniem ksiąg rachunkowych, jak również obsługą w zakresie kadr i płac podmiotów z kapitałem polskim i zagranicznym.',
+          'Prywatnie miłośnik podróży i wielki fan siatkówki.',
+        ],
+      },
+    ] as TeamMember[],
   },
   contact: {
     title: 'Skontaktuj się z nami',
-    intro: 'Opisz krótko, w czym możemy pomóc. Odpowiemy możliwie szybko.',
-    callUs: 'Lub zadzwoń pod numer',
-    labels: {
-      email: 'Twój e-mail',
-      name: 'Imię i nazwisko',
-      phone: 'Numer telefonu (opcjonalnie)',
-      message: 'Treść wiadomości',
+    intro: 'Zadzwoń, napisz lub odwiedź nas w biurze. Chętnie odpowiemy na Twoje pytania.',
+    hours: {
+      title: 'Godziny pracy',
+      rows: [
+        { days: 'Poniedziałek – czwartek', time: '9:00 – 17:00' },
+        { days: 'Piątek', time: '9:00 – 15:00' },
+      ],
     },
-    // TODO: klauzula do zatwierdzenia przez klienta / prawnika (dane administratora: nazwa, NIP, adres)
-    consent:
-      'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu odpowiedzi na zapytanie. Administratorem danych jest [NAZWA FIRMY – do uzupełnienia].',
+    quote: {
+      text: 'Chcesz poznać koszt obsługi? Wypełnij krótki formularz wyceny.',
+      cta: 'Poproś o wycenę',
+    },
     map: {
       label: 'Mapa z lokalizacją biura',
       show: 'Pokaż mapę',
@@ -433,16 +469,6 @@ export const pl = {
         'Po kliknięciu załaduje się mapa z serwisu Google Maps, który może zapisywać dane o Twoim urządzeniu.',
       open: 'Otwórz w Google Maps',
       iframeTitle: 'Mapa Google z lokalizacją biura Everest',
-    },
-    submit: 'Wyślij wiadomość',
-    sending: 'Wysyłanie…',
-    success: 'Wiadomość została wysłana. Odpowiemy możliwie szybko.',
-    error: 'Nie udało się wysłać wiadomości. Spróbuj ponownie lub zadzwoń pod numer podany obok.',
-    errors: {
-      required: 'Uzupełnij to pole.',
-      email: 'Podaj poprawny adres e-mail.',
-      phone: 'Podaj poprawny numer telefonu.',
-      consent: 'Zgoda jest wymagana, aby wysłać wiadomość.',
     },
   },
   footer: {
