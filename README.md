@@ -1,4 +1,4 @@
-# Everest Rachunkowość & NGO – strona internetowa
+# Everest Biuro Rachunkowe & NGO – strona internetowa
 
 Nowa wersja strony https://everest-rachunkowosc.pl – statyczna strona w **Astro 7** z **Tailwind CSS 4** i krojami **Source Serif 4** (nagłówki) oraz **Public Sans** (tekst), dwujęzyczna (PL domyślnie, EN pod `/en/`).
 

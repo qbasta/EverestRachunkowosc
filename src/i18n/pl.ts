@@ -10,7 +10,7 @@ export const pl = {
   lang: 'pl',
   locale: 'pl_PL',
   meta: {
-    title: 'Everest – Rachunkowość & NGO | Biuro rachunkowe Warszawa',
+    title: 'Everest Biuro Rachunkowe & NGO | Księgowość, kadry i płace – Warszawa',
     description:
       'Everest Biuro Rachunkowe & NGO – obsługa rachunkowa, podatkowa i kadrowo-płacowa dla organizacji pozarządowych i firm. Warszawa.',
   },
@@ -49,13 +49,13 @@ export const pl = {
   },
   pageSoon: 'Treść tej podstrony jest w przygotowaniu.',
   teamPage: {
-    metaTitle: 'Nasz zespół | Everest – Rachunkowość & NGO',
+    metaTitle: 'Nasz zespół | Everest Biuro Rachunkowe & NGO',
     metaDescription:
       'Poznaj zespół biura rachunkowego Everest: księgowość, kadry i płace oraz wsparcie informatyczne.',
     title: 'Nasz zespół',
   },
   faqPage: {
-    metaTitle: 'Najczęściej zadawane pytania | Everest – Rachunkowość & NGO',
+    metaTitle: 'Najczęściej zadawane pytania | Everest Biuro Rachunkowe & NGO',
     metaDescription:
       'Odpowiedzi na najczęstsze pytania o obsługę księgową organizacji pozarządowych i firm, rozliczanie dotacji oraz zasady współpracy z biurem Everest.',
     title: 'Najczęściej zadawane pytania',
@@ -182,7 +182,7 @@ export const pl = {
     ],
   },
   quotePage: {
-    metaTitle: 'Wycena usług | Everest – Rachunkowość & NGO',
+    metaTitle: 'Wycena usług | Everest Biuro Rachunkowe & NGO',
     metaDescription:
       'Wypełnij krótki formularz, a przygotujemy wstępną wycenę obsługi księgowej i kadrowo-płacowej dla Twojej organizacji lub firmy.',
     title: 'Wycena usług',
