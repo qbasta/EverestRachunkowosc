@@ -159,6 +159,7 @@ test.describe('FAQ – bez JavaScriptu', () => {
     await expect(page.locator('[data-faq-tools]')).toBeHidden();
     await expect(items(page)).toHaveCount(11);
     await page.locator('#formy-ksiegowosci summary').click();
-    await expect(page.locator('#formy-ksiegowosci')).toHaveJSProperty('open', true);
+    // Atrybut zamiast właściwości JS: przy wyłączonym JavaScripcie Firefox nie obsługuje odczytu właściwości.
+    await expect(page.locator('#formy-ksiegowosci')).toHaveAttribute('open', '');
   });
 });
