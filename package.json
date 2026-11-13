@@ -13,7 +13,8 @@
     "preview": "astro preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "audit:prod": "npm audit --omit=dev --audit-level=high"
+    "audit:prod": "npm audit --omit=dev --audit-level=high",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@playwright/test": "^1.65.0",
     "prettier": "^3.9.9",
     "prettier-plugin-astro": "^1.1.0",
     "typescript": "~6.0.3"

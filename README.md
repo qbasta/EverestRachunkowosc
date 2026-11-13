@@ -13,13 +13,18 @@ npm run dev        # http://localhost:4321
 
 Po otwarciu folderu VS Code zaproponuje zalecane rozszerzenia (Astro, Tailwind, Prettier).
 
-| Polecenie            | Co robi                                           |
-| -------------------- | ------------------------------------------------- |
-| `npm run dev`        | serwer deweloperski                               |
-| `npm run build`      | kontrola typów (`astro check`) + build do `dist/` |
-| `npm run preview`    | podgląd zbudowanej strony                         |
-| `npm run format`     | formatowanie Prettierem                           |
-| `npm run audit:prod` | `npm audit` dla zależności produkcyjnych          |
+| Polecenie            | Co robi                                                 |
+| -------------------- | ------------------------------------------------------- |
+| `npm run dev`        | serwer deweloperski                                     |
+| `npm run build`      | kontrola typów (`astro check`) + build do `dist/`       |
+| `npm run preview`    | podgląd zbudowanej strony                               |
+| `npm run format`     | formatowanie Prettierem                                 |
+| `npm run audit:prod` | `npm audit` dla zależności produkcyjnych                |
+| `npm run test:e2e`   | testy w przeglądarkach (Playwright), po `npm run build` |
+
+### Testy w przeglądarkach
+
+Testy (`tests/e2e/`) sprawdzają kluczowe funkcje (menu, FAQ, kreator wyceny, brak przewijania w poziomie, wersje bez JavaScriptu) w Chromium, Firefoksie i WebKit (silnik Safari, także w emulacji iPhone'a). W CI uruchamiają się automatycznie przy każdym pull requeście. Lokalnie: `npx playwright install` (raz), potem `npm run build && npm run test:e2e`; pojedynczy silnik: `npx playwright test --project=firefox`.
 
 ## Struktura
 
@@ -91,7 +96,7 @@ Gotowe (etap 1): szkielet, design tokens, PL/EN, podział na stronę główną i
 
 Do zrobienia (kolejne etapy):
 
-1. **Endpoint formularza** (`/api/contact.php`, PHP + SMTP): walidacja serwerowa, honeypot, minimalny czas wypełnienia, limit zapytań, sprawdzanie `Origin`, ochrona przed header injection, Turnstile/ALTCHA.
+1. **Endpoint formularza wyceny** (`/api/quote.php`, PHP + SMTP): walidacja serwerowa, honeypot, minimalny czas wypełnienia, limit zapytań, sprawdzanie `Origin`, ochrona przed header injection, Turnstile/ALTCHA.
 2. **Nagłówki bezpieczeństwa** (`.htaccess`): CSP, HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `frame-ancestors` + prawdziwe przekierowania 301 (`/signin`, `biuroeverest.pl` → domena główna).
 3. **Polityka prywatności** i klauzula RODO (dane administratora od klienta).
 4. Prawdziwe logo klientów (za ich zgodą), linki social, finalne treści i zdjęcia, obraz OG do udostępniania.

@@ -1,32 +1,24 @@
 import type { ImageMetadata } from 'astro';
 
-import mock01 from '../assets/clients/mock-01-fundacja-horyzont.svg';
-import mock02 from '../assets/clients/mock-02-nowa-droga.svg';
-import mock03 from '../assets/clients/mock-03-zielony-krag.svg';
-import mock04 from '../assets/clients/mock-04-centrum-dialogu.svg';
-import mock05 from '../assets/clients/mock-05-nordic-trade.svg';
-import mock06 from '../assets/clients/mock-06-dom-kultury-brzoza.svg';
-import mock07 from '../assets/clients/mock-07-ks-olimp.svg';
-import mock08 from '../assets/clients/mock-08-budtech.svg';
-
 export interface Client {
   name: string;
-  logo: ImageMetadata;
+  /** Logo (SVG lub PNG z `src/assets/clients/`). Bez logo pokazujemy placeholder z nazwą. */
+  logo?: ImageMetadata;
 }
 
 /**
- * MAKIETY – fikcyjne nazwy i znaki, tylko do pokazania układu karuzeli.
- * Podmiana: wrzuć prawdziwe logo (SVG lub PNG) do `src/assets/clients/`,
- * zaimportuj je powyżej i zamień wpisy poniżej.
- * WAŻNE: logo klienta publikujemy wyłącznie za jego zgodą (najlepiej pisemną / mailową).
+ * Klienci w pasku „Zaufali nam już”.
+ * TODO(klient): logo oraz zgoda na publikację od każdej organizacji (najlepiej pisemna / e-mailowa).
+ * Podmiana: wrzuć plik do `src/assets/clients/`, zaimportuj go i dodaj `logo` do wpisu poniżej.
+ * Dopóki nie ma logo, pokazujemy placeholder (ikona obrazka z krzyżykiem + nazwa).
  */
 export const clients: Client[] = [
-  { name: 'Fundacja Horyzont', logo: mock01 },
-  { name: 'Stowarzyszenie Nowa Droga', logo: mock02 },
-  { name: 'Zielony Krąg', logo: mock03 },
-  { name: 'Centrum Dialogu', logo: mock04 },
-  { name: 'Nordic Trade Sp. z o.o.', logo: mock05 },
-  { name: 'Dom Kultury Brzoza', logo: mock06 },
-  { name: 'KS Olimp', logo: mock07 },
-  { name: 'BudTech Sp. z o.o.', logo: mock08 },
+  { name: 'Fundacja Instrat' },
+  { name: 'Fundacja Herosi' },
+  { name: 'Fundacja Centrum im. Prof. B. Geremka' },
+  { name: 'Fundacja Gotowi na Przyszłość' },
+  { name: 'Polska Fundacja Dzieci i Młodzieży' },
+  { name: 'Fundacja Impuls dla Młodych' },
+  { name: 'Fundacja Instytut Reform' },
+  { name: 'Fundacja Pomocy Dzieciom z Chorobą Nowotworową' },
 ];

@@ -168,6 +168,11 @@ const faqHref = pagePath('faq', lang);
     next.addEventListener('click', () => move(1)(next));
     track.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
+    window.addEventListener('load', schedule);
+    // Układ może ustalić się już po uruchomieniu skryptu (np. Safari) – obserwujemy rozmiary toru i kart.
+    const observer = new ResizeObserver(schedule);
+    observer.observe(track);
+    for (const card of Array.from(track.children)) observer.observe(card);
     update();
   }
 </script>

@@ -410,37 +410,55 @@ export const en: Dict = {
           'She holds chief HR and payroll specialist certificates issued by the Accountants Association in Poland (SKwP).',
         ],
       },
+      {
+        key: 'marek',
+        role: 'IT specialist and software developer',
+        name: 'Marek Kropiewnicki',
+        description: [
+          'IT specialist and software developer with several decades of experience. He has an economics education but has always worked in IT. For many years he has run his own business. He has gained experience in various areas of IT as:',
+          [
+            'Computer hardware and software service technician',
+            'Installer and administrator of local computer networks',
+            'Installer and administrator of e-mail servers',
+            'Designer and developer of financial, accounting and payroll software',
+            'Implementation specialist for payroll software, both his own and from other vendors',
+          ],
+          'For years he has specialised in managing the IT infrastructure of accounting offices. He earned a Google certificate for completing the “AI Skills for Tomorrow” training. He supports the office with entering data into the financial and accounting system.',
+        ],
+      },
+      {
+        key: 'krzysztof',
+        role: 'Payroll and HR settlements specialist',
+        name: 'Krzysztof Kuśmierowski',
+        description: [
+          'Labour law, accounting and taxes have been his way of life and passion for over 20 years.',
+          'He is a graduate of the University of Łódź in Finance and Banking and in Tax Law and Accounting, as well as of the postgraduate studies in Transfer Pricing and Tax Management at the Warsaw School of Economics (SGH). He has completed numerous courses in accounting, taxes and payroll organised by the Accountants Association in Poland (SKwP) and the Academy of Labour Law and Accounting CEDOZ in Warsaw.',
+          'In his professional work to date he has handled both bookkeeping and payroll and HR services for entities with Polish and foreign capital.',
+          'In his private life he is a travel enthusiast and a big volleyball fan.',
+        ],
+      },
     ],
   },
   contact: {
     title: 'Get in touch',
-    intro: 'Tell us briefly how we can help. We will reply as soon as we can.',
-    callUs: 'Or call us on',
-    labels: {
-      email: 'Your email',
-      name: 'Full name',
-      phone: 'Phone number (optional)',
-      message: 'Your message',
+    intro: 'Call, write or visit us at the office. We are happy to answer your questions.',
+    hours: {
+      title: 'Opening hours',
+      rows: [
+        { days: 'Monday – Thursday', time: '9:00 – 17:00' },
+        { days: 'Friday', time: '9:00 – 15:00' },
+      ],
     },
-    consent:
-      'I consent to the processing of my personal data in order to reply to my enquiry. The data controller is [COMPANY NAME – to be completed].',
+    quote: {
+      text: 'Want to know what our services cost? Fill in a short quote form.',
+      cta: 'Request a quote',
+    },
     map: {
       label: 'Map showing the office location',
       show: 'Show map',
       notice: 'Clicking loads a map from Google Maps, which may store data about your device.',
       open: 'Open in Google Maps',
       iframeTitle: 'Google map showing the location of the Everest office',
-    },
-    submit: 'Send message',
-    sending: 'Sending…',
-    success: 'Your message has been sent. We will reply as soon as we can.',
-    error:
-      'Your message could not be sent. Please try again or call the number shown next to the form.',
-    errors: {
-      required: 'Please fill in this field.',
-      email: 'Enter a valid email address.',
-      phone: 'Enter a valid phone number.',
-      consent: 'Consent is required to send the message.',
     },
   },
   footer: {

@@ -26,4 +26,7 @@ export const teamProfiles: Record<string, TeamProfile> = {
     photo: julita,
     linkedin: 'https://www.linkedin.com/in/julita-markiewicz-8758b1230/',
   },
+  // Marek i Krzysztof: bez zdjęcia (karty tekstowe) i bez LinkedIn – ustalone z klientem.
+  marek: {},
+  krzysztof: {},
 };
