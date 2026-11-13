@@ -23,6 +23,7 @@ for (const path of pages) {
         const response = await page.goto(path);
         // 304 = ta sama strona wczytana ponownie z pamięci podręcznej (przy zmianie szerokości okna).
         expect([200, 304]).toContain(response?.status());
+        await expect(page).toHaveTitle(/Everest Biuro Rachunkowe & NGO/);
         await expect(page.locator('h1')).toBeVisible();
         expect(await horizontalOverflow(page), `szerokość ${width}`).toBeLessThanOrEqual(0);
       }

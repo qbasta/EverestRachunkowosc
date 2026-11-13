@@ -5,9 +5,9 @@ export const en: Dict = {
   lang: 'en',
   locale: 'en_GB',
   meta: {
-    title: 'Everest – Accounting & NGO | Accounting office in Warsaw',
+    title: 'Everest Biuro Rachunkowe & NGO | Accounting, payroll and tax services in Warsaw',
     description:
-      'Everest Accounting Office & NGO – bookkeeping, tax and payroll services for non-governmental organisations and businesses in Warsaw, Poland.',
+      'Everest Biuro Rachunkowe & NGO – bookkeeping, tax and payroll services for non-governmental organisations and businesses in Warsaw, Poland.',
   },
   a11y: {
     skip: 'Skip to content',
@@ -35,7 +35,7 @@ export const en: Dict = {
   hero: {
     title: 'Reliable accounting for NGOs and business',
     paragraphs: [
-      'At Everest Accounting Office & NGO we combine knowledge and experience in accounting, taxes, payroll and HR',
+      'At Everest Biuro Rachunkowe & NGO we combine knowledge and experience in accounting, taxes, payroll and HR',
       'We rely on partnership and an individual approach to every client',
     ],
     primary: 'Contact us',
@@ -44,13 +44,13 @@ export const en: Dict = {
   },
   pageSoon: 'The content of this page is being prepared.',
   teamPage: {
-    metaTitle: 'Our team | Everest – Accounting & NGO',
+    metaTitle: 'Our team | Everest Biuro Rachunkowe & NGO',
     metaDescription:
       'Meet the team of Everest accounting office: bookkeeping, payroll and IT support.',
     title: 'Our team',
   },
   faqPage: {
-    metaTitle: 'Frequently asked questions | Everest – Accounting & NGO',
+    metaTitle: 'Frequently asked questions | Everest Biuro Rachunkowe & NGO',
     metaDescription:
       'Answers to the most common questions about accounting for non-governmental organisations and businesses, grant accounting and how we work with clients.',
     title: 'Frequently asked questions',
@@ -175,7 +175,7 @@ export const en: Dict = {
     ],
   },
   quotePage: {
-    metaTitle: 'Request a quote | Everest – Accounting & NGO',
+    metaTitle: 'Request a quote | Everest Biuro Rachunkowe & NGO',
     metaDescription:
       'Fill in a short form and we will prepare a preliminary quote for bookkeeping and payroll services for your organisation or business.',
     title: 'Request a quote',
@@ -192,7 +192,7 @@ export const en: Dict = {
   about: {
     title: 'About our office',
     paragraphs: [
-      'Everest Accounting Office & NGO provides bookkeeping, tax and payroll services to entities operating in the field of public tasks and to businesses.',
+      'Everest Biuro Rachunkowe & NGO provides bookkeeping, tax and payroll services to entities operating in the field of public tasks and to businesses.',
       'We specialise in serving small and medium-sized entities at every stage of their development. We support new organisations from the moment they are founded, helping them through the formalities of starting their activity. We also work with established organisations, offering continuous, comprehensive management of their finances. This lets our clients focus on achieving their goals, confident that their accounting and payroll matters are in good hands.',
       'We have many years of experience keeping the books of, among others, foundations, associations and companies. We also keep improving our qualifications by taking part in courses and training. We believe a good accountant should have an open mind and be ready for continuous development and improvement of their skills.',
       'In our relationships with clients we rely on professionalism, an individual approach and mutual trust.',
@@ -245,7 +245,7 @@ export const en: Dict = {
           'Ongoing bookkeeping services',
           'Ongoing clarification of missing documents',
           'Preparing, settling and filing tax returns: VAT, CIT, PIT, PCC',
-          'Support with KSeF, including issuing invoices',
+          'Support with KSeF (the National e-Invoicing System), including issuing invoices',
           'Preparing an accounting policy',
           'Advice on day-to-day operations, the organisation of accounting and the flow of financial documents',
           'Support in dealings with the tax office and active participation in inspections',
@@ -256,7 +256,7 @@ export const en: Dict = {
         title: 'Financial and project reporting and audit',
         items: [
           'Preparing annual financial statements',
-          'Help in preparing narrative reports, including those for GUS and NIW',
+          'Help in preparing narrative reports, including those for Statistics Poland (GUS) and the National Freedom Institute (NIW)',
           'Analysing the current financial situation',
           'Reconciling project accounts with reports and internal documents',
           'Making substantive reclassification entries',
@@ -268,12 +268,12 @@ export const en: Dict = {
         title: 'Payroll and HR',
         items: [
           'Payroll and HR services: calculating payrolls and issuing bills for civil-law contracts',
-          'Preparing registration and settlement declarations for ZUS',
+          'Preparing registration and settlement declarations for the Social Insurance Institution (ZUS)',
           'PPK (employee capital plans) administration',
           'Keeping personnel files',
           'Preparing leave summaries',
           'Issuing employment-related documents, including employment certificates and earnings statements',
-          'Preparing PFRON declarations',
+          'Preparing declarations for the State Fund for Rehabilitation of Disabled Persons (PFRON)',
           'Preparing PIT-4R, PIT-8AR, PIT-11 and IFT-1R returns',
           'Support in dealings with ZUS and the tax office, and participation in inspections',
         ],
