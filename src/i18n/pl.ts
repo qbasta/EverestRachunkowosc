@@ -51,6 +51,127 @@ export const pl = {
     metaDescription:
       'Odpowiedzi na najczęstsze pytania o obsługę księgową organizacji pozarządowych i firm, rozliczanie dotacji oraz zasady współpracy z biurem Everest.',
     title: 'Najczęściej zadawane pytania',
+    // TODO(klient): zatwierdzić wstęp.
+    intro:
+      'Zebraliśmy odpowiedzi na pytania, które najczęściej słyszymy od klientów. Nie znalazłeś swojej? Napisz lub zadzwoń – chętnie pomożemy.',
+    searchLabel: 'Szukaj w pytaniach i odpowiedziach',
+    searchPlaceholder: 'Wpisz słowo kluczowe, np. dotacje',
+    categoriesLabel: 'Kategorie',
+    all: 'Wszystkie',
+    expandAll: 'Rozwiń wszystkie',
+    collapseAll: 'Zwiń wszystkie',
+    resultsCount: 'Wyświetlone pytania: {n}',
+    noResults:
+      'Nie znaleźliśmy pytań pasujących do „{q}”. Spróbuj innego słowa albo skontaktuj się z nami.',
+    clearSearch: 'Wyczyść wyszukiwanie',
+    closing: {
+      title: 'Nie znalazłeś odpowiedzi?',
+      text: 'Napisz lub zadzwoń – odpowiemy na Twoje pytania.',
+      cta: 'Skontaktuj się',
+      ctaQuote: 'Poproś o wycenę',
+    },
+    categories: [
+      { key: 'cooperation', label: 'Współpraca' },
+      { key: 'grants', label: 'Dotacje i granty' },
+      { key: 'scope', label: 'Zakres usług' },
+      { key: 'pricing', label: 'Rozliczenia i wycena' },
+    ],
+    // `id` to stały fragment adresu (/faq#id) – nie zmieniać po publikacji.
+    items: [
+      {
+        id: 'ksiegowosc-fundacji-i-stowarzyszen',
+        category: 'scope',
+        q: 'Czy prowadzą Państwo księgowość fundacji i stowarzyszeń?',
+        a: [
+          'Tak. Specjalizujemy się w obsłudze księgowej organizacji pozarządowych – obecnie stanowią one około 90% naszych klientów. Współpracujemy zarówno z mniejszymi, jak i większymi organizacjami, o różnej strukturze finansowania i zakresie działalności. Obsługujemy podmioty prowadzące działalność nieodpłatną, odpłatną oraz gospodarczą.',
+        ],
+      },
+      {
+        id: 'formy-ksiegowosci',
+        category: 'scope',
+        q: 'Jakie formy księgowości obsługuje Państwa biuro?',
+        a: [
+          'Biuro świadczy usługi księgowe w formie prowadzenia pełnych ksiąg rachunkowych zgodnie z ustawą o rachunkowości. Nie obsługujemy form uproszczonych – podatkowej księgi przychodów i rozchodów czy uproszczonej ewidencji przychodów i kosztów.',
+        ],
+      },
+      {
+        id: 'doswiadczenie-w-rozliczaniu-dotacji',
+        category: 'grants',
+        q: 'Czy mają Państwo doświadczenie w rozliczaniu dotacji i grantów?',
+        a: [
+          'Tak. Posiadamy doświadczenie w obsłudze księgowej dotacji i grantów pochodzących z różnych źródeł, w tym ze środków publicznych, funduszy Unii Europejskiej, EOG, programów współpracy międzynarodowej oraz źródeł prywatnych.',
+          'Odpowiadamy za prawidłowe ujęcie księgowe otrzymanego finansowania, zgodnie z przepisami ustawy o rachunkowości, przepisami podatkowymi oraz przyjętą polityką rachunkowości organizacji.',
+        ],
+      },
+      {
+        id: 'wspolpraca-przy-rozliczaniu-dotacji',
+        category: 'grants',
+        q: 'Jak wygląda współpraca przy rozliczaniu dotacji?',
+        a: [
+          'Po podpisaniu umowy o dofinansowanie prosimy o przekazanie budżetu projektu. Na jego podstawie przygotowujemy odpowiednią strukturę kont księgowych, która umożliwia prawidłowe ewidencjonowanie i monitorowanie wydatków. Księgowanie dokumentów odbywa się na podstawie materiałów opisanych merytorycznie przez klienta. Opis powinien zawierać w szczególności zatwierdzenie wydatku przez uprawnioną osobę, wskazanie rodzaju działalności, której dotyczy wydatek, oraz określenie źródła jego finansowania.',
+          'Warto pamiętać: odpowiadamy za księgową stronę rozliczenia dotacji. Za merytoryczne przypisanie wydatków do projektu oraz przygotowanie i rozliczenie projektu przed grantodawcą odpowiada organizacja.',
+        ],
+      },
+      {
+        id: 'zmiany-we-wczesniejszych-okresach',
+        category: 'grants',
+        q: 'Czy możliwe jest dokonywanie zmian we wcześniejszych okresach danego roku?',
+        a: [
+          'W trakcie realizacji projektu możliwe jest również wprowadzanie zmian w ewidencji księgowej, w tym dokonywanie przeksięgowań między pozycjami budżetowymi lub projektami, jeśli zachodzi taka potrzeba.',
+          'Przed końcowym rozliczeniem finansowania lub zamknięciem roku obrotowego przekazujemy klientowi zestawienie zapisów księgowych dotyczących realizowanych grantów. Pozwala to zweryfikować zgodność ewidencji księgowej ze sprawozdaniami przekazanymi grantodawcom.',
+        ],
+      },
+      {
+        id: 'ubezpieczenie-oc',
+        category: 'cooperation',
+        q: 'Czy posiadają Państwo ubezpieczenie OC?',
+        a: [
+          'Tak. Posiadamy obowiązkowe ubezpieczenie odpowiedzialności cywilnej (OC), a także dodatkowe ubezpieczenia obejmujące prowadzenie rozliczeń VAT, obsługę kadrowo-płacową i rozliczenia ZUS, ochronę danych osobowych (RODO) oraz cyberbezpieczeństwo.',
+        ],
+      },
+      {
+        id: 'polityka-rachunkowosci',
+        category: 'scope',
+        q: 'Czy pomagają Państwo w przygotowaniu polityki rachunkowości organizacji?',
+        a: [
+          'Tak. Wspieramy organizacje w opracowaniu i dostosowaniu polityki (zasad) rachunkowości do ich indywidualnych potrzeb.',
+          'Każdą politykę przygotowujemy indywidualnie, w konsultacji z Zarządem i z uwzględnieniem specyfiki działalności organizacji, jej źródeł finansowania oraz bieżących potrzeb.',
+        ],
+      },
+      {
+        id: 'doradztwo-podatkowe',
+        category: 'scope',
+        q: 'Czy świadczą Państwo usługi doradztwa podatkowego?',
+        a: [
+          'Obecnie nie świadczymy usług doradztwa podatkowego. W ramach naszej działalności zapewniamy natomiast bieżące wsparcie związane z obsługą księgową organizacji.',
+        ],
+      },
+      {
+        id: 'wspolpraca-z-bieglymi-rewidentami',
+        category: 'cooperation',
+        q: 'Czy współpracują Państwo z biegłymi rewidentami podczas audytów i badania sprawozdań finansowych?',
+        a: [
+          'Tak. Współpracujemy z biegłymi rewidentami przy audytach projektów oraz badaniu sprawozdań finansowych organizacji. Zakres i zasady współpracy ustalamy indywidualnie z klientem, dostosowując je do potrzeb organizacji i charakteru przeprowadzanego audytu.',
+        ],
+      },
+      {
+        id: 'umowy-z-pracownikami-i-kontrahentami',
+        category: 'scope',
+        q: 'Czy przygotowują Państwo umowy z pracownikami i kontrahentami oraz nadzorują proces ich zawierania?',
+        a: [
+          'Nie przygotowujemy umów z pracownikami ani kontrahentami, ponieważ ich opracowanie i nadzór nad procesem zawierania należą do obszaru obsługi prawnej i administracyjnej.',
+          'W ramach obsługi księgowej udostępniamy natomiast wzory dokumentów niezbędnych do prawidłowego przeprowadzenia rozliczeń, m.in. oświadczenia podatkowe i składkowe, wzory rachunków oraz inne dokumenty związane z zawieraniem umów.',
+        ],
+      },
+      {
+        id: 'miesiace-bez-dokumentow',
+        category: 'pricing',
+        q: 'Jak wygląda rozliczenie z biurem w miesiącach, w których organizacja nie ma dokumentów księgowych?',
+        a: [
+          'Podstawowa opłata za obsługę księgową obejmuje ustalony w umowie limit dokumentów i obowiązuje również w miesiącach, w których organizacja nie przekazuje dokumentów do zaksięgowania. Z naszego doświadczenia wynika, że takie sytuacje zdarzają się jednak bardzo rzadko. Wynagrodzenie obejmuje nie tylko bieżące księgowanie dokumentów, ale również stałą gotowość do współpracy, wsparcie w sprawach księgowych oraz bieżące konsultacje – niezależnie od liczby dokumentów w danym miesiącu.',
+        ],
+      },
+    ],
   },
   quotePage: {
     metaTitle: 'Wycena usług | Everest – Rachunkowość & NGO',
@@ -254,7 +375,11 @@ export const pl = {
   },
   faq: {
     title: 'Masz pytanie? Zajrzyj do sekcji FAQ',
-    cta: 'Zobacz wszystkie pytania',
+    cta: 'Masz więcej pytań?',
+    more: 'Pełna odpowiedź',
+    prev: 'Poprzednie pytanie',
+    next: 'Następne pytanie',
+    slide: 'Pytanie {n} z {total}',
   },
   software: {
     title: 'Oprogramowanie',
