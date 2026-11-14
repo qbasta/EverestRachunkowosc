@@ -29,6 +29,8 @@ export const en: Dict = {
     software: 'Software',
     faq: 'Frequently asked questions (FAQ)',
     pricing: 'Pricing',
+    priceList: 'Price list',
+    quoteWizard: 'Quote wizard',
     contact: 'Contact us',
     langName: 'Polski',
   },
@@ -386,7 +388,6 @@ export const en: Dict = {
     categories: {
       accounting: 'Accounting',
       payroll: 'HR and payroll',
-      zus: 'Social insurance (ZUS)',
       invoicing: 'Invoicing',
       law: 'Legal information',
     },

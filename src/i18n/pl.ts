@@ -34,6 +34,8 @@ export const pl = {
     software: 'Oprogramowanie',
     faq: 'Najczęściej zadawane pytania (FAQ)',
     pricing: 'Wycena usług',
+    priceList: 'Cennik usług',
+    quoteWizard: 'Kreator wyceny',
     contact: 'Skontaktuj się',
     langName: 'English',
   },
@@ -395,7 +397,6 @@ export const pl = {
     categories: {
       accounting: 'Księgowość',
       payroll: 'Kadry i płace',
-      zus: 'Rozliczenia z ZUS',
       invoicing: 'Fakturowanie',
       law: 'Informacja prawna',
     },

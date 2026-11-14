@@ -52,7 +52,16 @@ const items: Item[] = [
       { href: pagePath('faq', lang), label: t.nav.faq, current: page === 'faq' },
     ],
   },
-  { id: 'pricing', href: `${home}#pricing`, label: t.nav.pricing, active: page === 'quote' },
+  {
+    id: 'pricing',
+    href: `${home}#pricing`,
+    label: t.nav.pricing,
+    active: page === 'quote',
+    children: [
+      { href: `${home}#pricing`, label: t.nav.priceList, current: false },
+      { href: pagePath('quote', lang), label: t.nav.quoteWizard, current: page === 'quote' },
+    ],
+  },
 ];
 ---
 

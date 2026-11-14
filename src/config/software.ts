@@ -12,19 +12,18 @@ export interface SoftwareBrand {
   /** Krótka nazwa do kafla bez logo (np. „Płatnik”). */
   short?: string;
   /** Do czego służy program – klucz etykiety z `software.categories` w słownikach. */
-  category: 'accounting' | 'payroll' | 'zus' | 'invoicing' | 'law';
+  category: 'accounting' | 'payroll' | 'invoicing' | 'law';
 }
 
 /**
  * Logo pochodzą z materiałów producentów. Symfonia: obraz rastrowy ~1546 px szerokości
  * (oficjalny plik producenta ma taki sam rozmiar) – przy prawdziwym SVG wystarczy podmienić plik i import.
  * Fakturownia i Legalis: pliki PNG z białym tłem (kafel logo też jest biały).
- * Płatnik (znak ZUS): brak pliku – do tego czasu kafel z nazwą.
+ * Program Płatnik (ZUS) pominięty na życzenie klienta – brak logo w dobrej jakości.
  */
 export const softwareBrands: SoftwareBrand[] = [
   { name: 'Symfonia Finanse i Księgowość', logo: symfonia, category: 'accounting' },
   { name: 'Enova365 Kadry i płace', logo: enova, category: 'payroll' },
-  { name: 'Program Płatnik', short: 'Płatnik', category: 'zus' },
   { name: 'Fakturownia.pl', logo: fakturownia, category: 'invoicing' },
   { name: 'Legalis księgowość kadry biznes', logo: legalis, category: 'law' },
 ];
