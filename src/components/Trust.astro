@@ -12,13 +12,19 @@ const { t } = Astro.props;
 
 // Karuzela jest zamknięta w kontenerze strony (nie rozciąga się na cały monitor).
 // Żeby pętla nie miała „dziury” przy małej liczbie pozycji, powtarzamy listę tak, aby jedna
-// grupa była zawsze szersza niż kontener (szacunek: logo 56 px wysokości, placeholder 272 px, odstęp 72 px).
+// grupa była zawsze szersza niż kontener (szacunek: logo 56 px wysokości – okrągłe 88 px, placeholder 272 px,
+// odstęp 72 px).
 const LOGO_HEIGHT = 56;
+const LOGO_HEIGHT_TALL = 88;
 const PLACEHOLDER_WIDTH = 272;
 const GAP = 72;
 const groupWidth = clients.reduce(
   (sum, c) =>
-    sum + (c.logo ? (c.logo.width / c.logo.height) * LOGO_HEIGHT : PLACEHOLDER_WIDTH) + GAP,
+    sum +
+    (c.logo
+      ? (c.logo.width / c.logo.height) * (c.tall ? LOGO_HEIGHT_TALL : LOGO_HEIGHT)
+      : PLACEHOLDER_WIDTH) +
+    GAP,
   0,
 );
 const repeats = Math.max(1, Math.ceil(2200 / groupWidth));
@@ -66,7 +72,7 @@ const items = Array.from({ length: repeats }, () => clients).flat();
                     alt={decorative ? '' : c.name}
                     loading="eager"
                     decoding="async"
-                    class="client-logo"
+                    class:list={['client-logo', c.tall && 'client-logo-tall']}
                   />
                 ) : (
                   // TODO(klient): brak logo – placeholder (ikona obrazka z krzyżykiem + nazwa).
@@ -91,7 +97,7 @@ const items = Array.from({ length: repeats }, () => clients).flat();
                   alt=""
                   loading="eager"
                   decoding="async"
-                  class="client-logo"
+                  class:list={['client-logo', c.tall && 'client-logo-tall']}
                 />
               ) : (
                 <span class="client-placeholder">
@@ -138,6 +144,9 @@ const items = Array.from({ length: repeats }, () => clients).flat();
     transition:
       filter 0.25s ease,
       opacity 0.25s ease;
+  }
+  .client-logo-tall {
+    height: 5.5rem;
   }
   .client-logo:hover {
     filter: grayscale(0);
