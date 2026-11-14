@@ -31,9 +31,17 @@ test.describe('Kontakt i „Zaufali nam”', () => {
       page.locator('#trust .group:not(.group-copy) > li:not([aria-hidden])'),
     ).toHaveCount(8);
     await expect(page.locator('#trust')).toContainText('Fundacja Instrat');
-    await expect(page.locator('#trust')).toContainText(
+    // Fundacje z logo: nazwa jest w opisie obrazka (raz – powtórzenia w pętli mają pusty alt).
+    for (const name of [
+      'Fundacja Herosi',
+      'Fundacja Impuls dla Młodych',
       'Fundacja Pomocy Dzieciom z Chorobą Nowotworową',
-    );
+    ]) {
+      const logo = page.locator(`#trust img[alt="${name}"]`);
+      await expect(logo).toHaveCount(1);
+      // Obrazek faktycznie się wczytał (nie jest uszkodzony).
+      expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+    }
   });
 
   test('przycisk pauzy przełącza stan animacji', async ({ page }) => {
