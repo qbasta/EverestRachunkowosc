@@ -29,37 +29,128 @@ const icons = {
   aria-labelledby="cooperation-title"
   class="section-y bg-ice relative isolate overflow-hidden"
 >
-  <!-- Warstwice tylko w rogu obok nagłówka – nie leżą pod tekstem pozycji. -->
+  <!-- Warstwice na całym tle sekcji; pod tekstem zasłaniają je białe karty. -->
   <Contours
     class="text-summit pointer-events-none absolute inset-0 -z-10 h-full w-full"
-    style="-webkit-mask-image: radial-gradient(ellipse 48% 34% at 90% 0%, #000 0%, transparent 100%); mask-image: radial-gradient(ellipse 48% 34% at 90% 0%, #000 0%, transparent 100%);"
-    cx={1280}
-    cy={120}
-    rings={12}
-    r0={30}
-    dr={46}
+    cx={720}
+    cy={430}
+    rings={18}
+    r0={50}
+    dr={58}
     rot={8}
+    strong
   />
   <div class="container-page">
-    <h2 id="cooperation-title" class="text-summit text-h2 max-w-[22ch]">
+    <h2 id="cooperation-title" class="text-summit text-h2 mx-auto max-w-[22ch] text-center">
       {t.cooperation.title}
     </h2>
 
-    <ul class="mt-12 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-14">
+    <ul class="coop-grid mt-12 grid gap-6 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3" data-reveal-group>
       {t.cooperation.items.map((item) => {
         const Icon = icons[item.key as keyof typeof icons];
         return (
-          <li class="flex flex-col items-start">
-            <span class="bg-summit mb-5 inline-flex h-14 w-14 items-center justify-center rounded text-white">
+          <li class="coop-card">
+            <span class="coop-icon">
               <Icon class="size-7" stroke-width={1.8} aria-hidden="true" />
             </span>
             <h3 class="font-display text-summit text-[1.4rem] leading-snug font-semibold">
               {item.title}
             </h3>
-            <p class="text-ink/85 mt-3 max-w-[40ch]">{item.text}</p>
+            <p class="text-ink/85 mt-3">{item.text}</p>
           </li>
         );
       })}
     </ul>
   </div>
 </section>
+
+<style>
+  .coop-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid var(--color-mist);
+    border-top: 3px solid var(--color-summit);
+    border-radius: 0 0 0.25rem 0.25rem;
+    background: #fff;
+    padding: 1.75rem;
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .coop-icon {
+    display: inline-flex;
+    height: 3.5rem;
+    width: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    border-radius: 0.25rem;
+    background: var(--color-summit);
+    color: #fff;
+    transition: background-color 0.25s ease;
+  }
+  @media (hover: hover) {
+    .coop-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px -18px rgb(0 40 100 / 0.45);
+    }
+    .coop-card:hover .coop-icon {
+      background: var(--color-glacier);
+    }
+  }
+
+  /* Wejście kart przy przewinięciu do sekcji. Stan początkowy ustawia dopiero skrypt (klasa na liście),
+     więc bez JavaScriptu karty są po prostu widoczne. */
+  @media (prefers-reduced-motion: no-preference) {
+    .coop-grid.reveal-ready .coop-card {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    .coop-grid.reveal-ready.is-visible .coop-card {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s ease,
+        box-shadow 0.25s ease;
+    }
+    .coop-grid.is-visible .coop-card:nth-child(2) {
+      transition-delay: 0.08s;
+    }
+    .coop-grid.is-visible .coop-card:nth-child(3) {
+      transition-delay: 0.16s;
+    }
+    .coop-grid.is-visible .coop-card:nth-child(4) {
+      transition-delay: 0.24s;
+    }
+    .coop-grid.is-visible .coop-card:nth-child(5) {
+      transition-delay: 0.32s;
+    }
+    .coop-grid.is-visible .coop-card:nth-child(6) {
+      transition-delay: 0.4s;
+    }
+    /* Po zakończeniu wejścia opóźnienia znikają, żeby najechanie reagowało od razu. */
+    .coop-grid.reveal-done .coop-card {
+      transition-delay: 0s;
+    }
+  }
+</style>
+
+<script>
+  const group = document.querySelector<HTMLElement>('[data-reveal-group]');
+  if (group && 'IntersectionObserver' in window) {
+    group.classList.add('reveal-ready');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          group.classList.add('is-visible');
+          observer.disconnect();
+          setTimeout(() => group.classList.add('reveal-done'), 1200);
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px' },
+    );
+    observer.observe(group);
+  }
+</script>

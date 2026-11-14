@@ -34,6 +34,8 @@ export const pl = {
     software: 'Oprogramowanie',
     faq: 'Najczęściej zadawane pytania (FAQ)',
     pricing: 'Wycena usług',
+    priceList: 'Cennik usług',
+    quoteWizard: 'Kreator wyceny',
     contact: 'Skontaktuj się',
     langName: 'English',
   },
@@ -391,7 +393,16 @@ export const pl = {
   },
   software: {
     title: 'Oprogramowanie',
-    text: 'Korzystamy ze sprawdzonych programów księgowych i kadrowo-płacowych, które są na bieżąco aktualizowane w odpowiedzi na zmiany w przepisach. Wykorzystujemy również dedykowane narzędzie do zdalnego przekazywania dokumentów, do którego dostęp mają wyłącznie osoby upoważnione. Nad prawidłowym funkcjonowaniem naszego zaplecza informatycznego czuwa specjalista IT posiadający szerokie doświadczenie w obsłudze biur rachunkowych.',
+    paragraphs: [
+      'Korzystamy ze sprawdzonych programów księgowych i kadrowo-płacowych, które są na bieżąco aktualizowane w odpowiedzi na zmiany w przepisach. Wykorzystujemy również dedykowane narzędzie do zdalnego przekazywania dokumentów, do którego dostęp mają wyłącznie osoby upoważnione.',
+      'Nad prawidłowym funkcjonowaniem naszego zaplecza informatycznego czuwa specjalista IT posiadający szerokie doświadczenie w obsłudze biur rachunkowych.',
+    ],
+    categories: {
+      accounting: 'Księgowość',
+      payroll: 'Kadry i płace',
+      invoicing: 'Fakturowanie',
+      law: 'Informacja prawna',
+    },
   },
   team: {
     title: 'Nasz zespół',

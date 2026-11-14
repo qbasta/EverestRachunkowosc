@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import LinkedInIcon from './LinkedInIcon.astro';
+import Contours from './Contours.astro';
 import { teamProfiles } from '../config/team';
 import type { Dict } from '../i18n/pl';
 
@@ -9,36 +10,56 @@ interface Props {
 }
 const { t } = Astro.props;
 
-// Osoby ze zdjęciem (karty ze zdjęciem) i bez zdjęcia (karty tekstowe, bez ramki na zdjęcie).
-const withPhoto = t.team.members.filter((m) => teamProfiles[m.key]?.photo);
-const withoutPhoto = t.team.members.filter((m) => !teamProfiles[m.key]?.photo);
+/** Inicjały do ramki osoby bez zdjęcia („Marek Kropiewnicki” → „MK”). */
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
 ---
 
-<section id="team" aria-labelledby="team-title" class="section-y border-mist border-t bg-white">
+<!-- Tytuł strony („Nasz zespół”) jest już w nagłówku nad sekcją – tutaj go nie powtarzamy. -->
+<section id="team" aria-label={t.team.title} class="section-y border-mist border-t bg-white">
   <div class="container-page">
-    <h2 id="team-title" class="text-summit text-h2">
-      {t.team.title}
-    </h2>
-
-    {withPhoto.length > 0 && (
-      <div class="mt-14 grid items-start gap-x-6 gap-y-14 md:grid-cols-2 lg:gap-x-10">
-        {withPhoto.map((m) => {
-          const profile = teamProfiles[m.key];
-          return (
-            <article class="flex flex-col">
+    <div class="team-list">
+      {t.team.members.map((m) => {
+        const profile = teamProfiles[m.key] ?? {};
+        return (
+          <article class="team-member">
+            {/* Każda osoba ma tę samą ramkę 4:5 – ze zdjęciem albo z inicjałami – więc układ jest równy. */}
+            {profile.photo ? (
               <Image
-                src={profile.photo!}
+                src={profile.photo}
                 alt={m.name}
-                widths={[360, 540, 720]}
-                sizes="(min-width: 768px) 45vw, 92vw"
-                class="aspect-[4/5] w-full max-w-md rounded-[3px] object-cover object-top"
+                widths={[240, 360, 480, 720]}
+                sizes="(min-width: 768px) 18rem, 92vw"
+                class="team-portrait object-cover object-top"
                 loading="lazy"
               />
+            ) : (
+              <div class="team-portrait team-monogram" aria-hidden="true">
+                <Contours
+                  class="text-summit absolute inset-0 h-full w-full opacity-70"
+                  cx={720}
+                  cy={470}
+                  rings={9}
+                  r0={60}
+                  dr={95}
+                  rot={-14}
+                />
+                <span class="font-display relative">{initials(m.name)}</span>
+              </div>
+            )}
 
-              <div class="mt-6 flex max-w-md items-start justify-between gap-4">
+            <div class="min-w-0">
+              <div class="flex items-start justify-between gap-4">
                 <div>
-                  <h3 class="text-ink text-3xl font-semibold">{m.name}</h3>
-                  <p class="text-glacier mt-1 text-lg font-medium">{m.role}</p>
+                  <h2 class="text-ink font-display text-[1.75rem] leading-tight font-semibold md:text-[2rem]">
+                    {m.name}
+                  </h2>
+                  <p class="text-glacier mt-1.5 text-lg font-medium">{m.role}</p>
                 </div>
                 {profile.linkedin && (
                   <a
@@ -53,44 +74,7 @@ const withoutPhoto = t.team.members.filter((m) => !teamProfiles[m.key]?.photo);
                 )}
               </div>
 
-              <details class="group mt-4 max-w-md">
-                <summary class="text-glacier cursor-pointer list-none text-base font-semibold underline underline-offset-4">
-                  <span class="group-open:hidden">{t.team.more}</span>
-                  <span class="hidden group-open:inline">{t.team.less}</span>
-                </summary>
-                <div class="bio text-slate mt-4 space-y-4 text-base leading-relaxed">
-                  {m.description.map((block) =>
-                    typeof block === 'string' ? (
-                      <p>{block}</p>
-                    ) : (
-                      <ul class="list-disc space-y-1.5 pl-5">
-                        {block.map((item) => (
-                          <li>{item}</li>
-                        ))}
-                      </ul>
-                    ),
-                  )}
-                </div>
-              </details>
-            </article>
-          );
-        })}
-      </div>
-    )}
-
-    {withoutPhoto.length > 0 && (
-      <div class="mt-14 grid items-start gap-6 md:grid-cols-2 lg:gap-10">
-        {withoutPhoto.map((m) => (
-          <article class="bg-ice border-summit flex flex-col border-t-[3px] p-7 sm:p-9">
-            <h3 class="text-ink text-3xl font-semibold">{m.name}</h3>
-            <p class="text-glacier mt-1 text-lg font-medium">{m.role}</p>
-
-            <details class="group mt-5">
-              <summary class="text-glacier cursor-pointer list-none text-base font-semibold underline underline-offset-4">
-                <span class="group-open:hidden">{t.team.more}</span>
-                <span class="hidden group-open:inline">{t.team.less}</span>
-              </summary>
-              <div class="bio text-slate mt-4 space-y-4 text-base leading-relaxed">
+              <div class="bio text-ink/85 mt-6 max-w-[68ch] space-y-4 leading-relaxed">
                 {m.description.map((block) =>
                   typeof block === 'string' ? (
                     <p>{block}</p>
@@ -103,22 +87,66 @@ const withoutPhoto = t.team.members.filter((m) => !teamProfiles[m.key]?.photo);
                   ),
                 )}
               </div>
-            </details>
+            </div>
           </article>
-        ))}
-      </div>
-    )}
+        );
+      })}
+    </div>
   </div>
 </section>
 
 <style>
-  /* Justowanie z dzieleniem wyrazów (język strony ustawia atrybut lang na <html>).
-     Na wąskich ekranach zostaje wyrównanie do lewej – justowanie w wąskiej kolumnie daje „dziury”. */
-  @media (min-width: 640px) {
-    .bio p {
-      text-align: justify;
-      hyphens: auto;
-      -webkit-hyphens: auto;
+  .team-member {
+    display: grid;
+    gap: 1.75rem;
+    padding-block: 3rem;
+    border-top: 1px solid var(--color-mist);
+  }
+  .team-member:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .team-member:last-child {
+    padding-bottom: 0;
+  }
+  .team-portrait {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    max-width: 18rem;
+    border-radius: 3px;
+  }
+  .team-monogram {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-top: 3px solid var(--color-summit);
+    background: var(--color-ice);
+    color: var(--color-summit);
+    font-size: 4.5rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  /* Telefon: osoba bez zdjęcia dostaje mały znak z inicjałami zamiast pustej ramki na pół ekranu. */
+  @media (max-width: 47.99rem) {
+    .team-monogram {
+      aspect-ratio: 1;
+      max-width: 6.5rem;
+      font-size: 2.25rem;
+    }
+  }
+  @media (min-width: 48rem) {
+    .team-member {
+      grid-template-columns: 18rem minmax(0, 1fr);
+      gap: 3.5rem;
+      align-items: start;
+      padding-block: 4rem;
+    }
+  }
+  @media (min-width: 64rem) {
+    .team-member {
+      gap: 5rem;
     }
   }
 </style>

@@ -46,3 +46,14 @@ test('menu: lista „Oferta” otwiera się z klawiatury i zamyka klawiszem Esc'
   await page.keyboard.press('Escape');
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 });
+
+test('menu: pod „Wycena usług” jest cennik i kreator wyceny', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'Menu rozwijane dotyczy desktopu.');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  const submenu = page.locator('#submenu-pricing');
+  await page.locator('header button[aria-controls="submenu-pricing"]').click();
+  await expect(submenu.locator('a[href="/#pricing"]')).toBeVisible();
+  await submenu.locator('a[href="/wycena/"]').click();
+  await expect(page).toHaveURL(/\/wycena\/$/);
+});

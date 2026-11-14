@@ -55,33 +55,55 @@ test.describe('Kontakt i „Zaufali nam”', () => {
 });
 
 test.describe('Zespół', () => {
-  test('cztery osoby: dwie ze zdjęciem, dwie jako karty tekstowe', async ({ page }) => {
+  test('cztery osoby w tym samym układzie: dwie ze zdjęciem, dwie z inicjałami', async ({
+    page,
+  }) => {
     await page.goto('/nasz-zespol/');
     await expect(page.locator('#team article')).toHaveCount(4);
     await expect(page.locator('#team article img')).toHaveCount(2);
+    await expect(page.locator('#team .team-monogram')).toHaveCount(2);
     for (const name of [
       'Dominik Markiewicz',
       'Julita Markiewicz',
       'Marek Kropiewnicki',
       'Krzysztof Kuśmierowski',
     ]) {
-      await expect(page.locator('#team h3', { hasText: name })).toBeVisible();
+      await expect(page.locator('#team h2', { hasText: name })).toBeVisible();
+    }
+    // Tytuł strony jest tylko raz (w nagłówku), bez powtórzenia w sekcji.
+    await expect(page.getByRole('heading', { name: 'Nasz zespół' })).toHaveCount(1);
+  });
+
+  test('ramki osób (zdjęcie lub inicjały) mają tę samą szerokość i lewą krawędź', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'Układ dwukolumnowy dotyczy szerszych ekranów.');
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/nasz-zespol/');
+    const boxes = await page
+      .locator('#team .team-portrait')
+      .evaluateAll((els) => els.map((el) => el.getBoundingClientRect()));
+    expect(boxes).toHaveLength(4);
+    for (const box of boxes) {
+      expect(Math.abs(box.left - boxes[0].left)).toBeLessThan(1);
+      expect(Math.abs(box.width - boxes[0].width)).toBeLessThan(1);
+      expect(Math.abs(box.height - boxes[0].height)).toBeLessThan(1);
     }
   });
 
-  test('biogram Marka zawiera listę punktowaną po rozwinięciu', async ({ page }) => {
+  test('biogramy są widoczne od razu; biogram Marka zawiera listę punktowaną', async ({ page }) => {
     await page.goto('/nasz-zespol/');
     const card = page.locator('#team article', { hasText: 'Marek Kropiewnicki' });
     await expect(card.locator('li')).toHaveCount(5);
-    await expect(card.locator('li').first()).toBeHidden();
-    await card.locator('summary').click();
     await expect(card.locator('li').first()).toBeVisible();
     await expect(card).toContainText('„Umiejętności Jutra AI”');
+    await expect(page.locator('#team details')).toHaveCount(0);
   });
 
   test('wersja angielska ma te same cztery osoby', async ({ page }) => {
     await page.goto('/en/our-team/');
     await expect(page.locator('#team article')).toHaveCount(4);
-    await expect(page.locator('#team h3', { hasText: 'Krzysztof Kuśmierowski' })).toBeVisible();
+    await expect(page.locator('#team h2', { hasText: 'Krzysztof Kuśmierowski' })).toBeVisible();
   });
 });

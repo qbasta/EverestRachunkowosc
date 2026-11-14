@@ -1,6 +1,7 @@
 ---
 import ChevronLeft from '@lucide/astro/icons/chevron-left';
 import ChevronRight from '@lucide/astro/icons/chevron-right';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { pagePath, type Lang } from '../i18n';
 import type { Dict } from '../i18n/pl';
 import { FAQ_TEASER_IDS } from '../config/faq';
@@ -18,30 +19,22 @@ const faqHref = pagePath('faq', lang);
 
 <section id="faq" aria-labelledby="faq-title" class="section-y">
   <div class="container-page">
-    <div class="flex items-end justify-between gap-6">
-      <h2 id="faq-title" class="text-summit text-h2 max-w-[24ch]">
-        {t.faq.title}
-      </h2>
-      <!-- Przyciski pokazuje dopiero skrypt – bez JS karuzela nadal przewija się palcem lub klawiaturą. -->
-      <div data-faq-controls hidden>
-        <div class="flex gap-2">
-          <button type="button" class="faq-arrow" data-faq-prev aria-label={t.faq.prev}>
-            <ChevronLeft class="size-6" aria-hidden="true" />
-          </button>
-          <button type="button" class="faq-arrow" data-faq-next aria-label={t.faq.next}>
-            <ChevronRight class="size-6" aria-hidden="true" />
-          </button>
-        </div>
-      </div>
-    </div>
+    <h2 id="faq-title" class="text-summit text-h2 mx-auto max-w-[24ch] text-center">
+      {t.faq.title}
+    </h2>
 
+    <!-- Strzałki po bokach kart (na telefonie pod kartami). Pokazuje je dopiero skrypt – bez JS karuzela
+         nadal przewija się palcem lub klawiaturą. -->
     <div
       data-faq-carousel
       role="region"
       aria-roledescription="carousel"
       aria-labelledby="faq-title"
-      class="mt-10"
+      class="faq-carousel mt-10 lg:mt-12"
     >
+      <button type="button" class="faq-arrow faq-prev" data-faq-prev aria-label={t.faq.prev} hidden>
+        <ChevronLeft class="size-6" aria-hidden="true" />
+      </button>
       <div class="faq-track" data-faq-track tabindex="0">
         {items.map((item, i) => (
           <article
@@ -52,25 +45,36 @@ const faqHref = pagePath('faq', lang);
               .replace('{total}', String(items.length))}
             class="faq-card"
           >
-            <h3 class="font-display text-summit text-[1.35rem] leading-snug font-semibold">
+            <span class="faq-num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="font-display text-summit mt-3 text-[1.35rem] leading-snug font-semibold">
               {item.q}
             </h3>
             <p class="text-ink/85 mt-4 line-clamp-6">{item.a[0]}</p>
             <a
               href={`${faqHref}#${item.id}`}
-              class="tlink mt-auto inline-block pt-6"
+              class="faq-more tlink mt-auto pt-6"
               aria-label={`${t.faq.more}: ${item.q}`}
             >
               {t.faq.more}
+              <ArrowRight class="size-4 shrink-0" stroke-width={2.25} aria-hidden="true" />
             </a>
           </article>
         ))}
       </div>
+      <button type="button" class="faq-arrow faq-next" data-faq-next aria-label={t.faq.next} hidden>
+        <ChevronRight class="size-6" aria-hidden="true" />
+      </button>
     </div>
 
-    <a href={faqHref} class="btn btn-outline mt-10">
-      {t.faq.cta}
-    </a>
+    <!-- Wyraźny, wyśrodkowany przycisk; strzałka przesuwa się po najechaniu. -->
+    <div class="mt-10 flex justify-center lg:mt-12">
+      <a href={faqHref} class="btn btn-primary faq-cta w-full sm:w-auto">
+        {t.faq.cta}
+        <ArrowRight class="faq-cta-arrow size-5 shrink-0" stroke-width={2.25} aria-hidden="true" />
+      </a>
+    </div>
   </div>
 </section>
 
@@ -103,6 +107,28 @@ const faqHref = pagePath('faq', lang);
       flex-basis: calc(50% - 0.75rem);
     }
   }
+  .faq-num {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 1;
+    color: color-mix(in srgb, var(--color-summit) 32%, transparent);
+  }
+  .faq-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+  }
+  .faq-carousel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .faq-track {
+    grid-column: 1 / -1;
+    order: -1;
+  }
   .faq-arrow {
     display: inline-flex;
     height: 3rem;
@@ -110,13 +136,19 @@ const faqHref = pagePath('faq', lang);
     align-items: center;
     justify-content: center;
     border: 1.5px solid var(--color-summit);
-    border-radius: 0.25rem;
+    border-radius: 999px;
     color: var(--color-summit);
-    background: transparent;
+    background: #fff;
     cursor: pointer;
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
+  }
+  .faq-arrow[hidden] {
+    display: none;
+  }
+  .faq-prev {
+    justify-self: end;
   }
   .faq-arrow:hover:not([aria-disabled='true']) {
     background: var(--color-summit);
@@ -126,17 +158,44 @@ const faqHref = pagePath('faq', lang);
     opacity: 0.35;
     cursor: default;
   }
+  /* Od tabletu: strzałka – karty – strzałka w jednym rzędzie, strzałki na wysokości środka kart. */
+  @media (min-width: 48rem) {
+    .faq-carousel {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .faq-track {
+      grid-column: auto;
+      order: 0;
+    }
+  }
+  .faq-cta {
+    gap: 0.6rem;
+    padding-inline: 2.25rem;
+    box-shadow: 0 12px 26px -14px rgb(0 40 100 / 0.6);
+  }
+  .faq-cta-arrow {
+    transition: transform 0.2s ease;
+  }
+  .faq-cta:hover .faq-cta-arrow {
+    transform: translateX(5px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-cta-arrow {
+      transition: none;
+    }
+  }
 </style>
 
 <script>
   // Ręczna karuzela: przewijanie o jedną kartę, stan przycisków wynika z pozycji przewinięcia.
   const root = document.querySelector<HTMLElement>('[data-faq-carousel]');
   const track = root?.querySelector<HTMLElement>('[data-faq-track]');
-  const controls = document.querySelector<HTMLElement>('[data-faq-controls]');
   const prev = document.querySelector<HTMLButtonElement>('[data-faq-prev]');
   const next = document.querySelector<HTMLButtonElement>('[data-faq-next]');
 
-  if (track && controls && prev && next) {
+  if (track && prev && next) {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     let ticking = false;
 
@@ -144,7 +203,7 @@ const faqHref = pagePath('faq', lang);
       ticking = false;
       const max = track.scrollWidth - track.clientWidth;
       // Wszystkie karty mieszczą się naraz – strzałki są zbędne.
-      controls.hidden = max <= 1;
+      prev.hidden = next.hidden = max <= 1;
       prev.setAttribute('aria-disabled', String(track.scrollLeft <= 1));
       next.setAttribute('aria-disabled', String(track.scrollLeft >= max - 1));
     };

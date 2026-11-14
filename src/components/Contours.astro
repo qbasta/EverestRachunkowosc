@@ -14,8 +14,21 @@ interface Props {
   rot?: number;
   class?: string;
   style?: string;
+  /** Mocniejsze linie – gdy warstwice mają być wyraźnym tłem, a nie tylko akcentem. */
+  strong?: boolean;
 }
-const { cx, cy, rings = 12, r0 = 30, dr = 44, rot = -18, class: className, style } = Astro.props;
+const {
+  cx,
+  cy,
+  rings = 12,
+  r0 = 30,
+  dr = 44,
+  rot = -18,
+  class: className,
+  style,
+  strong = false,
+} = Astro.props;
+const k = strong ? 1.7 : 1;
 const lines = contourRings({ cx, cy, rings, r0, dr, rot });
 ---
 
@@ -32,7 +45,7 @@ const lines = contourRings({ cx, cy, rings, r0, dr, rot });
       d={r.d}
       fill="none"
       stroke="currentColor"
-      stroke-opacity={r.major ? 0.26 : 0.13}
+      stroke-opacity={(r.major ? 0.26 : 0.13) * k}
       stroke-width={r.major ? 1.4 : 0.9}
     />
   ))}

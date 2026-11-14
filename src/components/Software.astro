@@ -1,6 +1,7 @@
 ---
-import ImageOff from '@lucide/astro/icons/image-off';
+import MonitorCog from '@lucide/astro/icons/monitor-cog';
 import { Image } from 'astro:assets';
+import Contours from './Contours.astro';
 import { softwareBrands } from '../config/software';
 import type { Dict } from '../i18n/pl';
 
@@ -10,39 +11,112 @@ interface Props {
 const { t } = Astro.props;
 ---
 
-<section id="software" aria-labelledby="software-title" class="section-y bg-summit text-white">
-  <div class="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
-    <div class="lg:col-span-5">
-      <h2 id="software-title" class="text-h2">
-        {t.software.title}
-      </h2>
-      <p class="mt-6 max-w-[52ch] text-lg leading-relaxed text-white/85">{t.software.text}</p>
-    </div>
+<section id="software" aria-labelledby="software-title" class="software section-y text-white">
+  <!--
+    Tło „stoi w miejscu”: warstwa jest przypięta do okna przeglądarki, a sekcja działa jak okno, przez
+    które ją widać (clip-path na sekcji). Zamiast background-attachment: fixed, który nie działa na iOS.
+  -->
+  <div class="software-bg" aria-hidden="true">
+    <Contours
+      class="absolute inset-0 h-full w-full text-white"
+      cx={1080}
+      cy={380}
+      rings={16}
+      r0={40}
+      dr={62}
+      rot={-12}
+    />
+    <div class="software-grain"></div>
+  </div>
 
-    <ul class="grid grid-cols-2 content-start gap-x-5 gap-y-9 sm:grid-cols-3 lg:col-span-7">
-      {softwareBrands.map((brand) => (
-        <li class="flex flex-col">
-          {brand.logo ? (
-            <span class="flex h-24 items-center justify-center rounded bg-white px-5">
-              <Image
-                src={brand.logo}
-                alt={brand.name}
-                class="max-h-12 w-auto max-w-full object-contain"
-              />
+  <div class="container-page">
+    <h2 id="software-title" class="text-h2">
+      {t.software.title}
+    </h2>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-14">
+      <!-- Opis w polu z kropkowaną ramką; ikona jak w sekcji „Wycena usług”. -->
+      <div class="software-note lg:col-span-6">
+        <span class="text-summit inline-flex h-12 w-12 shrink-0 items-center justify-center rounded bg-white">
+          <MonitorCog class="size-6" stroke-width={1.8} aria-hidden="true" />
+        </span>
+        <div class="space-y-4 leading-[1.7] text-white/90">
+          {t.software.paragraphs.map((text) => (
+            <p>{text}</p>
+          ))}
+        </div>
+      </div>
+
+      <!-- Cztery programy w układzie 2×2; pod logo etykieta, do czego program służy. -->
+      <ul class="grid grid-cols-2 content-center gap-x-5 gap-y-8 lg:col-span-6">
+        {softwareBrands.map((brand) => (
+          <li class="flex flex-col">
+            <span class="flex h-20 items-center justify-center rounded bg-white px-5">
+              {brand.logo ? (
+                <Image
+                  src={brand.logo}
+                  alt={brand.name}
+                  class="max-h-8 w-auto max-w-[80%] object-contain"
+                />
+              ) : (
+                // Brak pliku logo – nazwa programu złożona czcionką nagłówków.
+                <span class="font-display text-summit text-xl font-semibold" aria-hidden="true">
+                  {brand.short ?? brand.name}
+                </span>
+              )}
             </span>
-          ) : (
-            // TODO(klient): brak pliku logo – tymczasowy placeholder (ikona obrazka z krzyżykiem).
-            <span
-              class="flex h-24 items-center justify-center rounded border-2 border-dashed border-white/45 text-white/70"
-              role="img"
-              aria-label={brand.name}
-            >
-              <ImageOff class="size-8" stroke-width={1.5} aria-hidden="true" />
+            <span class="mt-3 text-xs font-semibold tracking-[0.08em] text-white/65 uppercase">
+              {t.software.categories[brand.category]}
             </span>
-          )}
-          <span class="mt-3 text-base leading-snug font-medium text-white/90">{brand.name}</span>
-        </li>
-      ))}
-    </ul>
+            <span class="mt-1 text-[0.95rem] leading-snug font-medium text-white/95">
+              {brand.name}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 </section>
+
+<style>
+  .software {
+    position: relative;
+    clip-path: inset(0);
+    /* Kolor zapasowy, gdyby warstwa tła się nie narysowała. */
+    background: var(--color-summit);
+  }
+  .software-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 70% 60% at 78% 40%, rgb(255 255 255 / 0.1), transparent 70%),
+      radial-gradient(ellipse 60% 70% at 8% 95%, rgb(0 0 0 / 0.22), transparent 70%),
+      var(--color-summit);
+    pointer-events: none;
+  }
+  .software-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url('../assets/textures/grain.png');
+    background-size: 160px 160px;
+    opacity: 0.55;
+    mix-blend-mode: overlay;
+  }
+  .software-note {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    border: 2px dotted rgb(255 255 255 / 0.45);
+    border-radius: 1rem;
+    background: rgb(0 20 60 / 0.28);
+    padding: 1.5rem;
+  }
+  @media (min-width: 40rem) {
+    .software-note {
+      flex-direction: row;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+  }
+</style>
