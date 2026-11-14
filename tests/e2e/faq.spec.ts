@@ -24,7 +24,7 @@ test.describe('FAQ – strona główna (karuzela)', () => {
     await page.goto('/');
     const track = page.locator('[data-faq-track]');
     const scrollLeft = () => track.evaluate((el) => el.scrollLeft);
-    await expect(page.locator('[data-faq-controls]')).toBeVisible();
+    await expect(page.locator('[data-faq-next]')).toBeVisible();
     await expect(page.locator('[data-faq-prev]')).toHaveAttribute('aria-disabled', 'true');
     await page.locator('[data-faq-next]').click();
     await expect.poll(scrollLeft).toBeGreaterThan(100);

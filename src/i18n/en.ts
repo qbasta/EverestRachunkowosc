@@ -384,7 +384,10 @@ export const en: Dict = {
   },
   software: {
     title: 'Software',
-    text: 'We use proven accounting and payroll programs that are kept up to date with changes in regulations. We also use a dedicated tool for transferring documents remotely, accessible only to authorised persons. The proper functioning of our IT infrastructure is looked after by an IT specialist with broad experience in supporting accounting offices.',
+    paragraphs: [
+      'We use proven accounting and payroll programs that are kept up to date with changes in regulations. We also use a dedicated tool for transferring documents remotely, accessible only to authorised persons.',
+      'The proper functioning of our IT infrastructure is looked after by an IT specialist with broad experience in supporting accounting offices.',
+    ],
     categories: {
       accounting: 'Accounting',
       payroll: 'HR and payroll',

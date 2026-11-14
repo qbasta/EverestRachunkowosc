@@ -393,7 +393,10 @@ export const pl = {
   },
   software: {
     title: 'Oprogramowanie',
-    text: 'Korzystamy ze sprawdzonych programów księgowych i kadrowo-płacowych, które są na bieżąco aktualizowane w odpowiedzi na zmiany w przepisach. Wykorzystujemy również dedykowane narzędzie do zdalnego przekazywania dokumentów, do którego dostęp mają wyłącznie osoby upoważnione. Nad prawidłowym funkcjonowaniem naszego zaplecza informatycznego czuwa specjalista IT posiadający szerokie doświadczenie w obsłudze biur rachunkowych.',
+    paragraphs: [
+      'Korzystamy ze sprawdzonych programów księgowych i kadrowo-płacowych, które są na bieżąco aktualizowane w odpowiedzi na zmiany w przepisach. Wykorzystujemy również dedykowane narzędzie do zdalnego przekazywania dokumentów, do którego dostęp mają wyłącznie osoby upoważnione.',
+      'Nad prawidłowym funkcjonowaniem naszego zaplecza informatycznego czuwa specjalista IT posiadający szerokie doświadczenie w obsłudze biur rachunkowych.',
+    ],
     categories: {
       accounting: 'Księgowość',
       payroll: 'Kadry i płace',
