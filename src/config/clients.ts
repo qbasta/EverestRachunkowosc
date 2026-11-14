@@ -1,4 +1,5 @@
 import type { ImageMetadata } from 'astro';
+import geremek from '../assets/clients/fundacja-geremka.webp';
 import herosi from '../assets/clients/herosi.webp';
 import impuls from '../assets/clients/impuls.svg';
 import pomocDzieciom from '../assets/clients/fundacja-pomocy-dzieciom.webp';
@@ -21,7 +22,7 @@ export interface Client {
 export const clients: Client[] = [
   { name: 'Fundacja Instrat' },
   { name: 'Fundacja Herosi', logo: herosi },
-  { name: 'Fundacja Centrum im. Prof. B. Geremka' },
+  { name: 'Fundacja Centrum im. Prof. B. Geremka', logo: geremek },
   { name: 'Fundacja Gotowi na Przyszłość' },
   { name: 'Polska Fundacja Dzieci i Młodzieży' },
   { name: 'Fundacja Impuls dla Młodych', logo: impuls },
