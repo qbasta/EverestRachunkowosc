@@ -13,7 +13,7 @@ test.describe('FAQ – strona główna (karuzela)', () => {
     const hrefs = await page
       .locator('.faq-card a')
       .evaluateAll((as) => as.map((a) => a.getAttribute('href')));
-    for (const href of hrefs) expect(href).toMatch(/^\/faq#[a-z0-9-]+$/);
+    for (const href of hrefs) expect(href).toMatch(/^\/faq\/#[a-z0-9-]+$/);
     await expect(page.locator('#faq .btn')).toHaveText('Masz więcej pytań?');
     expect(errors).toEqual([]);
   });
@@ -52,7 +52,7 @@ test.describe('FAQ – podstrona', () => {
     page,
   }) => {
     const errors = collectErrors(page);
-    await page.goto('/faq');
+    await page.goto('/faq/');
     await expect(items(page)).toHaveCount(11);
     await expect(page.locator('[data-faq-count]')).toHaveText('Wyświetlone pytania: 11');
 
@@ -100,7 +100,7 @@ test.describe('FAQ – podstrona', () => {
   });
 
   test('kliknięcie otwiera pytanie i zapisuje jego adres; klawiatura działa', async ({ page }) => {
-    await page.goto('/faq');
+    await page.goto('/faq/');
     await page.locator('#ubezpieczenie-oc summary').click();
     await expect(page.locator('#ubezpieczenie-oc')).toHaveJSProperty('open', true);
     expect(await page.evaluate(() => location.hash)).toBe('#ubezpieczenie-oc');
@@ -115,7 +115,7 @@ test.describe('FAQ – podstrona', () => {
   });
 
   test('link do pytania otwiera je, przewija i ustawia fokus', async ({ page }) => {
-    await page.goto('/faq#ubezpieczenie-oc');
+    await page.goto('/faq/#ubezpieczenie-oc');
     await expect(page.locator('details.faq-item[open]')).toHaveCount(1);
     await expect(page.locator('#ubezpieczenie-oc')).toHaveJSProperty('open', true);
     await expect(page.locator('#ubezpieczenie-oc summary')).toBeFocused();
@@ -129,12 +129,12 @@ test.describe('FAQ – podstrona', () => {
   });
 
   test('nieznany #fragment nic nie otwiera', async ({ page }) => {
-    await page.goto('/faq#nie-ma-takiego');
+    await page.goto('/faq/#nie-ma-takiego');
     await expect(page.locator('details.faq-item[open]')).toHaveCount(0);
   });
 
   test('wersja angielska: lista i wyszukiwarka', async ({ page }) => {
-    await page.goto('/en/faq');
+    await page.goto('/en/faq/');
     await expect(items(page)).toHaveCount(11);
     await page.fill('#faq-search', 'grant');
     expect(await shown(page).count()).toBeGreaterThanOrEqual(3);
@@ -144,7 +144,7 @@ test.describe('FAQ – podstrona', () => {
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/faq');
+    await page.goto('/faq/');
     expect(await horizontalOverflow(page)).toBeLessThanOrEqual(0);
     await page.locator('[data-faq-toggle-all]').click();
     expect(await horizontalOverflow(page)).toBeLessThanOrEqual(0);
@@ -155,7 +155,7 @@ test.describe('FAQ – bez JavaScriptu', () => {
   test.use({ javaScriptEnabled: false });
 
   test('pytania są widoczne i otwierają się natywnie, narzędzia ukryte', async ({ page }) => {
-    await page.goto('/faq');
+    await page.goto('/faq/');
     await expect(page.locator('[data-faq-tools]')).toBeHidden();
     await expect(items(page)).toHaveCount(11);
     await page.locator('#formy-ksiegowosci summary').click();

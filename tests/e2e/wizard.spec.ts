@@ -6,7 +6,7 @@ const next = '[data-wz=next]';
 test.describe('Kreator wyceny', () => {
   test('przejście przez 5 kroków, walidacja, podsumowanie, edycja i wysyłka', async ({ page }) => {
     const errors = collectErrors(page);
-    await page.goto('/wycena');
+    await page.goto('/wycena/');
     const count = page.locator('.wz-count');
     await expect(count).toContainText('1');
     await expect(page.locator('.wz-submit')).toBeHidden();
@@ -76,7 +76,7 @@ test.describe('Kreator wyceny', () => {
   });
 
   test('Enter w polu przechodzi do następnego kroku', async ({ page }) => {
-    await page.goto('/wycena');
+    await page.goto('/wycena/');
     await page.fill('#q-firstName', 'X');
     await page.press('#q-firstName', 'Enter');
     await expect(page.locator('.wz-count')).toContainText('2');
@@ -84,7 +84,7 @@ test.describe('Kreator wyceny', () => {
 
   test('telefon: bez przewijania w poziomie', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/wycena');
+    await page.goto('/wycena/');
     expect(await horizontalOverflow(page)).toBeLessThanOrEqual(0);
   });
 });
@@ -93,7 +93,7 @@ test.describe('Kreator wyceny – bez JavaScriptu', () => {
   test.use({ javaScriptEnabled: false });
 
   test('wszystkie kroki widoczne naraz, jest przycisk wysyłki', async ({ page }) => {
-    await page.goto('/wycena');
+    await page.goto('/wycena/');
     await expect(page.locator('.wz-step')).toHaveCount(4);
     for (const step of await page.locator('.wz-step').all()) await expect(step).toBeVisible();
     await expect(page.locator('.wz-submit')).toBeVisible();

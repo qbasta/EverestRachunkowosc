@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 const port = 4321;
 
-// Testy uruchamiają się na zbudowanej stronie (`npm run build` → `astro preview`) w trzech silnikach:
+// Testy uruchamiają się na zbudowanej stronie (`npm run build` → `scripts/serve.mjs`: serwer z nagłówkami z public/.htaccess) w trzech silnikach:
 // Chromium (Chrome, Edge), Firefox i WebKit (Safari) + emulacja iPhone'a w WebKit.
 export default defineConfig({
   testDir: 'tests/e2e',
@@ -28,7 +28,7 @@ export default defineConfig({
     { name: 'mobile-safari', use: { ...devices['iPhone 13'] } },
   ],
   webServer: {
-    command: `npm run preview -- --port ${port} --ignore-lock`,
+    command: `node scripts/serve.mjs ${port}`,
     url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,

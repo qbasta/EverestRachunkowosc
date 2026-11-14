@@ -4,12 +4,12 @@ import { collectErrors, horizontalOverflow } from './helpers';
 const pages = [
   '/',
   '/en/',
-  '/nasz-zespol',
-  '/en/our-team',
-  '/faq',
-  '/en/faq',
-  '/wycena',
-  '/en/quote',
+  '/nasz-zespol/',
+  '/en/our-team/',
+  '/faq/',
+  '/en/faq/',
+  '/wycena/',
+  '/en/quote/',
 ];
 
 for (const path of pages) {

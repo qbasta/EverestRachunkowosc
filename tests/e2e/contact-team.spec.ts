@@ -12,7 +12,7 @@ test.describe('Kontakt i „Zaufali nam”', () => {
     await expect(contact).toContainText('9:00 – 17:00');
     await expect(contact).toContainText('9:00 – 15:00');
     await expect(contact.locator('form')).toHaveCount(0);
-    await expect(contact.locator('a[href="/wycena"]')).toBeVisible();
+    await expect(contact.locator('a[href="/wycena/"]')).toBeVisible();
     expect(errors).toEqual([]);
   });
 
@@ -48,7 +48,7 @@ test.describe('Kontakt i „Zaufali nam”', () => {
 
 test.describe('Zespół', () => {
   test('cztery osoby: dwie ze zdjęciem, dwie jako karty tekstowe', async ({ page }) => {
-    await page.goto('/nasz-zespol');
+    await page.goto('/nasz-zespol/');
     await expect(page.locator('#team article')).toHaveCount(4);
     await expect(page.locator('#team article img')).toHaveCount(2);
     for (const name of [
@@ -62,7 +62,7 @@ test.describe('Zespół', () => {
   });
 
   test('biogram Marka zawiera listę punktowaną po rozwinięciu', async ({ page }) => {
-    await page.goto('/nasz-zespol');
+    await page.goto('/nasz-zespol/');
     const card = page.locator('#team article', { hasText: 'Marek Kropiewnicki' });
     await expect(card.locator('li')).toHaveCount(5);
     await expect(card.locator('li').first()).toBeHidden();
@@ -72,7 +72,7 @@ test.describe('Zespół', () => {
   });
 
   test('wersja angielska ma te same cztery osoby', async ({ page }) => {
-    await page.goto('/en/our-team');
+    await page.goto('/en/our-team/');
     await expect(page.locator('#team article')).toHaveCount(4);
     await expect(page.locator('#team h3', { hasText: 'Krzysztof Kuśmierowski' })).toBeVisible();
   });

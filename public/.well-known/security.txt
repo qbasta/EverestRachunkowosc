@@ -1,0 +1,5 @@
+# Zgłaszanie luk bezpieczeństwa (RFC 9116)
+Contact: mailto:dominik@biuroeverest.pl
+Expires: 2027-10-31T00:00:00.000Z
+Preferred-Languages: pl, en
+Canonical: https://everest-rachunkowosc.pl/.well-known/security.txt

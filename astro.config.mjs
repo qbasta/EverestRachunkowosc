@@ -8,7 +8,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://everest-rachunkowosc.pl',
   output: 'static',
-  trailingSlash: 'ignore',
+  // Każda podstrona to katalog z index.html, więc adresy mają ukośnik na końcu: serwer nie musi
+  // dokładać własnego przekierowania, a kanoniczny adres i mapa strony są zawsze zgodne.
+  trailingSlash: 'always',
   build: {
     // Zewnętrzne pliki CSS zamiast <style> w HTML – ułatwia restrykcyjne CSP.
     inlineStylesheets: 'never',
@@ -29,5 +31,9 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      // Bez wstawiania skryptów do HTML – pozwala na `script-src 'self'` w CSP, bez 'unsafe-inline'.
+      assetsInlineLimit: 0,
+    },
   },
 });

@@ -1,0 +1,87 @@
+# Konfiguracja Apache dla home.pl (kopiowana do katalogu głównego razem z zawartością dist/).
+# Każdy blok jest w <IfModule>, więc brak modułu na serwerze nie powoduje błędu 500 – tylko wyłącza daną funkcję.
+# Instrukcja wdrożenia i sprawdzenia: docs/WDROZENIE-HOME-PL.md
+
+# --- Podstawy ---------------------------------------------------------------
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+AddDefaultCharset UTF-8
+
+# --- Jeden kanoniczny adres: https://everest-rachunkowosc.pl (bez www, bez http) ---------
+# Przekierowania są sklejone tak, żeby każdy stary adres trafiał pod nowy jednym skokiem 301.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Stary adres formularza kontaktowego.
+  RewriteCond %{HTTP_HOST} ^(www\.)?(everest-rachunkowosc\.pl|biuroeverest\.pl)$ [NC]
+  RewriteRule ^signin/?$ https://everest-rachunkowosc.pl/#contact [R=301,NE,L]
+
+  # http → https oraz www / biuroeverest.pl → everest-rachunkowosc.pl.
+  # Drugi warunek: część hostingów kończy HTTPS przed Apache i przekazuje tylko nagłówek.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://everest-rachunkowosc.pl%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{HTTP_HOST} !^everest-rachunkowosc\.pl$ [NC]
+  RewriteRule ^ https://everest-rachunkowosc.pl%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# --- Ochrona plików ---------------------------------------------------------------
+# Pliki zaczynające się od kropki (.git, .env, .htaccess) nie są wydawane; wyjątek: /.well-known/.
+<IfModule mod_rewrite.c>
+  RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
+  RewriteRule (^|/)\. - [F,L]
+</IfModule>
+<FilesMatch "\.(map|md|log|bak|sql|env|ya?ml|lock)$">
+  Require all denied
+</FilesMatch>
+
+# --- Nagłówki bezpieczeństwa ---------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "DENY"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+
+  # CSP: wszystko tylko z własnej domeny. Wyjątki:
+  #  - frame-src: mapa Google (ładuje się dopiero po kliknięciu zgody),
+  #  - style-src-attr: kilka stylów inline na elementach SVG/dekoracjach (nie dotyczy skryptów).
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://www.google.com; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+
+  # HSTS – WŁĄCZANIE ETAPAMI (po włączeniu przeglądarka pamięta regułę, więc najpierw krótko):
+  #   1) tydzień testów:   max-age=300  (5 minut)  ← aktualnie
+  #   2) po potwierdzeniu, że wszystko działa: max-age=604800 (tydzień)
+  #   3) docelowo: max-age=31536000 (rok); includeSubDomains dopiero po sprawdzeniu wszystkich subdomen
+  # Nagłówek jest wysyłany wyłącznie przez HTTPS.
+  Header always set Strict-Transport-Security "max-age=300" "expr=%{HTTPS} == 'on' || %{HTTP:X-Forwarded-Proto} == 'https'"
+</IfModule>
+
+# --- Typy plików i kompresja -----------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType application/javascript .js .mjs
+  AddType image/svg+xml .svg
+  AddType image/webp .webp
+  AddType application/manifest+json .webmanifest
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+# --- Pamięć podręczna ----------------------------------------------------------------
+# /_astro/* ma w nazwie skrót zawartości, więc może leżeć w pamięci przeglądarki rok.
+# HTML zawsze sprawdzany na nowo, żeby poprawki były widoczne od razu.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 1 day"
+  ExpiresByType text/plain "access plus 1 day"
+  ExpiresByType image/x-icon "access plus 1 week"
+</IfModule>
+<IfModule mod_headers.c>
+  <If "%{REQUEST_URI} =~ m#^/_astro/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>
