@@ -1,6 +1,7 @@
 ---
 import ChevronLeft from '@lucide/astro/icons/chevron-left';
 import ChevronRight from '@lucide/astro/icons/chevron-right';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { pagePath, type Lang } from '../i18n';
 import type { Dict } from '../i18n/pl';
 import { FAQ_TEASER_IDS } from '../config/faq';
@@ -52,25 +53,32 @@ const faqHref = pagePath('faq', lang);
               .replace('{total}', String(items.length))}
             class="faq-card"
           >
-            <h3 class="font-display text-summit text-[1.35rem] leading-snug font-semibold">
+            <span class="faq-num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="font-display text-summit mt-3 text-[1.35rem] leading-snug font-semibold">
               {item.q}
             </h3>
             <p class="text-ink/85 mt-4 line-clamp-6">{item.a[0]}</p>
             <a
               href={`${faqHref}#${item.id}`}
-              class="tlink mt-auto inline-block pt-6"
+              class="faq-more tlink mt-auto pt-6"
               aria-label={`${t.faq.more}: ${item.q}`}
             >
               {t.faq.more}
+              <ArrowRight class="size-4 shrink-0" stroke-width={2.25} aria-hidden="true" />
             </a>
           </article>
         ))}
       </div>
     </div>
 
-    <a href={faqHref} class="btn btn-outline mt-10">
-      {t.faq.cta}
-    </a>
+    <!-- Przycisk pod karuzelą po prawej (na telefonie na całą szerokość) – domyka sekcję. -->
+    <div class="mt-10 flex sm:justify-end">
+      <a href={faqHref} class="btn btn-outline w-full sm:w-auto">
+        {t.faq.cta}
+      </a>
+    </div>
   </div>
 </section>
 
@@ -102,6 +110,19 @@ const faqHref = pagePath('faq', lang);
     .faq-card {
       flex-basis: calc(50% - 0.75rem);
     }
+  }
+  .faq-num {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 1;
+    color: color-mix(in srgb, var(--color-summit) 32%, transparent);
+  }
+  .faq-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
   }
   .faq-arrow {
     display: inline-flex;

@@ -152,6 +152,13 @@ const items = Array.from({ length: repeats }, () => clients).flat();
     filter: grayscale(0);
     opacity: 1;
   }
+  /* Ekrany dotykowe nie mają „najechania” – tam loga są od razu w kolorze. */
+  @media (hover: none) {
+    .client-logo {
+      filter: none;
+      opacity: 1;
+    }
+  }
   /* Placeholder do czasu otrzymania logo: przygaszony, o stałej szerokości, żeby pętla była równa. */
   .client-placeholder {
     display: flex;

@@ -132,7 +132,7 @@ const rings = contourRings({ cx: 720, cy: 560, rings: 17, r0: 34, dr: 40 });
     <h1 id="hero-title" class="text-h1 max-w-[24ch]">
       {t.hero.title}
     </h1>
-    <div class="text-ink/85 mt-6 max-w-[52ch] space-y-3 text-lg leading-relaxed md:text-xl">
+    <div class="text-ink/85 mt-6 max-w-[52ch] space-y-3 text-lg leading-relaxed">
       {t.hero.paragraphs.map((p) => (
         <p>{p}</p>
       ))}
@@ -277,12 +277,24 @@ const rings = contourRings({ cx: 720, cy: 560, rings: 17, r0: 34, dr: 40 });
     top: 0;
     bottom: 0;
     left: 60.76%;
-    z-index: -10;
+    z-index: -20;
     width: min(100%, 2200px);
     height: 100%;
     transform: translateX(-50%);
-    -webkit-mask-image: radial-gradient(ellipse 60% 75% at 50% 62%, #000 20%, transparent 78%);
-    mask-image: radial-gradient(ellipse 60% 75% at 50% 62%, #000 20%, transparent 78%);
+  }
+  /* Wygaszenie warstwic ku brzegom: nakładka w kolorze tła zamiast maski. Maska na animowanym SVG
+     zmuszała przeglądarkę do przerysowywania całej warstwy w każdej klatce (animacja „przycinała”). */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 60.76%;
+    z-index: -15;
+    width: min(100%, 2200px);
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse 60% 75% at 50% 62%, transparent 20%, var(--color-ice) 78%);
+    pointer-events: none;
   }
 
   /*
@@ -306,7 +318,7 @@ const rings = contourRings({ cx: 720, cy: 560, rings: 17, r0: 34, dr: 40 });
   @media (min-width: 1024px) {
     /* Na niskich oknach nagłówek nie może zabierać więcej niż ~10,5% wysokości – zostaje miejsce na wykres. */
     .hero h1 {
-      font-size: min(clamp(2.1rem, 1.25rem + 4.4vw, 5.25rem), 10.5vh);
+      font-size: min(clamp(2.1rem, 1.3rem + 3.8vw, 4.5rem), 10.5vh);
     }
     .hero:not([data-mode='stacked']) .ridge-svg {
       position: absolute;
@@ -500,18 +512,33 @@ const rings = contourRings({ cx: 720, cy: 560, rings: 17, r0: 34, dr: 40 });
     y: box.bottom - (VB_H - (y + shift)) * scale,
   });
 
+  // Punkty wzdłuż linii liczymy raz: geometria rysunku się nie zmienia, a getPointAtLength() jest
+  // kosztowne – liczone przy każdym pomiarze blokowało animację wejścia.
+  const sampleCache = new WeakMap<SVGPathElement, { x: number; y: number }[]>();
+  const samples = (path: SVGPathElement) => {
+    let points = sampleCache.get(path);
+    if (!points) {
+      const length = path.getTotalLength();
+      const steps = Math.min(1500, Math.max(200, Math.ceil(length / 10)));
+      points = [];
+      for (let i = 0; i <= steps; i++) {
+        const p = path.getPointAtLength((length * i) / steps);
+        points.push({ x: p.x, y: p.y });
+      }
+      sampleCache.set(path, points);
+    }
+    return points;
+  };
+
   const countHits = (
     path: SVGPathElement,
     box: DOMRect,
     rects: DOMRect[],
     faded: boolean,
   ): number => {
-    const length = path.getTotalLength();
     const shift = groupShift();
-    const steps = Math.min(3000, Math.max(300, Math.ceil(length / 6)));
     let hits = 0;
-    for (let i = 0; i <= steps; i++) {
-      const p = path.getPointAtLength((length * i) / steps);
+    for (const p of samples(path)) {
       const { x, y } = toScreen(p.x, p.y, box, shift);
       if (x < box.left || x > box.right || y < box.top || y > box.bottom) continue; // przycięte
       const alphaY = Math.min(1, (y - box.top) / (box.height * TOP_FADE));

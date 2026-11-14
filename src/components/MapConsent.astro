@@ -14,9 +14,10 @@ const { t } = Astro.props;
 const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&z=16&hl=${t.lang}&output=embed`;
 ---
 
-<div class="map-card text-ink overflow-hidden rounded border border-white/25 bg-white">
+<!-- Na desktopie karta rozciąga się na wysokość sąsiedniej kolumny z danymi kontaktowymi. -->
+<div class="map-card text-ink flex h-full flex-col overflow-hidden rounded border border-white/25 bg-white">
   <div
-    class="map-frame relative aspect-[16/10] w-full"
+    class="map-frame relative aspect-[16/10] w-full lg:aspect-auto lg:min-h-[22rem] lg:flex-1"
     data-src={embedSrc}
     data-title={t.contact.map.iframeTitle}
   >
